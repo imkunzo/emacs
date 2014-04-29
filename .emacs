@@ -1,66 +1,26 @@
-(setenv "HOME" "D:/Emacs")
-(setenv "PATH" (concat "D:\\Opt\\Cygwin\\bin;" (getenv "PATH")))
-(add-to-list 'exec-path "d:/Opt/Cygwin/bin")
-(setq default-directory "~/")
-
-;;;;    (add-hook 'comint-output-filter-functions 
-;;;;    	  'shell-strip-ctrl-m nil t)
-;;;;    (add-hook 'comint-output-filter-functions 
-;;;;    	  'comint-watch-for-password-prompt nil t)
-;;;;    (setq explicit-shell-file-name "bash.exe")
-;;;;    ;; For subprocesses invoked via the shell
-;;;;    ;; (e.g., "shell -c command")
-;;;;    (setq shell-file-name explicit-shell-file-name) 
+;; -*- lisp -*-
 
 ;;;; Emacs
 ;;; {{{
 (tool-bar-mode -1)
 ;; (menu-bar-mode nil)
 (scroll-bar-mode -1)
-;; ²»ÏÔÊ¾»¶Ó­½çÃæ
+;; ä¸æ˜¾ç¤ºæ¬¢è¿ç•Œé¢
 (setq inhibit-startup-message t)
-;; ²»Éú³ÉÁÙÊ±ÎÄ¼ş
+;; ä¸ç”Ÿæˆä¸´æ—¶æ–‡ä»¶
 (setq-default make-backup-files nil)
-;; ·´ÏÔÑ¡ÖĞÇøÓò
+;; åæ˜¾é€‰ä¸­åŒºåŸŸ
 (transient-mark-mode t)
-;; ×Ô¶¯Æ¥ÅäÀ¨ºÅ
-(electric-pair-mode t)
-(show-paren-mode t)
-(setq show-paren-style 'parentheses)
-;; ¹â±ê¿¿½üÊó±êÊ±£¬Êó±ê×Ô¶¯ÒÆ¿ª
+;; å…‰æ ‡é è¿‘é¼ æ ‡æ—¶ï¼Œé¼ æ ‡è‡ªåŠ¨ç§»å¼€
 ;; (mouse-avoidance-mode 'animate)
-;; ½â¾öemacs shell ÂÒÂë 
+;; è§£å†³emacs shell ä¹±ç  
 (setq ansi-color-for-comint-mode t) 
 (customize-group 'ansi-colors) 
-(kill-this-buffer);¹Ø±Õcustomize´°¿Ú 
-(setq default-major-mode 'text-mode);Ò»´ò¿ª¾ÍÆğÓÃ text Ä£Ê½ 
-
-;; (set-frame-parameter (selected-frame) 'alpha (list 90 50))
-;; (add-to-list 'default-frame-alist (cons 'alpha (list 90 50)))
-;; Æô¶¯ºó×î´ó»¯Emacs´°¿Ú
-(run-with-idle-timer 1 nil 'w32-send-sys-command 61488)
-;; (add-to-list 'default-frame-alist '(width  . 90))
-;; (add-to-list 'default-frame-alist '(height . 40))
-
-(add-hook 'write-file-hooks 'time-stamp)
-(setq time-stamp-format "%:u %02m/%02d/%04y %02H:%02M:%02S")
-
-(setq indent-tabs-mode nil) 
-(define-key text-mode-map (kbd "<tab>") 'tab-to-tab-stop)
-(setq tab-stop-list (number-sequence 4 120 4)) 
-
-(setq default-buffer-file-coding-system 'gbk)
-(prefer-coding-system 'gbk)
-
-;; ÉèÖÃÄ¬ÈÏä¯ÀÀÆ÷ÎªConkeror
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "d:/Opt/Conkeror/conkeror/conkeror.exe")
-
-(setq abbrev-file-name "~/.emacs.d/abbrev_defs")
-(setq save-abbrevs t)
-
-;; ÉèÖÃÁÙÊ±Ä¿Â¼
-(setq temporary-file-directory "d:/_WinTMP")
+(kill-this-buffer);å…³é—­customizeçª—å£ 
+(setq default-major-mode 'text-mode);ä¸€æ‰“å¼€å°±èµ·ç”¨ text æ¨¡å¼ 
+;; default browser
+(setq browse-url-generic-program (executable-find "conkeror"))
+(setq browse-url-browser-function 'browse-url-generic)
 ;;; }}}
 
 
@@ -68,19 +28,20 @@
 ;;; {{{
 ;; Setting English Font
 (set-face-attribute
-  'default nil :font "Monaco")
+  'default nil :font "Inconsolata 12")
  
 ;; Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
                       charset
-                      (font-spec :family "MicroSoft YaHei" :size 16)))
+                      (font-spec :family "WenQuanYi Micro Hei" :size 16)))
 ;;; }}}
 
 
 ;;;; color-theme
 ;;; {{{
 (add-to-list 'custom-theme-load-path "~/.emacs.d/molokai-theme/")
+(setq molokai-theme-kit t)
 (load-theme 'molokai t)
 ;;; }}}
 
@@ -132,12 +93,25 @@
 ;;; }}}
 
 
-;;;; load path
+;;;; æ‹¬å·çš„è‡ªåŠ¨åŒ¹é…å’Œé«˜äº®æ˜¾ç¤º
 ;;; {{{
-(setq load-path
-      (append (list nil
-		    "~/.emacs.d/plugins"
-		    ) load-path))
+(setq electric-pair-skip-self nil)
+(electric-pair-mode t)
+
+(setq hl-paren-colors
+      '("Red" "DeepSkyBlue" "Yellow" "Lime" "Magenta"))
+(define-global-minor-mode global-highlight-parentheses-mode
+  highlight-parentheses-mode
+  (lambda ()
+    (highlight-parentheses-mode t)))
+
+(global-highlight-parentheses-mode t)
+
+(require 'mic-paren)
+(paren-activate)
+(setq paren-dont-touch-blink t)
+(setq paren-match-face 'highlight)
+(setq paren-sexp-mode nil)
 ;;; }}}
 
 
@@ -172,17 +146,7 @@
 ;;; }}}
 
 
-;;;; Tramp
-;;; {{{
-(add-to-list 'load-path "~/.emacs.d/tramp/lisp/")
-(require 'tramp)
-(add-to-list 'exec-path "d:/Opt/PuTTY")
-(setq tramp-default-method "plink")
-(setq tramp-debug-buffer t)
-;;; }}}
-
-
-;;;;; Yasnippet
+;;;; Yasnippet
 ;;; {{{
 (require 'yasnippet)
 (setq yas-snippet-dirs
@@ -192,7 +156,7 @@
 ;;; }}}
 
 
-;;;;; org-mode
+;;;; org-mode
 ;;; {{{
 (require 'org-install)
 (require 'org-publish)
@@ -215,67 +179,45 @@
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-
-(setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "d:/Dropbox/org/index.org" "Tasks")
-         "* TODO %^{Description} %^g\n%?\nAdded: %U\n")
-        ("c" "Calendar" entry (file+headline "d:/Dropbox/org/index.org" "Calendar")
-         "* TODO %^{Description} %^g\n%?\nAdded: %U\n")
-        ("p" "Projects" entry (file+headline "d:/Dropbox/org/index.org" "Projects")
-         "* TODO %^{Description} %^g\n%?\nAdded: %U\n")
-        ("n" "Notes" entry (file+headline "d:/Dropbox/org/notes.org" "Notes")
-         "* %^{Description} %^g %? Added: %U\n")
-        ("j" "Journal" entry (file+datetree "d:/Dropbox/org/journal.org")
-         "* %^{Description} %^g %? Added: %U\n")))
-
-(setq org-todo-keywords
-      '((sequence "TODO(t!)" "NEXT(n)" "WAITTING(w)" "SOMEDAY(s)" "|" "DONE(d@/!)" "ABORT(a@/!)")
-))
-
-(setq org-agenda-files (list "d:/Dropbox/org/index.org"
-                             "d:/Dropbox/org/notes.org"
-                             "d:/Dropbox/org/journal.org"))
 ;;; }}}
+
+
+;;    ;;;; auctex
+;;    ;;; {{{
+;;    (load "auctex.el" nil t t)
+;;    (load "preview.el" nil t t)
+;;    (mapc (lambda (mode)
+;;    	(add-hook 'LaTeX-mode-hook mode))
+;;          (list 'auto-fill-mode
+;;    	    'LaTeX-math-mode
+;;    	    'turn-on-reftex
+;;    	    ; 'linum-mode
+;;    	    ))
+;;    
+;;    (add-hook 'LaTeX-mode-hook
+;;    	  (lambda ()
+;;    	    (setq TeX-auto-untabify t     ;remove all tabs before saving
+;;    		  TeX-engine 'xetex       ;use xelatex default
+;;    		  TeX-show-compilation t) ;display compilation windows
+;;    	    (TeX-global-PDF-mode t)       ;PDF mode enable, not plain
+;;    	    (setq TeX-save-query nil)
+;;    	    (imenu-add-menubar-index)
+;;    	    (define-key LaTeX-mode-map (kbd "TAB") 'TeX-complete-symbol)))
+;;    (setq TeX-view-program-list '("MuPDF" "mupdf %o"))
+;;    (setq TeX-view-program-selection '((output-pdf "MuPDF") (output-dvi "MuPDF")))
+;;    ;;; }}}
 
 
 ;;;; slime
 ;;; {{{
-(add-to-list 'load-path "d:/Opt/SBCL")
+;; (add-to-list 'load-path "d:/Opt/SBCL")
 (setq inferior-lisp-program "sbcl")
 (require 'slime)
 (slime-setup '(slime-fancy))
-;;; }}}
 
-
-;;;; php-mode
-;;; {{{
-;;    (require 'php-mode)
-;;    
-;; To use abbrev-mode
-(add-hook 'php-mode-hook
-	  '(lambda () (define-abbrev php-mode-abbrev-table "ex" "extends")))
-;;; }}}
-
-
-;;    ;;;; nxhtml-mode
-;;    ;;; {{{
-;;    
-;;    ;; Workaround the annoying warnings:
-;;    ;;    Warning (mumamo-per-buffer-local-vars):
-;;    ;;    Already 'permanent-local t: buffer-file-name
-;;    (when (and 
-;;           (>= emacs-major-version 24)
-;;           (>= emacs-minor-version 2))
-;;      (eval-after-load "mumamo"
-;;        '(setq mumamo-per-buffer-local-vars
-;;               (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
-;;    ;;; }}}
-
-
-;;;; xcscope
-;;; {{{
-(require 'xcscope)
-;; (setq cscope-do-not-update-database t)
+(add-hook 'slime-load-hook 
+	  #'(lambda ()
+	      (define-key 'slime-prefix-map (kbd "M-h") 'slime-documentation-lookup)))
 ;;; }}}
 
 
@@ -293,11 +235,11 @@
 
 ;; keymap
 (setq ac-use-menu-map t)
-;;    (define-key ac-complete-mode-map (kbd "<return>") nil)
-;;    (define-key ac-complete-mode-map (kbd "RET") nil)
-;;    (define-key ac-complete-mode-map (kbd "\M-j") 'ac-complete)
-;;    (define-key ac-complete-mode-map (kbd "\M-n") 'ac-next)
-;;    (define-key ac-complete-mode-map (kbd "\M-p") 'ac-previous)
+(define-key ac-complete-mode-map (kbd "<return>") nil)
+(define-key ac-complete-mode-map (kbd "RET") nil)
+(define-key ac-complete-mode-map (kbd "\M-j") 'ac-complete)
+(define-key ac-complete-mode-map (kbd "\M-n") 'ac-next)
+(define-key ac-complete-mode-map (kbd "\M-p") 'ac-previous)
 
 ;; auto-complete semantic
 (defun ac-semantic-construct-candidates (tags)
