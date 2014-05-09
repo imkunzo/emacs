@@ -95,8 +95,11 @@
 
 ;;;; 括号的自动匹配和高亮显示
 ;;; {{{
-(setq electric-pair-skip-self nil)
-(electric-pair-mode t)
+;;    (setq electric-pair-skip-self nil)
+;;    (electric-pair-mode t)
+(smartparens-global-mode t)
+(sp-pair "'" nil :actions :rem)
+(sp-pair "`" nil :actions :rem)
 
 (setq hl-paren-colors
       '("Red" "DeepSkyBlue" "Yellow" "Lime" "Magenta"))
