@@ -2,8 +2,7 @@
 
 ;;;; 基本环境设置
 ;; (setenv "HOME" "~")
-;; (setenv "PATH" (concat (getenv "PATH")
-;; 		       ";d:/Opt/Cygwin/bin;d:/Opt/PuTTY"))
+;; (setenv "PATH" (concat (getenv "PATH") ""))
 
 ;; 设置默认访问目录
 (setq default-directory "~/")
@@ -80,8 +79,8 @@
 		      slime
 		      auto-complete
 		      ac-slime
-					;clojure-mode
-					;nrepl
+		      clojure-mode
+		      nrepl
 		      ))
 
 (dolist (p my-packages)
@@ -157,7 +156,7 @@
 ;;;; yasnippet
 (setq yas-snippet-dirs
       '("~/.emacs.d/snippets" ;; personal snippets
-	"~/.emacs.d/elpa/yasnippet-20140511.947/snippets"
+	"~/.emacs.d/elpa/yasnippet-20140514.1649/snippets"
 	))
 (yas-global-mode t)
 
@@ -183,7 +182,7 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 
 ;;;; 设置slime
-(setq inferior-lisp-program "d:/Opt/SBCL/sbcl.exe")
+(setq inferior-lisp-program "/usr/bin/clisp")
 (setq slime-net-coding-system 'utf-8-unix)
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy))
@@ -191,6 +190,16 @@
 (add-hook 'slime-load-hook 
 	  #'(lambda ()
 	      (define-key 'slime-prefix-map (kbd "M-h") 'slime-documentation-lookup)))
+
+;;;; 设置nrepl
+(setq nrepl-history-file "~/.emacs.d/nrepl-history")
+(add-hook 'nrepl-connected-hook
+	  (defun my-clojure-mode-eldoc-hook ()
+	    (add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
+	    (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
+	    (nrepl-enable-on-existing-clojure-buffers)))
+
+(add-hook 'nrepl-mode-hook 'subword-mode)
 
 ;;;; auto-complete
 (require 'auto-complete-config)
