@@ -2,7 +2,11 @@
 (add-to-list 'load-path "~/.emacs.d/settings")
 
 ;; 基本环境设置
-(setenv "HOME" "d:/Emacs/")
+(when (eq system-type 'windows-nt)
+  (setenv "HOME" "d:/emacs/")
+  ;; tramp configure for windows
+  (setq tramp-default-method "plink"))
+
 ; (setenv "PATH" (concat (getenv "PATH") ""))
 (setq default-directory "~/") ; 设置默认访问目录
 (setq default-buffer-file-coding-system 'utf-8) ; 设置默认字符编码
@@ -12,11 +16,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-(global-set-key [C-tab] 'other-window)
-
-;; tramp
-(if (eq system-type 'windows-nt)
-    (setq tramp-default-method "plink"))
+;; (global-set-key [C-tab] 'other-window)
 
 ;; ido-mode
 (ido-mode t)

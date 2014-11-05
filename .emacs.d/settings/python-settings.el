@@ -1,5 +1,3 @@
-(require 'python)
-
 (defvar python-ide-packages '(elpy
                               ;; nose
                               jedi
@@ -12,6 +10,8 @@
 (dolist (p python-ide-packages)
   (when (not (package-installed-p p))
     (package-install p)))
+
+;; (require 'python)
 
 ;; tab configuration
 (setq-default indent-tabs-mode nil)
