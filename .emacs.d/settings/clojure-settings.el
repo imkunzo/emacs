@@ -32,19 +32,6 @@
   (ANY 2)
   (context 2))
 
-;; Making it easier to read some Clojure code by changing into actual symbols.
-;; (when (fboundp 'global-prettify-symbols-mode)
-;;   (defconst clojure--prettify-symbols-alist
-;;     '(("fn"  . ?λ)
-;;       ("->" . ?→)
-;;       ("->>" . ?⇉)
-;;       ("<=" . ?≤)
-;;       (">=" . ?≥)
-;;       ("==" . ?≡)   ;; Do I like this?
-;;       ("not=" . ?≠) ;; Or even this?
-;;       ("." . ?•)
-;;       ("__" . ?⁈))))
-
 ;; binding keys to jump to the next "__" phrase
 (add-hook 'clojure-mode-hook
           '(lambda ()
@@ -66,44 +53,15 @@
 (setq nrepl-hide-special-buffers t)
 ;; Stop the error buffer from popping up while working in buffers other than the REPL
 (setq cider-popup-stacktraces nil)
-;; To get Clojure’s Cider working with org-mode
-;; (require 'ob-clojure)
-;; (setq org-babel-clojure-backend 'cider)(require 'cider)
-
-;; (defun cider-eval-and-get-value (input &optional ns session)
-;;   "Send the INPUT to the nREPL server synchronously and return the value.
-;; NS & SESSION specify the evaluation context."
-;;   (cider-get-value (cider-eval-sync input ns session)))
-
-;; (defun cider-eval-and-get-value (input &optional ns session no-read)
-;;   "Send the INPUT to the nREPL server synchronously and return the value. NS & SESSION specify the evaluation context.  Unless NO-READ is non-nil, use 'read' to convert the output into an emacs object."
-;;   (let ((result (plist-get (cider-eval-sync input ns session) :value)))
-;;     (if no-read
-;;         result
-;;       (read result))))
-;; 
-;; ;; eval last S-Expression
-;; (defun cider-eval-last-sexp-and-append ()
-;;   "Evaluate the expression preceding point and append result."
-;;   (interactive)
-;;   (let* ((last-sexp (if (region-active-p)
-;;                         (buffer-substring (region-beginning) (region-end))
-;;                       (cider-last-sexp)))
-;;          (last-results (cider-eval-and-get-value last-sexp)))
-;; 
-;;     (with-current-buffer (current-buffer)
-;;       (comment-indent)
-;;       (insert " => ")
-;;       (insert (prin1-to-string last-results)))))
 
 ;; send the S-Expression to the REPL and evaluate it
 (defun cider-send-and-evaluate-sexp ()
   "Sends the s-expression located before the point or the activeregion to the REPL and evaluates it. Then the Clojure buffer isactivated as if nothing happened."
   (interactive)
-  (if (not (region-active-p))
-      (cider-insert-last-sexp-in-repl)
-    (cider-insert-in-repl
-     (buffer-substring (region-beginning) (region-end)) nil))
+    (if (not (region-active-p))
+        (cider-insert-last-sexp-in-repl)
+      (cider-insert-in-repl
+       (buffer-substring (region-beginning) (region-end)) nil))
   (cider-switch-to-repl-buffer)
   (cider-repl-closing-return)
   (cider-switch-to-last-clojure-buffer)
@@ -114,7 +72,6 @@
           (lambda ()
             (local-set-key (kbd "M-e") 'forward-sexp)
             (local-set-key (kbd "M-a") 'backward-sexp)
-            ;; (local-set-key (kbd "C-c C-S-v") 'cider-eval-last-sexp-and-append)
             (local-set-key (kbd "C-c C-v") 'cider-send-and-evaluate-sexp)))
 
 ;; paredit
@@ -161,7 +118,7 @@
   "If this regexp matches the text after the cursor, do an \"electric\" return.")
 
 (defun electrify-return-if-match (arg)
-  "If the text after the cursor matches `electrify-return-match' then  open and indent an empty line between the cursor and the text.  Move the  cursor to the new line."
+  "If the text after the cursor matches 'electrify-return-match' then  open and indent an empty line between the cursor and the text.  Move the  cursor to the new line."
   (interactive "P")
   (let ((case-fold-search nil))
     (if (looking-at electrify-return-match)
@@ -170,7 +127,7 @@
     (indent-according-to-mode)))
 
 (defun electrify-return-if-match (arg)
-  "If the text after the cursor matches `electrify-return-match' then  open and indent an empty line between the cursor and the text.  Move the  cursor to the new line."
+  "If the text after the cursor matches 'electrify-return-match' then  open and indent an empty line between the cursor and the text.  Move the  cursor to the new line."
   (interactive "P")
   (let ((case-fold-search nil))
     (if (looking-at electrify-return-match)
