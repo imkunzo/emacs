@@ -13,7 +13,7 @@
 
 ;; 设置英文字体
 (set-face-attribute
- 'default nil :font "Inconsolata 12")
+ 'default nil :font "Ubuntu Mono 12")
 ;; 设置方块字字体
 
 (if (eq system-type 'windows-nt)

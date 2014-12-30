@@ -32,6 +32,29 @@
   (ANY 2)
   (context 2))
 
+;; cider-mode
+;; Log communication with the nREPL server
+;; (setq nrepl-log-messages t)
+;; color the REPL
+(setq cider-repl-use-clojure-font-lock t)
+;; Don' t care much for the extra buffers that show up when you start
+(setq nrepl-hide-special-buffers t)
+;; Stop the error buffer from popping up while working in buffers other than the REPL
+(setq cider-popup-stacktraces nil)
+
+;; ;; send the S-Expression to the REPL and evaluate it
+;; (defun cider-send-and-evaluate-sexp ()
+;;   "Sends the s-expression located before the point or the activeregion to the REPL and evaluates it. Then the Clojure buffer isactivated as if nothing happened."
+;;   (interactive)
+;;   (if (not (region-active-p))
+;;       (cider-insert-last-sexp-in-repl)
+;;     (cider-insert-in-repl
+;;      (buffer-substring (region-beginning) (region-end)) nil))
+;;   (cider-switch-to-repl-buffer)
+;;   (cider-repl-closing-return)
+;;   (cider-switch-to-last-clojure-buffer)
+;;   (message ""))
+
 ;; binding keys to jump to the next "__" phrase
 (add-hook 'clojure-mode-hook
           '(lambda ()
@@ -44,35 +67,15 @@
   (set-mark (- (point) 2))
   (setq mark-alive t))
 
-(global-set-key (kbd "<f2> q") 'clojure-next-issue)
-
-;; cider-mode
-;; color the REPL
-(setq cider-repl-use-clojure-font-lock t)
-;; Don' t care much for the extra buffers that show up when you start
-(setq nrepl-hide-special-buffers t)
-;; Stop the error buffer from popping up while working in buffers other than the REPL
-(setq cider-popup-stacktraces nil)
-
-;; send the S-Expression to the REPL and evaluate it
-(defun cider-send-and-evaluate-sexp ()
-  "Sends the s-expression located before the point or the activeregion to the REPL and evaluates it. Then the Clojure buffer isactivated as if nothing happened."
-  (interactive)
-    (if (not (region-active-p))
-        (cider-insert-last-sexp-in-repl)
-      (cider-insert-in-repl
-       (buffer-substring (region-beginning) (region-end)) nil))
-  (cider-switch-to-repl-buffer)
-  (cider-repl-closing-return)
-  (cider-switch-to-last-clojure-buffer)
-  (message ""))
-
+;; (global-set-key (kbd "<f2> q") 'clojure-next-issue)
 
 (add-hook 'clojure-mode-hook
           (lambda ()
             (local-set-key (kbd "M-e") 'forward-sexp)
             (local-set-key (kbd "M-a") 'backward-sexp)
-            (local-set-key (kbd "C-c C-v") 'cider-send-and-evaluate-sexp)))
+            (local-set-key (kbd "C-o q") 'clojure-next-issue)
+            ;; (local-set-key (kbd "C-c C-v") 'cider-send-and-evaluate-sexp)
+            ))
 
 ;; paredit
 (require 'paredit)
@@ -139,17 +142,21 @@
 (add-hook 'prog-mode-hook  'rainbow-delimiters-mode)
 (add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
 
-;; ac-cider
-;; CIDER-specific configuration for auto completion
-(require 'ac-cider)
-(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
-(add-hook 'cider-mode-hook 'ac-cider-setup)
-(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'cider-mode))
-;; popup doc with C-c C-d
-(eval-after-load "cider"
-  '(define-key cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc))
+(global-company-mode)
+(add-hook 'cider-repl-mode-hook 'company-mode)
+(add-hook 'cider-mode-hook 'company-mode)
+
+;;    ;; ac-cider
+;;    ;; CIDER-specific configuration for auto completion
+;;    (require 'ac-cider)
+;;    (add-hook 'cider-mode-hook 'ac-flyspell-workaround)
+;;    (add-hook 'cider-mode-hook 'ac-cider-setup)
+;;    (add-hook 'cider-repl-mode-hook 'ac-cider-setup)
+;;    (eval-after-load "auto-complete"
+;;      '(add-to-list 'ac-modes 'cider-mode))
+;;    ;; popup doc with C-c C-d
+;;    (eval-after-load "cider"
+;;      '(define-key cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc))
 
 ;; eldoc
 ;; get ElDoc working with Clojure and Emacs Lisp

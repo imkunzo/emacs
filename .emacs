@@ -1,4 +1,4 @@
-4;; Path where settings files are kept
+;; Path where settings files are kept
 (add-to-list 'load-path "~/.emacs.d/settings")
 
 ;; 基本环境设置
