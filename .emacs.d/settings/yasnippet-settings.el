@@ -1,4 +1,7 @@
 ;;;; yasnippet
+(when (not (package-installed-p 'yasnippet))
+  (package-install 'yasnippet))
+
 (require 'yasnippet)
 
 (setq yas-snippet-dirs

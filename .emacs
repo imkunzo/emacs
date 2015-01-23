@@ -53,4 +53,5 @@
 (require 'clojure-settings)
 
 ;; python ide settings
-(require 'python-settings)
+;; (require 'python-settings)
+
