@@ -1,11 +1,11 @@
 (defvar clojure-ide-packages '(clojure-mode
-			       clojure-mode-extra-font-locking
+                               clojure-mode-extra-font-locking
                                ;; clojure-cheatsheet
                                ;; clojure-snippets
                                ;; clojurescript-mode
                                cider
-			       ac-cider
-			       ;; clj-refactor
+                               ;; ac-cider
+                               ;; clj-refactor
                                ;; elein
                                ;; popup
                                ;; ;; Mode for alternating paren colors
@@ -142,17 +142,17 @@
 (add-hook 'prog-mode-hook  'rainbow-delimiters-mode)
 (add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
 
-;; ac-cider
-;; CIDER-specific configuration for auto completion
-(require 'ac-cider)
-(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
-(add-hook 'cider-mode-hook 'ac-cider-setup)
-(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'cider-mode))
-;; popup doc with C-c C-d
-(eval-after-load "cider"
-  '(define-key cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc))
+;;    ;; ac-cider
+;;    ;; CIDER-specific configuration for auto completion
+;;    (require 'ac-cider)
+;;    (add-hook 'cider-mode-hook 'ac-flyspell-workaround)
+;;    (add-hook 'cider-mode-hook 'ac-cider-setup)
+;;    (add-hook 'cider-repl-mode-hook 'ac-cider-setup)
+;;    (eval-after-load "auto-complete"
+;;      '(add-to-list 'ac-modes 'cider-mode))
+;;    ;; popup doc with C-c C-d
+;;    (eval-after-load "cider"
+;;      '(define-key cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc))
 
 ;; eldoc
 ;; get ElDoc working with Clojure and Emacs Lisp

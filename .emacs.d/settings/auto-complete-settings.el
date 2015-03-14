@@ -13,18 +13,18 @@
       (cons 'backward-delete-char-untabify ac-trigger-commands))
 (set-default 'ac-sources
              '(ac-source-yasnippet
-	       ac-source-abbrev
+               ac-source-abbrev
                ac-source-dictionary
-	       ; ac-source-words-in-buffer
+                                        ; ac-source-words-in-buffer
                ac-source-words-in-same-mode-buffers
-	       ; ac-source-symbols
-	       ; ac-source-variables
-	       ; ac-source-imenu
-	       ; ac-source-functions
-	       ; ac-source-features
-	       ; ac-source-emacs-lisp-features
-               ; ac-source-semantic
-	       ))
+                                        ; ac-source-symbols
+                                        ; ac-source-variables
+                                        ; ac-source-imenu
+                                        ; ac-source-functions
+                                        ; ac-source-features
+                                        ; ac-source-emacs-lisp-features
+                                        ; ac-source-semantic
+               ))
 
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/db/ac-dict")
 (ac-config-default)
