@@ -29,6 +29,11 @@
 ;; fill-column-indicator
 ;; (require 'fill-column-indicator-settings)
 
+;; projectile
+(setq projectile-indexing-method 'alien)
+(setq projectile-enable-caching t)
+(projectile-global-mode)
+
 ;; yasnippet
 (require 'yasnippet-settings)
 
