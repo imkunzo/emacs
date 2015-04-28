@@ -6,3 +6,5 @@
 /.emacs.d/tramp
 /.emacs~
 /.ipython/
+/.emacs.d/projectile-bookmarks.eld
+/.gnupg/

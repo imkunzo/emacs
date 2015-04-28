@@ -7,7 +7,10 @@
  '(global-linum-mode t)
  '(inhibit-startup-screen t)
  '(make-backup-files nil)
- '(setq tab-stop-list (number-sequence 4 200 4))
+ '(package-selected-packages
+   (quote
+    (rainbow-delimiters pylint py-autopep8 projectile paredit monokai-theme flymake-python-pyflakes elpy company-anaconda color-identifiers-mode clojure-mode-extra-font-locking cider)))
+ '(setq tab-stop-list t)
  '(transient-mark-mode t)
  '(vcl-indent-level 4))
 
@@ -59,5 +62,4 @@
 (setq ido-enable-last-directory-history nil)
 
 ;;;; monokai theme
-;; (load-theme 'flatland t)
 (load-theme 'monokai t)
