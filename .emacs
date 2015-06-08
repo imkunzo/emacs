@@ -7,6 +7,13 @@
 ;; 基本环境设置
 (when (eq system-type 'windows-nt)
   (setenv "HOME" "d:/emacs/")
+  ;; set environment
+  (setenv "PATH"
+          (concat
+           "D:/opt/msys64/usr/bin" ";"
+           "D:/opt/msys64/mingw64/bin" ";"
+           (getenv "PATH")))
+  
   ;; tramp configure for windows
   (setq tramp-default-method "plink"))
 

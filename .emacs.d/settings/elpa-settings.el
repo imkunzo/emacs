@@ -9,6 +9,7 @@
 
 (defvar my-default-packages '(monokai-theme
                               paredit
+                              projectile
                               rainbow-delimiters))
 
 (dolist (p my-default-packages)
