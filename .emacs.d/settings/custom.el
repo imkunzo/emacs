@@ -4,7 +4,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(global-linum-mode t)
  '(inhibit-startup-screen t)
  '(make-backup-files nil)
  '(package-selected-packages
@@ -25,11 +24,19 @@
 (prefer-coding-system 'utf-8)
 (setq indent-tabs-mode nil) ; always use spaces, not tabs, when indenting
 
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(if (not (eq window-system nil))
+    (progn (tool-bar-mode -1)
+           (scroll-bar-mode -1)))
 
 ;; (global-set-key [C-tab] 'other-window)
+;; linum mode
+(defun linum-format-func (line)
+  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+    (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+(setq linum-format 'linum-format-func)
+(global-linum-mode t)
 
+;; indent mode
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
@@ -38,7 +45,7 @@
  'default nil :font "Ubuntu Mono 12")
 ;; 设置方块字字体
 
-(if (eq system-type 'windows-nt)
+(if (or (eq system-type 'windows-nt) (eq system-type 'cygwin))
     (progn (dolist (charset '(kana han symbol cjk-misc bopomofo))
              (set-fontset-font (frame-parameter nil 'font)
                                charset

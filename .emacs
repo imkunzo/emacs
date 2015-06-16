@@ -4,6 +4,9 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+;; Windows shortcut
+;; X:\PATH\TO\CYGWIN\run.exe /bin/bash --login -c /bin/emacs --debug-init
+
 ;; 基本环境设置
 (when (eq system-type 'windows-nt)
   (setenv "HOME" "d:/emacs/")
@@ -13,11 +16,9 @@
            "D:/opt/msys64/usr/bin" ";"
            "D:/opt/msys64/mingw64/bin" ";"
            (getenv "PATH")))
-  
   ;; tramp configure for windows
   (setq tramp-default-method "plink"))
 
-; (setenv "PATH" (concat (getenv "PATH") ""))
 (setq default-directory "~/") ; 设置默认访问目录
 
 ;; Path where settings files are kept
