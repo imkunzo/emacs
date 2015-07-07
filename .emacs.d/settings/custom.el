@@ -24,16 +24,17 @@
 (prefer-coding-system 'utf-8)
 (setq indent-tabs-mode nil) ; always use spaces, not tabs, when indenting
 
-(if (not (eq window-system nil))
-    (progn (tool-bar-mode -1)
-           (scroll-bar-mode -1)))
+(when (not (eq window-system nil))
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
 
 ;; (global-set-key [C-tab] 'other-window)
-;; linum mode
-(defun linum-format-func (line)
-  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-    (propertize (format (format "%%%dd " w) line) 'face 'linum)))
-(setq linum-format 'linum-format-func)
+
+;; ;; linum mode
+;; (defun linum-format-func (line)
+;;   (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+;;     (propertize (format (format "%%%dd " w) line) 'face 'linum)))
+;; (setq linum-format 'linum-format-func)
 (global-linum-mode t)
 
 ;; indent mode

@@ -44,9 +44,7 @@
 ;; (require 'fill-column-indicator-settings)
 
 ;; projectile
-(setq projectile-indexing-method 'alien)
-(setq projectile-enable-caching t)
-(projectile-global-mode)
+(require 'projectile-settings)
 
 ;; yasnippet
 (require 'yasnippet-settings)
