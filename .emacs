@@ -34,6 +34,10 @@
        (expand-file-name "settings/custom.el" user-emacs-directory))
  'noerror)
 
+;; evil-mode
+(require 'evil)
+(evil-mode 1)
+
 ;; paredit-mode
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
 

@@ -7,10 +7,12 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-(defvar my-default-packages '(monokai-theme
+(defvar my-default-packages '(evil
+                              monokai-theme
                               paredit
                               projectile
-                              rainbow-delimiters))
+                              rainbow-delimiters
+                              zenburn-theme))
 
 (dolist (p my-default-packages)
   (when (not (package-installed-p p))

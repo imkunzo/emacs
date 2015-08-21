@@ -43,7 +43,7 @@
 
 ;; 设置英文字体
 (set-face-attribute
- 'default nil :font "Ubuntu Mono 12")
+ 'default nil :font "Monaco 10")
 ;; 设置方块字字体
 
 (if (or (eq system-type 'windows-nt) (eq system-type 'cygwin))
@@ -70,4 +70,10 @@
 (setq ido-enable-last-directory-history nil)
 
 ;;;; monokai theme
-(load-theme 'monokai t)
+;; (load-theme 'monokai t)
+
+;;;; zenburn theme
+(load-theme 'zenburn t)
+
+;;;; solarized theme
+;; (load-theme 'solarized-dark t)
