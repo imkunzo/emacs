@@ -2,7 +2,9 @@
 /.emacs.d/ac-comphist.dat
 /.emacs.d/auto-save-list/
 /.emacs.d/elpa/
+/.emacs.d/eshell/
 /.emacs.d/snippets/
+/.emacs.d/smex-items
 /.emacs.d/tramp
 /.emacs~
 /.ipython/

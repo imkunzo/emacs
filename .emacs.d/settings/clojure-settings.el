@@ -1,5 +1,6 @@
 (defvar clojure-ide-packages '(clojure-mode
                                clojure-mode-extra-font-locking
+                               company
                                ;; clojure-cheatsheet
                                ;; clojure-snippets
                                ;; clojurescript-mode

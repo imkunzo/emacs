@@ -15,6 +15,8 @@
           (concat
            "D:/opt/msys64/usr/bin" ";"
            "D:/opt/msys64/mingw64/bin" ";"
+;;           "D:/opt/PuTTY" ";"
+;;           "d:/opt/leiningen" ";"
            (getenv "PATH")))
   ;; tramp configure for windows
   (setq tramp-default-method "plink"))
@@ -35,8 +37,8 @@
  'noerror)
 
 ;; evil-mode
-(require 'evil)
-(evil-mode 1)
+;; (require 'evil)
+;; (evil-mode 1)
 
 ;; paredit-mode
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
@@ -46,6 +48,12 @@
 
 ;; fill-column-indicator
 ;; (require 'fill-column-indicator-settings)
+
+;;
+(require 'smex-settings)
+
+;; org-mode
+(require 'org-mode-settings)
 
 ;; projectile
 (require 'projectile-settings)
@@ -63,5 +71,4 @@
 (require 'clojure-settings)
 
 ;; python ide settings
-(require 'python-settings)
-
+;; (require 'python-settings)

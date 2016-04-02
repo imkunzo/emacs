@@ -8,7 +8,7 @@
  '(make-backup-files nil)
  '(package-selected-packages
    (quote
-    (rainbow-delimiters pylint py-autopep8 projectile paredit monokai-theme flymake-python-pyflakes elpy company-anaconda color-identifiers-mode clojure-mode-extra-font-locking cider)))
+    (smex company clojure-snippets anaconda-mode clojure-mode yasnippet rainbow-delimiters pylint py-autopep8 projectile paredit monokai-theme flymake-python-pyflakes elpy company-anaconda color-identifiers-mode clojure-mode-extra-font-locking cider)))
  '(setq tab-stop-list t)
  '(transient-mark-mode t)
  '(vcl-indent-level 4))
@@ -70,10 +70,8 @@
 (setq ido-enable-last-directory-history nil)
 
 ;;;; monokai theme
-;; (load-theme 'monokai t)
+(load-theme 'monokai t)
 
 ;;;; zenburn theme
-(load-theme 'zenburn t)
+;; (load-theme 'zenburn t)
 
-;;;; solarized theme
-;; (load-theme 'solarized-dark t)
