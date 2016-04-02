@@ -1,5 +1,8 @@
-(when (not (package-installed-p 'smex))
-  (package-install 'smex))
+(defvar smex-packages '(smex))
+
+(dolist (p smex-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
 
 (require 'smex)
 (smex-initialize)
