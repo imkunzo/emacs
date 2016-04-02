@@ -1,6 +1,9 @@
 ;;;; yasnippet
-(when (not (package-installed-p 'yasnippet))
-  (package-install 'yasnippet))
+(defvar yasnippet-packages '(yasnippet))
+
+(dolist (p yasnippet-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
 
 (require 'yasnippet)
 
