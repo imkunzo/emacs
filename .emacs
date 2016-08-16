@@ -5,8 +5,6 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -17,7 +15,7 @@
  '(make-backup-files nil)
  '(package-selected-packages
    (quote
-    (evil flycheck-clojure clojure-cheatsheet clj-refactor cider rainbow-delimiters projectile monokai-theme))))
+    (racer rust-mode flycheck-rust company-racer flycheck-clojure clojure-cheatsheet clj-refactor cider yasnippet rainbow-delimiters projectile paredit monokai-theme helm flycheck-pos-tip evil company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -44,7 +42,7 @@
 
 ;;;; 设置英文字体
 (set-face-attribute
- 'default nil :font "Monaco 10")
+ 'default nil :font "Ubuntu Mono 12")
 ;; 设置方块字字体
 (if (or (eq system-type 'windows-nt) (eq system-type 'cygwin))
     (progn (dolist (charset '(kana han symbol cjk-misc bopomofo))
@@ -55,21 +53,22 @@
 
 ;;;; ELPA
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ;; ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")
-                         ("elpy" . "http://jorgenschaefer.github.io/packages/")))
+                         ("melpa" . "https://melpa.org/packages/")
+                         ;; ("elpy" . "http://jorgenschaefer.github.io/packages/")
+                         ))
 
 (setq package-enable-at-startup nil)
 (package-initialize)
 ;; 默认插件安装
 (defvar my-default-packages '(company
+                              evil
                               flycheck
                               flycheck-pos-tip
+                              helm
                               monokai-theme
                               paredit
                               projectile
                               rainbow-delimiters
-                              smex
                               yasnippet))
 
 (dolist (p my-default-packages)
@@ -161,12 +160,6 @@
     (set-face-underline-p 'org-link t))
   (iimage-mode))
 
-;;;; ido-mode
-(ido-mode t)
-(setq ido-everywhere t)
-(setq ido-enable-flex-matching t)
-(setq ido-enable-last-directory-history nil)
-
 ;;;; projectile
 (require 'projectile)
 (projectile-global-mode)
@@ -174,19 +167,25 @@
 (setq projectile-enable-caching nil)
 (setq projectile-require-project-root t)
 
-;;;; smex
-(require 'smex)
-(smex-initialize)
-;; Use smex instand of old M-x.
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;;;; helm
+(require 'helm)
+(require 'helm-config)
+;;
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+;;
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+(helm-mode t)
 
 ;;;; yasnippet
 (require 'yasnippet)
-(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-(mapc 'yas/load-directory yas-snippet-dirs)
+;; (add-to-list 'yas-snippet-dirs '("~/.emacs.d/snippets"))
+;; (mapc 'yas/load-directory yas-snippet-dirs)
 (yas-global-mode 1)
 ;; (yas-reload-all)
 ;; (add-hook 'prog-mode-hook #'yas-minor-mode)
@@ -243,3 +242,14 @@
 ;; flycheck setting for clojure
 (add-hook 'clojure-mode-hook #'flycheck-mode)
 (eval-after-load 'flycheck '(flycheck-clojure-setup))
+
+;;;; Rust IDE
+(defvar rust-ide-packages '(company-racer
+                            flycheck-rust
+                            rust-mode
+                            racer
+                            ))
+;;
+(dolist (p rust-ide-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
