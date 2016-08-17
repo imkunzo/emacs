@@ -253,3 +253,13 @@
 (dolist (p rust-ide-packages)
   (when (not (package-installed-p p))
     (package-install p)))
+;;
+(require 'rust-mode)
+(setq racer-rust-src-path "d:/Workspace/rust/src")
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+;;
+(add-hook 'racer-mode-hook #'company-mode)
+;;
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
