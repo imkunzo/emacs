@@ -15,7 +15,7 @@
  '(make-backup-files nil)
  '(package-selected-packages
    (quote
-    (racer rust-mode flycheck-rust company-racer flycheck-clojure clojure-cheatsheet clj-refactor cider yasnippet rainbow-delimiters projectile paredit monokai-theme helm flycheck-pos-tip evil company))))
+    (py-autopep8 flycheck-pyflakes elpy company-anaconda color-identifiers-mode anaconda-mode racer rust-mode flycheck-rust company-racer flycheck-clojure clojure-cheatsheet clj-refactor cider yasnippet rainbow-delimiters projectile paredit monokai-theme helm flycheck-pos-tip evil company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -29,27 +29,29 @@
   ;; set environment
   (setenv "PATH"
           (concat
-           "D:/opt/msys64/usr/bin" ";"
-           "D:/opt/msys64/mingw64/bin" ";"
-           "D:/opt/PuTTY" ";"
-;;           "d:/opt/leiningen" ";"
+           "d:/opt/Python/Python35" ";"
+           "d:/opt/Python/Python35/Scripts" ";"
+           "d:/opt/PuTTY" ";"
            (getenv "PATH")))
   ;; tramp configure for windows
   (setq tramp-default-method "plink"))
 
-;;;; 设置默认访问目录
+;;;; Setting default folder
 (setq default-directory "~/")
 
-;;;; 设置英文字体
+;;;; Fonts configuration
+;;; {{{
+;; Setting english font
 (set-face-attribute
- 'default nil :font "Ubuntu Mono 12")
-;; 设置方块字字体
+ 'default nil :font "Monaco 10")
+;; Setting chinese Font
 (if (or (eq system-type 'windows-nt) (eq system-type 'cygwin))
     (progn (dolist (charset '(kana han symbol cjk-misc bopomofo))
              (set-fontset-font (frame-parameter nil 'font)
                                charset
-                               (font-spec :family "Microsoft YaHei" :size 16)))))
-
+                               (font-spec :family "Microsoft YaHei"
+                                          :size 16)))))
+;;; }}}
 
 ;;;; ELPA
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -113,13 +115,13 @@
           (lambda ()
             (setq truncate-lines nil)))
 ;; org-capture
-(setq org-default-notes-file "d:/Dropbox/GTD/INBOX.org")
+(setq org-default-notes-file "e:/Dropbox/GTD/INBOX.org")
 (define-key global-map "\C-cr" 'org-capture)
 (setq org-capture-templates
-      '(("n" "New" entry (file+headline "d:/Dropbox/GTD/INBOX.org" "Temp") "* TODO %?\n %i\n %a")
-        ("t" "Todo" entry (file+headline "d:/Dropbox/GTD/TASK.org" "Tasks") "* TODO %?\n %i\n")
-        ("i" "Idea" entry (file+headline "d:/Dropbox/GTD/TASK.org" "Ideas") "* TODO %?\nEntered on: %U\n %i\n")
-        ("j" "Journal" entry (file+datetree "d:/Dropbox/GTD/NOTE.org") "* %?\nEntered on: %U\n %i\n")))
+      '(("n" "New" entry (file+headline "e:/Dropbox/GTD/INBOX.org" "Temp") "* TODO %?\n %i\n %a")
+        ("t" "Todo" entry (file+headline "e:/Dropbox/GTD/TASK.org" "Tasks") "* TODO %?\n %i\n")
+        ("i" "Idea" entry (file+headline "e:/Dropbox/GTD/TASK.org" "Ideas") "* TODO %?\nEntered on: %U\n %i\n")
+        ("j" "Journal" entry (file+datetree "e:/Dropbox/GTD/NOTE.org") "* %?\nEntered on: %U\n %i\n")))
 ;;
 (setq org-todo_keywords
       '((sequence "TODO(t!)"
@@ -219,6 +221,45 @@
 (require 'flycheck)
 (with-eval-after-load 'flycheck (flycheck-pos-tip-mode))
 
+;;;; Python IDE
+(defvar python-ide-packages '(anaconda-mode
+                              color-identifiers-mode
+                              company-anaconda
+                              elpy
+                              flycheck-pyflakes
+                              py-autopep8
+                              virtualenvwrapper))
+(dolist (p python-ide-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
+;; tab configuration
+(add-hook 'python-mode-hook '(lambda () (setq python-indent 4)))
+;; color the defined variables
+(add-hook 'python-mode-hook 'color-identifiers-mode)
+;; virtualenvwrapper
+(when (require 'virtualenvwrapper nil 'noerror)
+  ;; (venv-initialize-eshell)
+  ;; (venv-initialize-interactive-shells)
+  (when (eq system-type 'windows-nt)
+    (setq venv-location "d:/opt/Python/virtualenv")))
+;; elpy
+(when (require 'elpy nil 'noerror)
+  (elpy-enable)
+  ;; (elpy-clean-modeline)
+  (elpy-use-ipython)
+  )
+;; anaconda mode
+(add-to-list 'company-backends 'company-anaconda)
+(add-hook 'python-mode-hook 'anaconda-mode)
+;; py-autopep8
+(when (require 'py-autopep8 nil 'noerror)
+  (add-hook 'before-save-hook 'py-autopep8-before-save))
+;; python lint
+(when (require 'flycheck-pyflakes nil 'noerror)
+  (add-hook 'python-mode-hook 'flycheck-mode))
+;; eldoc
+(add-hook 'python-mode-hook 'turn-on-eldoc-mode)
+
 ;;;; Clojure IDE
 ;; define clojure ide packages
 (defvar clojure-ide-packages '(cider
@@ -261,5 +302,5 @@
 ;;
 (add-hook 'racer-mode-hook #'company-mode)
 ;;
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(define-key rust-mode-map (kbd "<tab>") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
