@@ -8,7 +8,7 @@
  '(make-backup-files nil)
  '(package-selected-packages
    (quote
-    (evil-leader hydra rustfmt rust-snippets racer flycheck-rust emacs-racer cargo evil company)))
+    (magit evil-leader hydra rustfmt rust-snippets racer flycheck-rust emacs-racer cargo evil company)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

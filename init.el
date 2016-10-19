@@ -14,7 +14,7 @@
   (package-refresh-contents))
 ;; default packages
 (defvar default-packages '(company evil evil-leader flycheck flycheck-pos-tip
-  helm hydra linum-relative monokai-theme paredit projectile
+  helm hydra linum-relative magit monokai-theme paredit projectile
   rainbow-delimiters yasnippet))
 ;; install default packages
 (mapc #'(lambda (pkg)
@@ -51,7 +51,7 @@
 (set-face-attribute
  'default nil :font "Monaco 10")
 ;; Setting chinese Font
-(if (or (eq system-type 'windows-nt) (eq system-type 'cygwin))
+(if (or (eq system-type 'windows-nt) (eq system-type 'opt/cygwin))
     (progn (dolist (charset '(kana han symbol cjk-misc bopomofo))
              (set-fontset-font (frame-parameter nil 'font)
                                charset
@@ -133,6 +133,12 @@
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook #'enable-paredit-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; magit
+(when (eq system-type 'windows-nt)
+  (setq magit-git-executable "d:/opt/Git/bin/git.exe"))
+(global-magit-file-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; projectile
