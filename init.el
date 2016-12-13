@@ -181,7 +181,7 @@
 ;; flycheck-rust
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 ;; emacs-racer
-(setq racer-rust-src-path "d:/opt/Rust/rustc-1.12.0/src/")
+(setq racer-rust-src-path "d:/opt/Rust/rustc-1.13.0-src/src/")
 (add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 ;; rust company
