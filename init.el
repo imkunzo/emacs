@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; customize file configuration
-(setq custom-file "~/.emacs.d/customize.el")
+(setq custom-file (expand-file-name "customize.el" user-emacs-directory))
 (load custom-file)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -14,7 +14,7 @@
   (package-refresh-contents))
 ;; default packages
 (defvar default-packages '(company evil evil-leader flycheck flycheck-pos-tip
-  helm hydra linum-relative magit monokai-theme paredit projectile
+  helm linum-relative magit monokai-theme paredit projectile
   rainbow-delimiters yasnippet))
 ;; install default packages
 (mapc #'(lambda (pkg)
@@ -59,7 +59,7 @@
                                           :size 16)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; evil
+;; ;;;; evil
 (require 'evil)
 (evil-mode 1)
 (define-key evil-normal-state-map (kbd ",f") 'projectile-find-file)
@@ -99,29 +99,17 @@
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 (helm-mode t)
-;; hydra define helm-like-unite
-(defhydra helm-like-unite ()
-  "EVIL"
-  ("?" helm-help "help")
-  ("<escape>" keyboard-escape-quit "exit")
-  ("<SPC>" helm-toggle-visible-mark "mark")
-  ("a" helm-toggle-all-marks "(un)mark all")
-  ;; define search
-  ("/" (lambda ()
-         (interactive)
-         (execute-kbd-macro [?\C-s]))
-   "search")
-  ("<tab>" helm-execute-persistent-action "execute")
-  ("v" helm-select-action "action" :color blue)
-  ("g" helm-beginning-of-buffer "top")
-  ("G" helm-end-of-buffer "bottom")
-  ("h" helm-previous-source "previous")
-  ("l" helm-next-source "next")
-  ("j" helm-next-line "down")
-  ("k" helm-previous-line "up")
-  ("i" nil "cancel"))
-;; to escape
-(define-key helm-map (kbd "<escape>") 'helm-like-unite/body)
+;; Add vim-like movement to Helm
+(define-key helm-map (kbd "C-j") 'helm-next-line)
+(define-key helm-map (kbd "C-k") 'helm-previous-line)
+(define-key helm-map (kbd "C-h") 'helm-next-source)
+(define-key helm-map (kbd "C-S-h") 'describe-key)
+(define-key helm-map (kbd "C-l") (kbd "RET"))
+(define-key helm-map [escape] 'helm-keyboard-quit)
+(dolist (keymap (list helm-find-files-map helm-read-file-map))
+  (define-key keymap (kbd "C-l") 'helm-execute-persistent-action)
+  (define-key keymap (kbd "C-h") 'helm-find-files-up-one-level)
+  (define-key keymap (kbd "C-S-h") 'describe-key))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; paredit
@@ -169,7 +157,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Rust IDE
-(defvar rust-ide-packages '(cargo flycheck-rust racer rust-mode rustfmt))
+(defvar rust-ide-packages '(cargo company-racer flycheck-rust racer rust-mode rustfmt))
 ;;; install rust ide packages
 (mapc #'(lambda (pkg)
           (unless (package-installed-p pkg)
@@ -181,7 +169,7 @@
 ;; flycheck-rust
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 ;; emacs-racer
-(setq racer-rust-src-path "d:/opt/Rust/rustc-1.13.0-src/src/")
+;; (setq racer-rust-src-path "d:/opt/Rust/rustc-1.13.0-src/src/")
 (add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 ;; rust company
@@ -189,3 +177,29 @@
 (setq company-tooltip-align-annotations t)
 ;; cargo
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Clojure IDE
+(defvar clojure-ide-packages '(cider
+                               clj-refactor
+                               clojure-cheatsheet
+                               clojure-mode
+                               flycheck-clojure))
+;;; install clojure ide packages
+(mapc #'(lambda (pkg)
+          (unless (package-installed-p pkg)
+            (package-install pkg)))
+      clojure-ide-packages)
+;;; config clojure ide
+;; eldoc setting for clojure
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+(add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
+;; paredit setting for clojure
+(add-hook 'cider-mode-hook #'enable-paredit-mode)
+(add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
+(add-hook 'clojure-mode-hook #'enable-paredit-mode)
+;; rainbow-delimiters setting for clojure
+(add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
+;; flycheck setting for clojure
+(add-hook 'clojure-mode-hook #'flycheck-mode)
+(eval-after-load 'flycheck '(flycheck-clojure-setup))
