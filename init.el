@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; customize file configuration
 (setq custom-file (expand-file-name "customize.el" user-emacs-directory))
-(load custom-file)
+(load custom-file 'noerror)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; ELPA
@@ -14,7 +14,7 @@
   (package-refresh-contents))
 ;; default packages
 (defvar default-packages '(company evil evil-leader flycheck flycheck-pos-tip
-  helm linum-relative magit monokai-theme paredit projectile
+  helm magit monokai-theme nlinum-relative paredit projectile
   rainbow-delimiters yasnippet))
 ;; install default packages
 (mapc #'(lambda (pkg)
@@ -22,6 +22,9 @@
             (package-install pkg)))
       default-packages)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; My packages
+(add-to-list 'load-path (expand-file-name "mypackages/" user-emacs-directory))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; basic environment
 (when (eq system-type 'windows-nt)
@@ -41,11 +44,13 @@
 ;;; rainbow delimiters mode
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-;;; linum-relative
-(require 'linum-relative)
-(setq linum-relative-current-symbol "")
-(setq linum-relative-format "%3s \u2502")
-(linum-relative-global-mode)
+;;; nlinum-relative
+(when (require 'nlinum-relative nil :no-error)
+  (nlinum-relative-setup-evil) ;; setup for evil
+  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+  (setq nlinum-relative-redisplay-delay 0) ;; delay
+  (setq nlinum-relative-current-symbol "->") ;; or "" for display current line number
+  (setq nlinum-relative-offset 0)) ;; 1 if you want 0, 2, 3...
 ;;; Fonts configuration
 ;; Setting english font
 (set-face-attribute
@@ -57,6 +62,9 @@
                                charset
                                (font-spec :family "Microsoft YaHei"
                                           :size 16)))))
+;;; long lines
+(when (require 'so-long nil :no-error)
+  (so-long-enable))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;; evil
@@ -125,7 +133,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; magit
 (when (eq system-type 'windows-nt)
-  (setq magit-git-executable "d:/opt/Git/bin/git.exe"))
+  (setq magit-git-executable "d:/opt/msys2/usr/bin/git.exe"))
 (global-magit-file-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -157,7 +165,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Rust IDE
-(defvar rust-ide-packages '(cargo company-racer flycheck-rust racer rust-mode rustfmt))
+(defvar rust-ide-packages '(cargo company-racer flycheck-rust racer rust-mode))
 ;;; install rust ide packages
 (mapc #'(lambda (pkg)
           (unless (package-installed-p pkg)
@@ -166,22 +174,25 @@
 ;;; config rust ide
 ;; rust-mode
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(add-hook 'rust-mode-hook #'flycheck-mode)
+(add-hook 'rust-mode-hook #'racer-mode)
 ;; flycheck-rust
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+(eval-after-load 'flycheck '(flycheck-rust-setup))
 ;; emacs-racer
 ;; (setq racer-rust-src-path "d:/opt/Rust/rustc-1.13.0-src/src/")
-(add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 ;; rust company
 (add-hook 'racer-mode-hook #'company-mode)
 (setq company-tooltip-align-annotations t)
 ;; cargo
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
+(add-hook 'cargo-process-mode-hook (lambda ()
+                                     (setq truncate-lines nil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Clojure IDE
 (defvar clojure-ide-packages '(cider
-                               clj-refactor
                                clojure-cheatsheet
                                clojure-mode
                                flycheck-clojure))
