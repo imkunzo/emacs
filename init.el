@@ -25,6 +25,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; My packages
 (add-to-list 'load-path (expand-file-name "mypackages/" user-emacs-directory))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; basic environment
 (when (eq system-type 'windows-nt)
@@ -58,7 +59,7 @@
       nil t))
 ;;
 (defun make-font-string (font-name font-size)
-  (if (and (stringp font-size) 
+  (if (and (stringp font-size)
            (equal ":" (string (elt font-size 0))))
       (format "%s%s" font-name font-size)
     (format "%s %s" font-name font-size)))
@@ -67,7 +68,7 @@
                  english-font-size
                  chinese-fonts
                  &optional chinese-font-size)
-  "english-font-size could be set to \":pixelsize=18\" or a integer. 
+  "english-font-size could be set to \":pixelsize=18\" or a integer.
   If set/leave chinese-font-size to nil, it will follow english-font-size"
   (require 'cl)
   (let ((en-font (make-font-string
@@ -83,7 +84,7 @@
     (message "Set English Font to %s" en-font)
     (set-face-attribute
      'default nil :font en-font)
-    ;; Set Chinese font 
+    ;; Set Chinese font
     ;; Do not use 'unicode charset, it will cause the english font setting invalid
     (message "Set Chinese Font to %s" zh-font)
     (dolist (charset '(kana han symbol cjk-misc bopomofo))
