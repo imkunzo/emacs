@@ -4,6 +4,15 @@
 (load custom-file 'noerror)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; My functions
+(defun pre-install-packages (pkgs)
+  (let ((packages pkgs))
+    (mapc #'(lambda (pkg)
+              (unless (package-installed-p pkg)
+                (package-install pkg)))
+          packages)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; ELPA
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -13,14 +22,10 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 ;; default packages
-(defvar default-packages '(company evil evil-leader evil-tabs flycheck flycheck-pos-tip
-  helm magit monokai-theme nlinum-relative paredit powerline powerline-evil projectile
-  rainbow-delimiters yasnippet zenburn-theme))
-;; install default packages
-(mapc #'(lambda (pkg)
-          (unless (package-installed-p pkg)
-            (package-install pkg)))
-      default-packages)
+(pre-install-packages '(company evil evil-leader evil-tabs flycheck
+                                flycheck-pos-tip helm magit monokai-theme
+                                nlinum-relative paredit powerline powerline-evil
+                                projectile rainbow-delimiters yasnippet))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; My packages
@@ -90,14 +95,24 @@
   (global-evil-leader-mode)
   ;; (evil-leader/set-leader ",")
   (evil-leader/set-key
+    ;; appearance
+    "mb" 'toggle-menu-bar-mode-from-frame
+    ;; helm
     "x" 'helm-M-x
     "f" 'helm-find-files
     "b" 'helm-buffers-list
     "k" 'kill-buffer
     "y" 'helm-show-kill-ring
+    ;; projectile
     "pf" 'project-find-file
-    "mb" 'toggle-menu-bar-mode-from-frame
-    "gt" 'elscreen-goto))
+    ;; evil-tabs
+    "gt" 'elscreen-goto
+    ;; magit
+    "mgs" 'magit-status
+    "mgc" 'magit-commit
+    "mgt" 'magit-push
+    "mgl" 'magit-pull
+    ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; powerline
@@ -178,12 +193,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Rust IDE
-(defvar rust-ide-packages '(cargo company-racer flycheck-rust racer rust-mode))
 ;;; install rust ide packages
-(mapc #'(lambda (pkg)
-          (unless (package-installed-p pkg)
-            (package-install pkg)))
-      rust-ide-packages)
+(pre-install-packages '(cargo company-racer flycheck-rust racer rust-mode))
 ;;; config rust ide
 ;; rust-mode
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
@@ -205,15 +216,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Clojure IDE
-(defvar clojure-ide-packages '(cider
-                               clojure-cheatsheet
-                               clojure-mode
-                               flycheck-clojure))
 ;;; install clojure ide packages
-(mapc #'(lambda (pkg)
-          (unless (package-installed-p pkg)
-            (package-install pkg)))
-      clojure-ide-packages)
+(pre-install-packages '(cider clojure-cheatsheet clojure-mode flycheck-clojure))
 ;;; config clojure ide
 ;; eldoc setting for clojure
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
@@ -227,3 +231,8 @@
 ;; flycheck setting for clojure
 (add-hook 'clojure-mode-hook #'flycheck-mode)
 (eval-after-load 'flycheck '(flycheck-clojure-setup))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; python IDE
+;;; install python ide packages
+(pre-install-packages '(elpy anaconda-mode company-anaconda))
