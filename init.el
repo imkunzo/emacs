@@ -13,8 +13,8 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 ;; default packages
-(defvar default-packages '(company evil evil-leader flycheck flycheck-pos-tip
-  helm magit monokai-theme nlinum-relative paredit projectile
+(defvar default-packages '(company evil evil-leader evil-tabs flycheck flycheck-pos-tip
+  helm magit monokai-theme nlinum-relative paredit powerline powerline-evil projectile
   rainbow-delimiters yasnippet zenburn-theme))
 ;; install default packages
 (mapc #'(lambda (pkg)
@@ -41,8 +41,8 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 ;;; color theme
-;; (load-theme 'monokai t)
-(load-theme 'zenburn t)
+(load-theme 'monokai t)
+;; (load-theme 'zenburn t)
 ;;; rainbow delimiters mode
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
@@ -51,41 +51,59 @@
   (nlinum-relative-setup-evil) ;; setup for evil
   (add-hook 'prog-mode-hook 'nlinum-relative-mode)
   (setq nlinum-relative-redisplay-delay 0) ;; delay
-  (setq nlinum-relative-current-symbol "->") ;; or "" for display current line number
+  (setq nlinum-relative-current-symbol "") ;; or "" for display current line number
   (setq nlinum-relative-offset 0)) ;; 1 if you want 0, 2, 3...
 
 (when (window-system)
   (require 'init-gui-fonts nil :no-error))
  
 ;;; long lines
-(when (require 'so-long nil :no-error)
-  (so-long-enable))
+;; (when (require 'so-long nil :no-error)
+;;   (so-long-enable))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;;; evil
-(require 'evil)
-(evil-mode 1)
-(define-key evil-normal-state-map (kbd ",f") 'projectile-find-file)
-(define-key evil-normal-state-map (kbd ",,") 'evil-buffer)
-(define-key evil-normal-state-map (kbd "q") nil)
-;;
-(define-key evil-insert-state-map (kbd "C-e") nil)
-(define-key evil-insert-state-map (kbd "C-d") nil)
-(define-key evil-insert-state-map (kbd "C-k") nil)
-(define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-;; (define-key evil-visual-state-map (kbd "C-c") 'evil-normal-state)
-;;
-(define-key evil-motion-state-map (kbd "C-e") nil)
-(define-key evil-visual-state-map (kbd "C-c") 'evil-exit-visual-state)
+;;;; evil
+(when (require 'evil nil :no-error)
+  (require 'evil)
+  (evil-mode 1)
+  ;; (define-key evil-normal-state-map (kbd ",f") 'projectile-find-file)
+  ;; (define-key evil-normal-state-map (kbd ",,") 'evil-buffer)
+  (define-key evil-normal-state-map (kbd "q") nil)
+  ;;
+  (define-key evil-insert-state-map (kbd "C-e") nil)
+  (define-key evil-insert-state-map (kbd "C-d") nil)
+  (define-key evil-insert-state-map (kbd "C-k") nil)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  ;; (define-key evil-visual-state-map (kbd "C-c") 'evil-normal-state)
+  ;;
+  (define-key evil-motion-state-map (kbd "C-e") nil)
+  (define-key evil-visual-state-map (kbd "C-c") 'evil-exit-visual-state))
+;;; evil tab
+(when (require 'evil-tabs nil :no-error)
+  (global-evil-tabs-mode)
+  (evil-define-key 'normal evil-tabs-mode-map
+    "gnt" 'elscreen-create
+    "gkt" 'elscreen-kill))
 ;;; evil leader
-(global-evil-leader-mode)
-;; (evil-leader/set-leader ",")
-(evil-leader/set-key
- "x" 'helm-M-x
- "f" 'helm-find-files
- "b" 'helm-buffers-list
- "k" 'kill-buffer
- "y" 'helm-show-kill-ring)
+(when (require 'evil-leader nil :no-error)
+  (setq evil-leader/in-all-states t)
+  (global-evil-leader-mode)
+  ;; (evil-leader/set-leader ",")
+  (evil-leader/set-key
+    "x" 'helm-M-x
+    "f" 'helm-find-files
+    "b" 'helm-buffers-list
+    "k" 'kill-buffer
+    "y" 'helm-show-kill-ring
+    "pf" 'project-find-file
+    "mb" 'toggle-menu-bar-mode-from-frame
+    "gt" 'elscreen-goto))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; powerline
+(when (require 'powerline nil :no-error)
+  (powerline-evil-vim-color-theme)
+  (display-time-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; helm

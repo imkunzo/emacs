@@ -7,9 +7,10 @@
  '(global-font-lock-mode t)
  '(inhibit-startup-screen t)
  '(make-backup-files nil)
+ '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (helm flycheck-pos-tip flycheck flycheck-clojure clojure-cheatsheet cider racer flycheck-rust company-racer cargo company)))
+    (evil-tab helm flycheck-pos-tip flycheck flycheck-clojure clojure-cheatsheet cider racer flycheck-rust company-racer cargo company)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
