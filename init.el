@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; customize file configuration
+;;;; config customize
 (setq custom-file (expand-file-name "customize.el" user-emacs-directory))
 (load custom-file 'noerror)
 
@@ -22,14 +22,13 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 ;; default packages
-(pre-install-packages '(company evil evil-leader evil-tabs flycheck
-                                flycheck-pos-tip helm magit monokai-theme
+(pre-install-packages '(company flycheck flycheck-pos-tip helm helm-tramp magit monokai-theme
                                 nlinum-relative paredit powerline powerline-evil
                                 projectile rainbow-delimiters yasnippet))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; My packages
-(add-to-list 'load-path (expand-file-name "init-el/" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "init-el" user-emacs-directory))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; basic environment
@@ -38,7 +37,7 @@
   (setq default-directory "~/"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; appearance configuration
+;;;; appearance
 ;;; default encoding
 (setq default-buffer-file-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
@@ -58,16 +57,15 @@
   (setq nlinum-relative-redisplay-delay 0) ;; delay
   (setq nlinum-relative-current-symbol "") ;; or "" for display current line number
   (setq nlinum-relative-offset 0)) ;; 1 if you want 0, 2, 3...
-
+;; config gui fonts
 (when (window-system)
   (require 'init-gui-fonts nil :no-error))
  
-;;; long lines
-;; (when (require 'so-long nil :no-error)
-;;   (so-long-enable))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; evil
+;;; install evil packages
+(pre-install-packages '(evil evil-leader evil-tabs))
+;;; evil configuration
 (when (require 'evil nil :no-error)
   (require 'evil)
   (evil-mode 1)
@@ -111,8 +109,7 @@
     "mgs" 'magit-status
     "mgc" 'magit-commit
     "mgt" 'magit-push
-    "mgl" 'magit-pull
-    ))
+    "mgl" 'magit-pull))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; powerline
@@ -125,7 +122,7 @@
 (require 'helm)
 (require 'helm-config)
 ;;
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 ;;
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
@@ -183,13 +180,13 @@
 (add-hook 'org-mode-hook #'yas-minor-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; company mode basic configuration
+;;;; config company mode
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; flycheck basic configuration
-(require 'flycheck)
-(with-eval-after-load 'flycheck (flycheck-pos-tip-mode))
+;;;; config flycheck
+(when (require 'flycheck nil :noerror)
+  (with-eval-after-load 'flycheck (flycheck-pos-tip-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Rust IDE
@@ -236,3 +233,13 @@
 ;;;; python IDE
 ;;; install python ide packages
 (pre-install-packages '(elpy anaconda-mode company-anaconda))
+;;; config python ide
+(elpy-enable)
+;; pyvenv
+(when (require 'pyvenv nil :noerror)
+  (cond
+   ;; python virtualenv workon directory
+   ((or (eq system-type 'gnu/linux) (eq system-type 'darwin))
+    (setenv "WORKON_HOME" (expand-file-name "opt/python-venv" (getenv "HOME"))))
+   ((eq system-type 'windwos-nt)
+    (setenv "WORKON_HOME" "D:/opt/Python/venv"))))

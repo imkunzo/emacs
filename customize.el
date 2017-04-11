@@ -10,7 +10,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (company-anaconda anaconda-mode elpy evil-tab helm flycheck-pos-tip flycheck flycheck-clojure clojure-cheatsheet cider racer flycheck-rust company-racer cargo company)))
+    (virtualenvwrapper rainbow-delimiters racer projectile powerline-evil paredit nlinum-relative monokai-theme magit flycheck-rust flycheck-pos-tip flycheck-clojure evil-tabs evil-leader elpy company-racer company-anaconda clojure-cheatsheet cargo)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
