@@ -10,7 +10,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (virtualenvwrapper rainbow-delimiters racer projectile powerline-evil paredit nlinum-relative monokai-theme magit flycheck-rust flycheck-pos-tip flycheck-clojure evil-tabs evil-leader elpy company-racer company-anaconda clojure-cheatsheet cargo)))
+    (flycheck-ycmd company-ycmd ycmd emacs-ycmd flycheck-pyflakes company-quickhelp virtualenvwrapper rainbow-delimiters racer projectile powerline-evil paredit nlinum-relative monokai-theme magit flycheck-rust flycheck-pos-tip flycheck-clojure evil-tabs evil-leader elpy company-racer company-anaconda clojure-cheatsheet cargo)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
