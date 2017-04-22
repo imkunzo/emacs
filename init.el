@@ -22,7 +22,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 ;; default packages
-(pre-install-packages '(company company-quickhelp flycheck flycheck-pos-tip helm helm-tramp magit
+(pre-install-packages '(company company-quickhelp fcitx flycheck flycheck-pos-tip helm helm-tramp magit
                                 monokai-theme nlinum-relative paredit powerline
                                 powerline-evil projectile rainbow-delimiters yasnippet))
 
@@ -154,6 +154,23 @@
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook #'enable-paredit-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; fcitx
+(when (eq system-type 'gnu/linux)
+  (when (require 'fcitx nil :noerror)
+    (fcitx-aggressive-setup)
+    (setq fcitx-use-dbus t)
+    (setq fcitx-active-evil-states '(insert emacs hybrid))
+	;; auto turn off fcitx when "M-x"
+	(fcitx-M-x-turn-on)
+	;; auto turn off fcitx when "M-!"
+	(fcitx-shell-command-turn-on)
+	;; auto turn off fcitx when "M-:"
+	(fcitx-eval-expression-turn-on)
+	;; auto turn off fcitx with prefix keys
+	(fcitx-prefix-keys-add "C-x" "C-c" "C-h" "M-s" "M-o")
+    (fcitx-prefix-keys-turn-on)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; magit
