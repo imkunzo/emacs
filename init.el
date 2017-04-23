@@ -4,7 +4,16 @@
 (load custom-file 'noerror)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; My functions
+;;;; My define
+(defvar my-home-dir (getenv "HOME"))
+(when (eq system-type 'gnu/linux)
+  (defvar my-ycmd-dir (expand-file-name
+                       ".vim/vimfiles/plugin/youcompleteme/third_party/ycmd"
+                       my-home-dir))
+  (defvar my-rust-src-dir (expand-file-name
+                           ".rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"
+                           my-home-dir)))
+;;
 (defun pre-install-packages (pkgs)
   (let ((packages pkgs))
     (mapc #'(lambda (pkg)
@@ -198,12 +207,14 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; config company mode
-;; (add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'after-init-hook 'global-company-mode)
 (eval-after-load 'company
   '(define-key company-active-map
      (kbd "C-c h") #'company-quickhelp-manual-begin))
 (setq company-minimum-prefix-length 1)
 (setq company-idle-delay 0.5)
+;; (add-hook 'lisp-mode-hook #'company-mode)
+;; (add-hook 'emacs-lisp-mode-hook #'company-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; config flycheck
@@ -213,35 +224,43 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; config ycmd
 (pre-install-packages '(ycmd company-ycmd flycheck-ycmd))
-(when (require 'ycmd nil :noerror)
-  (set-variable 'ycmd-server-command '("python" "~/opt/ycmd/ycmd"))
-  (set-variable 'ycmd-global-config "/home/.ycm_extra_conf.py")
-  (company-ycmd-setup))
+(when (and (require 'ycmd nil :noerror)
+		   (require 'company-ycmd nil :noerror)
+		   (require 'flycheck-ycmd))
+  (set-variable 'ycmd-server-command
+                `("python" ,(expand-file-name "ycmd" my-ycmd-dir)))
+  ;; (set-variable 'ycmd-global-config
+  ;;               (expand-file-name "dotfiles/ycmd/ycm_extra_conf.py"
+  ;;                                 my-home-dir))
+  ;; ycmd for company
+  (company-ycmd-setup)
+  ;; ycmd for flycheck
+  (flycheck-ycmd-setup)
+  (when (not (display-graphic-p))
+	(setq flycheck-indication-mode nil))
+  ;; ycmd for eldoc
+  (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Rust IDE
 ;;; install rust ide packages
-(pre-install-packages '(cargo company-racer flycheck-rust racer rust-mode))
+(pre-install-packages '(cargo flycheck-rust rust-mode))
 ;;; config rust ide
 ;; rust-mode
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 (add-hook 'rust-mode-hook #'flycheck-mode)
-(add-hook 'rust-mode-hook #'racer-mode)
 ;; flycheck-rust
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-;; emacs-racer
-;; (setq racer-rust-src-path "d:/opt/Rust/rustc-1.13.0-src/src/")
-(add-hook 'racer-mode-hook #'eldoc-mode)
-;; rust company
-(add-hook 'racer-mode-hook #'company-mode)
-(setq company-tooltip-align-annotations t)
-;; company racer
-(with-eval-after-load 'company
-      (add-to-list 'company-backends 'company-racer))
 ;; cargo
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
 (add-hook 'cargo-process-mode-hook (lambda ()
                                      (setq truncate-lines nil)))
+;; ycmd
+(setq ycmd-rust-src-path my-rust-src-dir)
+(setq ycmd-racerd-binary-path
+        (expand-file-name "third_party/racerd/target/release/racerd"
+                          my-ycmd-dir))
+(add-hook 'rust-mode-hook 'ycmd-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Clojure IDE
@@ -264,7 +283,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; python IDE
 ;;; install python ide packages
-(pre-install-packages '(elpy anaconda-mode company-anaconda flycheck-pyflakes))
+(pre-install-packages '(elpy py-autopep8))
 ;; python indent
 (add-hook 'python-mode-hook
 	      (lambda ()
@@ -292,10 +311,9 @@
     (setenv "WORKON_HOME" (expand-file-name "opt/python-venv" (getenv "HOME"))))
    ((eq system-type 'windwos-nt)
     (setenv "WORKON_HOME" "D:/opt/Python/venv"))))
-;; anaconda
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 ;; flycheck
-(add-hook 'python-mode-hook 'flycheck-mode)
+(add-hook 'python-mode-hook #'flycheck-mode)
+;; py-autopep8
+(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 ;; ycmd
 (add-hook 'python-mode-hook 'ycmd-mode)
