@@ -4,26 +4,15 @@
 (load custom-file 'noerror)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; My define
-(defvar my-home-dir (getenv "HOME"))
-(when (eq system-type 'gnu/linux)
-  (defvar my-ycmd-dir (expand-file-name
-                       ".vim/vimfiles/plugin/youcompleteme/third_party/ycmd"
-                       my-home-dir))
-  (defvar my-rust-src-dir (expand-file-name
-                           ".rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"
-                           my-home-dir)))
-;;
-(defun pre-install-packages (pkgs)
-  (let ((packages pkgs))
-    (mapc #'(lambda (pkg)
-              (unless (package-installed-p pkg)
-                (package-install pkg)))
-          packages)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; ELPA
-(require 'package)
+(when (require 'package nil :noerror)
+  (defun pre-install-packages (pkgs)
+    (let ((packages pkgs))
+      (mapc #'(lambda (pkg)
+                (unless (package-installed-p pkg)
+                  (package-install pkg)))
+            packages))))
+;;
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
@@ -31,8 +20,8 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 ;; default packages
-(pre-install-packages '(company company-quickhelp fcitx flycheck flycheck-pos-tip helm helm-tramp magit
-                                monokai-theme nlinum-relative paredit powerline
+(pre-install-packages '(company company-quickhelp fcitx flycheck flycheck-pos-tip helm helm-tramp
+                                linum-relative magit monokai-theme paredit powerline
                                 powerline-evil projectile rainbow-delimiters yasnippet))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -60,7 +49,7 @@
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 ;;; nlinum-relative
-(when (require 'nlinum-relative nil :no-error)
+(when (require 'nlinum-relative nil :noerror)
   (nlinum-relative-setup-evil) ;; setup for evil
   (add-hook 'prog-mode-hook 'nlinum-relative-mode)
   (setq nlinum-relative-redisplay-delay 0) ;; delay
@@ -222,45 +211,28 @@
   (with-eval-after-load 'flycheck (flycheck-pos-tip-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; config ycmd
-(pre-install-packages '(ycmd company-ycmd flycheck-ycmd))
-(when (and (require 'ycmd nil :noerror)
-		   (require 'company-ycmd nil :noerror)
-		   (require 'flycheck-ycmd))
-  (set-variable 'ycmd-server-command
-                `("python" ,(expand-file-name "ycmd" my-ycmd-dir)))
-  ;; (set-variable 'ycmd-global-config
-  ;;               (expand-file-name "dotfiles/ycmd/ycm_extra_conf.py"
-  ;;                                 my-home-dir))
-  ;; ycmd for company
-  (company-ycmd-setup)
-  ;; ycmd for flycheck
-  (flycheck-ycmd-setup)
-  (when (not (display-graphic-p))
-	(setq flycheck-indication-mode nil))
-  ;; ycmd for eldoc
-  (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Rust IDE
 ;;; install rust ide packages
-(pre-install-packages '(cargo flycheck-rust rust-mode))
+(pre-install-packages '(cargo company-racer flycheck-rust racer rust-mode))
 ;;; config rust ide
 ;; rust-mode
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 (add-hook 'rust-mode-hook #'flycheck-mode)
-;; flycheck-rust
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 ;; cargo
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
 (add-hook 'cargo-process-mode-hook (lambda ()
                                      (setq truncate-lines nil)))
-;; ycmd
-(setq ycmd-rust-src-path my-rust-src-dir)
-(setq ycmd-racerd-binary-path
-        (expand-file-name "third_party/racerd/target/release/racerd"
-                          my-ycmd-dir))
-(add-hook 'rust-mode-hook 'ycmd-mode)
+;; racer
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+;; flycheck-rust
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+;; rust key binding
+(add-hook 'rust-mode-hook
+          (lambda ()
+            (define-key rust-mode-map (kbd "C-c <tab>") #'rust-format-buffer)
+            (define-key rust-mode-map (kbd "M-.") #'racer-find-definition)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Clojure IDE
@@ -283,7 +255,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; python IDE
 ;;; install python ide packages
-(pre-install-packages '(elpy py-autopep8))
+(pre-install-packages '(anaconda-mode company-anaconda elpy py-autopep8))
 ;; python indent
 (add-hook 'python-mode-hook
 	      (lambda ()
@@ -292,17 +264,9 @@
 		    (setq-default py-indent-tabs-mode t)
 			(setq-default python-indent-offset 4)
 	        (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
-(with-eval-after-load 'python
-  (defun python-shell-completion-native-try ()
-    "Return non-nil if can trigger native completion."
-    (let ((python-shell-completion-native-enable t)
-          (python-shell-completion-native-output-timeout
-           python-shell-completion-native-try-output-timeout))
-      (python-shell-completion-native-get-completions
-       (get-buffer-process (current-buffer))
-       nil "_"))))
 ;;; config python ide
 (elpy-enable)
+(setq python-shell-completion-native-enable nil)
 ;; pyvenv
 (when (require 'pyvenv nil :noerror)
   (cond
@@ -311,9 +275,13 @@
     (setenv "WORKON_HOME" (expand-file-name "opt/python-venv" (getenv "HOME"))))
    ((eq system-type 'windwos-nt)
     (setenv "WORKON_HOME" "D:/opt/Python/venv"))))
+;; anaconda
+(add-hook 'python-mode-hook #'anaconda-mode)
+(add-hook 'python-mode-hook #'anaconda-eldoc-mode)
 ;; flycheck
 (add-hook 'python-mode-hook #'flycheck-mode)
 ;; py-autopep8
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
-;; ycmd
-(add-hook 'python-mode-hook 'ycmd-mode)
+;; company
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-anaconda))

@@ -37,7 +37,7 @@
       zh-font))))
 ;; setup default fonts
 (set-font
- '("Monaco" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") ":pixelsize=16"
+ '("mononoki Nerd Font" "Monaco" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") ":pixelsize=18"
  '("WenQuanYi Micro Hei Mono" "Microsoft Yahei"))
  
 (provide 'init-gui-fonts)
