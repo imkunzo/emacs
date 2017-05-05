@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; config customize
-(setq custom-file (expand-file-name "customize.el" user-emacs-directory))
+(setq custom-file (expand-file-name "els/customize.el" user-emacs-directory))
 (load custom-file 'noerror)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -20,13 +20,15 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 ;; default packages
-(pre-install-packages '(company company-quickhelp fcitx flycheck flycheck-pos-tip helm helm-tramp
-                                linum-relative magit monokai-theme paredit powerline
-                                powerline-evil projectile rainbow-delimiters yasnippet))
+(pre-install-packages '(company company-quickhelp fcitx flycheck
+                                flycheck-pos-tip helm helm-tramp
+                                linum-relative magit monokai-theme
+                                paredit powerline powerline-evil
+                                projectile rainbow-delimiters yasnippet))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; My packages
-(add-to-list 'load-path (expand-file-name "init-el" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "els" user-emacs-directory))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; basic environment
@@ -58,6 +60,8 @@
 ;; config gui fonts
 (when (window-system)
   (require 'init-gui-fonts nil :no-error))
+;; set default split
+(setq split-width-threshold nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; evil
@@ -89,7 +93,6 @@
 (when (require 'evil-leader nil :no-error)
   (setq evil-leader/in-all-states t)
   (global-evil-leader-mode)
-  ;; (evil-leader/set-leader ",")
   (evil-leader/set-key
     ;; appearance
     "mb" 'toggle-menu-bar-mode-from-frame
@@ -111,7 +114,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; powerline
-(when (require 'powerline nil :no-error)
+(when (require 'powerline nil :noerror)
   (powerline-evil-vim-color-theme)
   (display-time-mode t))
 
@@ -119,8 +122,6 @@
 ;;;; helm
 (require 'helm)
 (require 'helm-config)
-;;
-;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 ;;
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
@@ -167,7 +168,7 @@
 	;; auto turn off fcitx when "M-:"
 	(fcitx-eval-expression-turn-on)
 	;; auto turn off fcitx with prefix keys
-	(fcitx-prefix-keys-add "C-x" "C-c" "C-h" "M-s" "M-o")
+	(fcitx-prefix-keys-add "C-c" "C-h" "C-s" "C-x" "M-s" "M-o")
     (fcitx-prefix-keys-turn-on)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -202,8 +203,6 @@
      (kbd "C-c h") #'company-quickhelp-manual-begin))
 (setq company-minimum-prefix-length 1)
 (setq company-idle-delay 0.5)
-;; (add-hook 'lisp-mode-hook #'company-mode)
-;; (add-hook 'emacs-lisp-mode-hook #'company-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; config flycheck
@@ -255,7 +254,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; python IDE
 ;;; install python ide packages
-(pre-install-packages '(anaconda-mode company-anaconda elpy py-autopep8))
+(pre-install-packages '(anaconda-mode company-anaconda elpy py-yapf))
 ;; python indent
 (add-hook 'python-mode-hook
 	      (lambda ()
@@ -281,7 +280,9 @@
 ;; flycheck
 (add-hook 'python-mode-hook #'flycheck-mode)
 ;; py-autopep8
-(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
 ;; company
 (eval-after-load 'company
   '(add-to-list 'company-backends 'company-anaconda))
+;; python inferior completion
+(add-hook 'inferior-python-mode-hook #'company-mode)
