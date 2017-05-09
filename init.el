@@ -20,11 +20,13 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 ;; default packages
-(pre-install-packages '(company company-quickhelp fcitx flycheck
+(pre-install-packages '(company company-quickhelp exec-path-from-shell
+                                fcitx flycheck
                                 flycheck-pos-tip helm helm-tramp
-                                linum-relative magit monokai-theme
+                                nlinum-relative magit monokai-theme
                                 paredit powerline powerline-evil
-                                projectile rainbow-delimiters yasnippet))
+                                projectile rainbow-delimiters which-key
+                                yasnippet))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; My packages
@@ -35,6 +37,11 @@
 (when (eq system-type 'windows-nt)
   (setq tramp-default-method "plink")
   (setq default-directory "~/"))
+;;
+(when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
+  (setq tramp-default-method "ssh")
+  (setq shell-file-name "/bin/zsh")
+  (exec-path-from-shell-initialize))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; appearance
@@ -208,6 +215,41 @@
 ;;;; config flycheck
 (when (require 'flycheck nil :noerror)
   (with-eval-after-load 'flycheck (flycheck-pos-tip-mode)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; org mode
+;; auto insert header
+(defun my/org-file-header ()
+  "Insert header on new org mode file"
+  (insert "#+TITLE: \n
+#+AUTHOR: Zack.Li
+#+CATEGORY: \n
+#+DATE: \n
+#+OPTIONS: toc:t ^:{} f:t \n
+#+STARTUP indent \n
+")
+  (org-mode-restart))
+(define-auto-insert "\\.org$" #'my/org-file-header)
+;; key binding
+(define-key global-map "\C-cc" 'org-capture)
+;; capture templates
+(setq org-capture-templates
+     '(("j" "Journal" entry (file+datetree "~/Org/journal.org")
+        "* %?\n Entered On: %U\n %i\n %a"
+        :empty-lines 1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; iimage mode
+(when (require 'iimage nil :noerror)
+  (autoload 'iimage-mode "iimage" "Support Inline image minor mode." t)
+  (autoload 'turn-on-iimage-mode "iimage" "Turn on Inline image minor mode." t)
+  (defun org-toggle-iimage-in-org ()
+    "display images in your org file"
+    (interactive)
+    (if (face-underline-p 'org-link)
+        (set-face-underline-p 'org-link nil)
+      (set-face-underline-p 'org-link t))
+    (iimage-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Rust IDE

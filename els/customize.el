@@ -10,10 +10,9 @@
  '(global-font-lock-mode t)
  '(inhibit-startup-screen t)
  '(make-backup-files nil)
- '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (airline-theme py-yapf company-anaconda anaconda-mode racer company-racer flycheck-rust helm-tramp py-autopep8 fcitx ycmd emacs-ycmd company-quickhelp virtualenvwrapper rainbow-delimiters projectile powerline-evil paredit nlinum-relative monokai-theme magit flycheck-pos-tip flycheck-clojure evil-tabs evil-leader elpy clojure-cheatsheet cargo)))
+    (cider airline-theme py-yapf company-anaconda anaconda-mode racer company-racer flycheck-rust helm-tramp py-autopep8 fcitx ycmd emacs-ycmd company-quickhelp virtualenvwrapper rainbow-delimiters projectile powerline-evil paredit nlinum-relative monokai-theme magit flycheck-pos-tip flycheck-clojure evil-tabs evil-leader elpy clojure-cheatsheet cargo)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
