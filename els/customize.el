@@ -12,7 +12,7 @@
  '(make-backup-files nil)
  '(package-selected-packages
    (quote
-    (cider airline-theme py-yapf company-anaconda anaconda-mode racer company-racer flycheck-rust helm-tramp py-autopep8 fcitx ycmd emacs-ycmd company-quickhelp virtualenvwrapper rainbow-delimiters projectile powerline-evil paredit nlinum-relative monokai-theme magit flycheck-pos-tip flycheck-clojure evil-tabs evil-leader elpy clojure-cheatsheet cargo)))
+    (org-gcal calfw emacs-calfw cider airline-theme py-yapf company-anaconda anaconda-mode racer company-racer flycheck-rust helm-tramp py-autopep8 fcitx ycmd emacs-ycmd company-quickhelp virtualenvwrapper rainbow-delimiters projectile powerline-evil paredit nlinum-relative monokai-theme magit flycheck-pos-tip flycheck-clojure evil-tabs evil-leader elpy clojure-cheatsheet cargo)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

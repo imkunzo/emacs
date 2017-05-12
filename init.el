@@ -39,9 +39,32 @@
   (setq default-directory "~/"))
 ;;
 (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
-  (setq tramp-default-method "ssh")
   (setq shell-file-name "/bin/zsh")
   (exec-path-from-shell-initialize))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; insert date and time
+(defvar current-date-format "%F %a")
+;;
+(defvar current-date-time-format "%a %b %d %H:%M:%S %Z %Y")
+;;
+(defvar current-time-format "%a %H:%M:%S")
+;;
+(defun insert-current-date ()
+       (interactive)
+;;       (insert (let () (comment-start)))
+       (insert (format-time-string current-date-format (current-time))))
+(defun insert-current-date-time ()
+       (interactive)
+;;       (insert (let () (comment-start)))
+       (insert (format-time-string current-date-time-format (current-time))))
+;;
+(defun insert-current-time ()
+       (interactive)
+       (insert (format-time-string current-time-format (current-time))))
+;;
+;; (global-set-key (kbd "C-i d") 'insert-current-date-time)
+;; (global-set-key (kbd "C-i t") 'insert-current-time)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; appearance
@@ -64,10 +87,12 @@
   (setq nlinum-relative-redisplay-delay 0) ;; delay
   (setq nlinum-relative-current-symbol "") ;; or "" for display current line number
   (setq nlinum-relative-offset 0)) ;; 1 if you want 0, 2, 3...
-;; config gui fonts
+;;; highlight current line
+(global-hl-line-mode)
+;;; config gui fonts
 (when (window-system)
-  (require 'init-gui-fonts nil :no-error))
-;; set default split
+  (require 'init-gui-fonts nil :noerror))
+;;; set default split
 (setq split-width-threshold nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -194,13 +219,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; yasnippet
-(require 'yasnippet)
-;; (add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets")
-;; (mapc 'yas/load-directory yas-snippet-dirs)
-;; (yas-global-mode 1)
-(yas-reload-all)
-(add-hook 'prog-mode-hook #'yas-minor-mode)
-(add-hook 'org-mode-hook #'yas-minor-mode)
+(when (require 'yasnippet nil :noerror)
+  ;; (add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets/")
+  ;; (mapc 'yas/load-directory yas-snippet-dirs)
+  (yas-global-mode 1)
+  (yas-reload-all))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; config company mode
@@ -234,9 +257,17 @@
 (define-key global-map "\C-cc" 'org-capture)
 ;; capture templates
 (setq org-capture-templates
-     '(("j" "Journal" entry (file+datetree "~/Org/journal.org")
-        "* %?\n Entered On: %U\n %i\n %a"
-        :empty-lines 1)))
+     '(("j" "Journal" entry (file+datetree "~/Dropbox/ORG/journal.org")
+        "* %?\n Entered On: %U\n %i\n %a")))
+;;; org sync with google calendar
+(pre-install-packages '(calfw org-gcal))
+;;
+(when (and (require 'calfw nil :noerror)
+           (require 'calfw-org nil :noerror)
+           (require 'org-gcal nil :noerror))
+  (setq org-gcal-client-id "something.apps.googleusercontent.com"
+      org-gcal-client-secret "something"
+      org-gcal-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/ORG/gcal.org"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; iimage mode
@@ -312,8 +343,10 @@
 (when (require 'pyvenv nil :noerror)
   (cond
    ;; python virtualenv workon directory
-   ((or (eq system-type 'gnu/linux) (eq system-type 'darwin))
-    (setenv "WORKON_HOME" (expand-file-name "opt/python-venv" (getenv "HOME"))))
+   ((or (eq system-type 'gnu/linux)
+        (eq system-type 'darwin))
+    (setenv "WORKON_HOME" (expand-file-name "opt/python-venv"
+                                            (getenv "HOME"))))
    ((eq system-type 'windwos-nt)
     (setenv "WORKON_HOME" "D:/opt/Python/venv"))))
 ;; anaconda
