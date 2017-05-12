@@ -241,18 +241,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; org mode
-;; auto insert header
-(defun my/org-file-header ()
-  "Insert header on new org mode file"
-  (insert "#+TITLE: \n
-#+AUTHOR: Zack.Li
-#+CATEGORY: \n
-#+DATE: \n
-#+OPTIONS: toc:t ^:{} f:t \n
-#+STARTUP indent \n
-")
-  (org-mode-restart))
-(define-auto-insert "\\.org$" #'my/org-file-header)
 ;; key binding
 (define-key global-map "\C-cc" 'org-capture)
 ;; capture templates
@@ -266,8 +254,11 @@
            (require 'calfw-org nil :noerror)
            (require 'org-gcal nil :noerror))
   (setq org-gcal-client-id "something.apps.googleusercontent.com"
-      org-gcal-client-secret "something"
-      org-gcal-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/ORG/gcal.org"))))
+        org-gcal-client-secret "something"
+        org-gcal-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/ORG/gcal.org"))))
+;; org export setting
+(setq org-export-backends '(ascii html icalendar latex md freemind))
+(setq org-export-html-coding-system 'utf-8)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; iimage mode
