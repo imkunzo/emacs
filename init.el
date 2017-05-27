@@ -28,10 +28,17 @@
 (require 'init-site-lisp)
 (require 'init-elpa)
 
+;;; config gui fonts
+(when (window-system)
+  (require 'init-gui-fonts))
+
+;;; config environment
 (require 'init-linum)
 (require 'init-evil)
 (require 'init-company)
 (require 'init-ivy)
+(require 'init-which-key)
+(require 'init-fcitx)
 
 (require 'init-org)
 (require 'init-python)
@@ -52,30 +59,6 @@
 (global-set-key (kbd "C-c t l" ) 'toggle-truncate-lines)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; insert date and time
-(defvar current-date-format "%F %a")
-;;
-(defvar current-date-time-format "%a %b %d %H:%M:%S %Z %Y")
-;;
-(defvar current-time-format "%a %H:%M:%S")
-;;
-(defun insert-current-date ()
-       (interactive)
-;;       (insert (let () (comment-start)))
-       (insert (format-time-string current-date-format (current-time))))
-(defun insert-current-date-time ()
-       (interactive)
-;;       (insert (let () (comment-start)))
-       (insert (format-time-string current-date-time-format (current-time))))
-;;
-(defun insert-current-time ()
-       (interactive)
-       (insert (format-time-string current-time-format (current-time))))
-;;
-;; (global-set-key (kbd "C-i d") 'insert-current-date-time)
-;; (global-set-key (kbd "C-i t") 'insert-current-time)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; appearance
 ;;; default encoding
 (setq default-buffer-file-coding-system 'utf-8)
@@ -93,16 +76,8 @@
 
 ;;; highlight current line
 (global-hl-line-mode)
-;;; config gui fonts
-(when (window-system)
-  (require 'init-gui-fonts nil :noerror))
 ;;; set default split
 (setq split-width-threshold nil)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; which-key
-(when (require 'which-key nil :noerror)
-  (which-key-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; powerline
@@ -120,23 +95,6 @@
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook #'enable-paredit-mode)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; fcitx
-(when (eq system-type 'gnu/linux)
-  (when (require 'fcitx nil :noerror)
-    (fcitx-aggressive-setup)
-    (setq fcitx-use-dbus t)
-    (setq fcitx-active-evil-states '(insert emacs hybrid))
-	;; auto turn off fcitx when "M-x"
-	(fcitx-M-x-turn-on)
-	;; auto turn off fcitx when "M-!"
-	(fcitx-shell-command-turn-on)
-	;; auto turn off fcitx when "M-:"
-	(fcitx-eval-expression-turn-on)
-	;; auto turn off fcitx with prefix keys
-	(fcitx-prefix-keys-add "C-c" "C-h" "C-s" "C-x" "M-s" "M-o")
-    (fcitx-prefix-keys-turn-on)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; magit

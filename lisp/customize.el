@@ -10,10 +10,10 @@
  '(global-font-lock-mode t)
  '(inhibit-startup-screen t)
  '(make-backup-files nil)
- '(org-export-backends (quote (gfm ascii html icalendar latex md freemind)))
+ '(org-export-backends (quote (gfm ascii freemind gfm html icalendar latex md)))
  '(package-selected-packages
    (quote
-    (org ox-gfm yaml-mode fullframe org-gcal calfw emacs-calfw cider airline-theme py-yapf company-anaconda anaconda-mode racer company-racer flycheck-rust helm-tramp py-autopep8 fcitx ycmd emacs-ycmd company-quickhelp virtualenvwrapper rainbow-delimiters projectile powerline-evil paredit nlinum-relative monokai-theme magit flycheck-pos-tip flycheck-clojure evil-tabs evil-leader elpy clojure-cheatsheet cargo)))
+    (which-key counsel ivy-historian use-package org ox-gfm yaml-mode fullframe org-gcal calfw emacs-calfw cider airline-theme py-yapf company-anaconda anaconda-mode racer company-racer flycheck-rust helm-tramp py-autopep8 fcitx ycmd emacs-ycmd company-quickhelp virtualenvwrapper rainbow-delimiters projectile powerline-evil paredit nlinum-relative monokai-theme magit flycheck-pos-tip flycheck-clojure evil-tabs evil-leader elpy clojure-cheatsheet cargo)))
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
 (custom-set-faces

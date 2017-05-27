@@ -4,6 +4,7 @@
 (add-to-list 'completion-styles 'initials t)
 ;; Stop completion-at-point from popping up completion buffers so eagerly
 (setq completion-cycle-threshold 5)
+(setq company-dabbrev-downcase nil)
 
 
 (when (maybe-require-package 'company)

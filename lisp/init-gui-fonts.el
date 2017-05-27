@@ -1,5 +1,4 @@
 ;;; Gui Fonts configuration
-;;
 (defun font-existsp (font)
   (if (null (x-list-fonts font)) nil t))
 ;;
@@ -39,5 +38,6 @@
 (set-font
  '("mononoki Nerd Font" "Monaco" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 14
  '("Noto Sans CJK SC" "WenQuanYi Micro Hei Mono" "Microsoft Yahei") 16)
- 
+
+
 (provide 'init-gui-fonts)

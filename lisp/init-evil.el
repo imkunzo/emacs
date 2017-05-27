@@ -16,39 +16,40 @@
         (setq evil-leader/in-all-states t)
         (evil-leader/set-leader "<SPC>")
         (evil-leader/set-key
-         ;; appearance
-         "mb" 'toggle-menu-bar-mode-from-frame
-         ;; buffers
-         "bb" 'ivy-switch-buffer
-         "bk" 'kill-buffer
-         "bd" 'kill-this-buffer
-         ;; windows
-         "wv" 'evil-window-vsplit
-         "ws" 'evil-window-split
-         "wh" 'evil-window-left
-         "wj" 'evil-window-down
-         "wk" 'evil-window-up
-         "wl" 'evil-window-right
-         ;; files
-         "ff" 'counsel-find-file
-         "fr" 'counsel-recentf
-         "fs" 'save-buffer
-         ;; command
-         "x" 'counsel-M-x
-         ;; projectile
-         "pf" 'project-find-file
-         ;; evil-tabs
-         "gt" 'elscreen-goto
-         ;; magit
-         "mgs" 'magit-status
-         "mgc" 'magit-commit
-         "mgt" 'magit-push
-         "mgl" 'magit-pull)))
+          ;; appearance
+          "mb" 'toggle-menu-bar-mode-from-frame
+          ;; buffers
+          "bb" 'ivy-switch-buffer
+          "bk" 'kill-buffer
+          "bd" 'kill-this-buffer
+          ;; windows
+          "wv" 'evil-window-vsplit
+          "ws" 'evil-window-split
+          "wh" 'evil-window-left
+          "wj" 'evil-window-down
+          "wk" 'evil-window-up
+          "wl" 'evil-window-right
+          ;; files
+          "ff" 'counsel-find-file
+          "fr" 'counsel-recentf
+          "fs" 'save-buffer
+          ;; command
+          "x" 'counsel-M-x
+          ;; projectile
+          "pf" 'project-find-file
+          ;; evil-tabs
+          "gt" 'elscreen-goto
+          ;; magit
+          "mgs" 'magit-status
+          "mgc" 'magit-commit
+          "mgt" 'magit-push
+          "mgl" 'magit-pull)))
     (evil-mode t))
-  :bind (:map evil-insert-state-map
-              ("C-g" . evil-normal-state)
-              :map evil-visual-state-map
-              ("C-c" . evil-exit-visual-state))
+  :bind
+  (:map evil-insert-state-map
+        ("C-g" . evil-normal-state)
+        :map evil-visual-state-map
+        ("C-c" . evil-exit-visual-state))
   :config
   (progn
     (define-key evil-normal-state-map (kbd "q") nil)

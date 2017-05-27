@@ -23,7 +23,6 @@
 
 
 ;;; On-demand installation of packages
-
 (defun require-package (package &optional min-version no-refresh)
   "Install given PACKAGE, optionally requiring MIN-VERSION.
 If NO-REFRESH is non-nil, the available package lists will not be
@@ -53,19 +52,16 @@ locate PACKAGE."
      nil)))
 
 ;;; initialize package
-
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-;; (require-package 'fullframe)
-;; (fullframe list-packages quit-window)
 (use-package fullframe
+  :ensure t
   :config
   (fullframe list-packages quit-window))
 
-;; (require-package 'cl-lib)
-;; (require 'cl-lib)
-(use-package cl-lib)
+(use-package cl-lib
+  :ensure t)
 
 (defun pufferfish/set-tabulated-list-column-width (col-name width)
   "Set any column with name COL-NAME to the given WIDTH."
@@ -82,5 +78,6 @@ locate PACKAGE."
       (pufferfish/set-tabulated-list-column-width "Archive" longest-archive-name))))
 
 (add-hook 'package-menu-mode-hook 'pufferfish/maybe-widen-package-menu-columns)
+
 
 (provide 'init-elpa)

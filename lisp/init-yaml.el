@@ -5,4 +5,5 @@
   (progn
     (put 'yaml-indent-offset 'safe-local-variable 'integerp)))
 
+
 (provide 'init-yaml)

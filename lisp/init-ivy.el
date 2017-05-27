@@ -1,50 +1,51 @@
-(when (maybe-require-package 'ivy)
-  (after-load 'ivy
-              (setq-default ivy-use-virtual-buffers t
-                            ivy-count-format ""
-                            projectile-completion-system 'ivy
-                            ivy-initial-inputs-alist
-                            '((man . "^")
-                              (woman . "^")))
-              ;; IDO-style directory navigation
-              (define-key ivy-minibuffer-map (kbd "C-j") #'ivy-immediate-done)
-              (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
-              (when (maybe-require-package 'diminish)
-                (diminish 'ivy-mode)))
+(defun pufferfish/enable-ivy-flx-matching ()
+  "Make `ivy' matching work more like IDO."
+  (interactive)
+  (require-package 'flx)
+  (setq-default ivy-re-builders-alist
+                '((t . ivy--regex-fuzzy))))
 
-  (defun pufferfish/enable-ivy-flx-matching ()
-    "Make `ivy' matching work more like IDO."
-    (interactive)
-    (require-package 'flx)
-    (setq-default ivy-re-builders-alist
-                  '((t . ivy--regex-fuzzy))))
 
+(use-package ivy
+  :ensure t
+  :init
   (add-hook 'after-init-hook
             (lambda ()
               (when (bound-and-true-p ido-ubiquitous-mode)
                 (ido-ubiquitous-mode -1))
               (when (bound-and-true-p ido-mode)
                 (ido-mode -1))
-              (ivy-mode 1))))
+              (ivy-mode t)))
+  :bind
+  (:map ivy-minibuffer-map
+        ("C-j" . ivy-immediate-done)
+        ("RET" . ivy-alt-done))
+  :config
+  (progn
+    (setq-default ivy-use-virtual-buffers t
+                  ivy-count-format ""
+                  projectile-completion-system 'ivy)))
 
 
-(when (maybe-require-package 'ivy-historian)
+(use-package ivy-historian
+  :init
   (add-hook 'after-init-hook (lambda () (ivy-historian-mode t))))
 
 
-(when (maybe-require-package 'counsel)
-  (setq-default counsel-mode-override-describe-bindings t)
-  (when (maybe-require-package 'diminish)
-    (after-load 'counsel
-                (diminish 'counsel-mode)))
-  (add-hook 'after-init-hook 'counsel-mode))
+(use-package counsel
+  :init
+  (progn
+    (setq-default counsel-mode-override-describe-bindings t)
+    (add-hook 'after-init-hook 'counsel-mode))
+  :bind
+  (:map global-map
+        ("M-y" . counsel-yank-pop)))
 
 
-;; (when (maybe-require-package 'swiper)
-;;   (after-load 'ivy
-;;     (define-key ivy-mode-map (kbd "C-s") 'swiper)))
-
-(global-set-key (kbd "M-y") 'counsel-yank-pop)
+(use-package swiper
+  :bind
+  (:map ivy-mode-map
+        ("C-s" . swiper)))
 
 
 (provide 'init-ivy)
