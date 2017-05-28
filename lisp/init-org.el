@@ -1,3 +1,7 @@
+;;; init-org --- Summary
+;;; Commentary:
+
+;;; Code:
 (use-package org
   :ensure t
   :init
@@ -58,3 +62,4 @@
 
 
 (provide 'init-org)
+;;; init-org ends here

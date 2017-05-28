@@ -24,15 +24,20 @@
   (progn
     (setq-default ivy-use-virtual-buffers t
                   ivy-count-format ""
-                  projectile-completion-system 'ivy)))
+                  projectile-completion-system 'ivy
+                  ivy-initial-inputs-alist
+                  '((man . "^")
+                    (woman . "^")))))
 
 
 (use-package ivy-historian
+  :ensure t
   :init
   (add-hook 'after-init-hook (lambda () (ivy-historian-mode t))))
 
 
 (use-package counsel
+  :ensure t
   :init
   (progn
     (setq-default counsel-mode-override-describe-bindings t)
@@ -43,6 +48,7 @@
 
 
 (use-package swiper
+  :ensure t
   :bind
   (:map ivy-mode-map
         ("C-s" . swiper)))

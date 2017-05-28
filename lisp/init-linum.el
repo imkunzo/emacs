@@ -1,4 +1,5 @@
 (use-package nlinum-relative
+  :ensure t
   :init
   (setq nlinum-relative-redisplay-delay 0)
   (setq nlinum-relative-current-symbol "")

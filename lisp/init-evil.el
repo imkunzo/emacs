@@ -1,14 +1,19 @@
 (use-package evil
+  :ensure t
   :init
   (progn
-    (use-package evil-tabs
-      :init
-      (global-evil-tabs-mode)
-      :config
-      (progn (evil-define-key 'normal evil-tabs-mode-map
-               "gnt" 'elscreen-create
-               "gkt" 'elscreen-kill)))
+    ;; boot evil by default
+    (evil-mode t)
+
+    ;; elscreen
+    ;; (use-package elscreen
+    ;;   :ensure t
+    ;;   :init
+    ;;   (elscreen-start))
+
+    ;; evil-leader
     (use-package evil-leader
+      :ensure t
       :init
       (global-evil-leader-mode)
       :config
@@ -38,13 +43,12 @@
           ;; projectile
           "pf" 'project-find-file
           ;; evil-tabs
-          "gt" 'elscreen-goto
+          ;; "gt" 'elscreen-goto
           ;; magit
           "mgs" 'magit-status
           "mgc" 'magit-commit
           "mgt" 'magit-push
-          "mgl" 'magit-pull)))
-    (evil-mode t))
+          "mgl" 'magit-pull))))
   :bind
   (:map evil-insert-state-map
         ("C-g" . evil-normal-state)
@@ -65,6 +69,17 @@
     (define-key minibuffer-local-completion-map [escape] 'abort-recursive-edit)
     (define-key minibuffer-local-must-match-map [escape] 'abort-recursive-edit)
     (define-key minibuffer-local-isearch-map [escape] 'abort-recursive-edit)))
+
+    
+;; evil-tabs
+;; (use-package evil-tabs
+;;   :ensure t
+;;   :init
+;;   (global-evil-tabs-mode t)
+;;   :config
+;;   (evil-define-key 'normal evil-tabs-mode-map
+;;            "gnt" 'elscreen-create
+;;            "gkt" 'elscreen-kill))
 
 
 (provide 'init-evil)

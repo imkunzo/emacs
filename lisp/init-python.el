@@ -15,11 +15,16 @@
 
     ;; flycheck
     (add-hook 'python-mode-hook #'flycheck-mode)
-    ;; company
-    (eval-after-load 'company
-      '(add-to-list 'company-backends 'company-anaconda))
     ;; python inferior completion
     (add-hook 'inferior-python-mode-hook #'company-mode)
+
+
+    ;; company-anaconda
+    (use-package company-anaconda
+      :ensure t
+      :init
+      (eval-after-load 'company
+        '(add-to-list 'company-backends 'company-anaconda)))
 
 
     ;; pyvenv
