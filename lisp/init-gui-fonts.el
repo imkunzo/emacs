@@ -1,4 +1,8 @@
-;;; Gui Fonts configuration
+;;; init-gui-font --- Summary
+;;; Commentary:
+
+;;; Code:
+;; Gui Fonts configuration
 (defun font-existsp (font)
   (if (null (x-list-fonts font)) nil t))
 ;;
@@ -35,9 +39,16 @@
       (set-fontset-font (frame-parameter nil 'font) charset
       zh-font))))
 ;; setup default fonts
-(set-font
- '("mononoki Nerd Font" "Monaco" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 14
- '("Noto Sans CJK SC" "WenQuanYi Micro Hei Mono" "Microsoft Yahei") 16)
+(cond
+ (*is-linux-p*
+  (set-font
+   '("mononoki Nerd Font" "Monaco" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 12
+   '("WenQuanYi Micro Hei Mono" "Microsoft Yahei")))
+ (*is-mac-p*
+  (set-font
+   '("mononoki Nerd Font" "Monaco" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 14
+   '("Noto Sans CJK SC" "WenQuanYi Micro Hei Mono" "Microsoft Yahei") 16)))
 
 
 (provide 'init-gui-fonts)
+;;; init-gui-font ends here

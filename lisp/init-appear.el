@@ -10,10 +10,10 @@
 ;;; set default split
 (setq split-width-threshold nil)
 
-(use-package monokai-alt-theme
+(use-package monokai-theme
   :ensure t
   :init
-  (load-theme 'monokai-alt t))
+  (load-theme 'monokai t))
 
 
 (use-package rainbow-delimiters
