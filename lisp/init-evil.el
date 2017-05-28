@@ -1,3 +1,7 @@
+;;; init-evil --- Summary
+;;; Commentary:
+
+;;; Code:
 (use-package evil
   :ensure t
   :init
@@ -83,3 +87,4 @@
 
 
 (provide 'init-evil)
+;;; init-evil ends here

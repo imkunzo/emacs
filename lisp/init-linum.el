@@ -1,3 +1,7 @@
+;;; init-linum --- Summary
+;;; Commentary:
+
+;;; Code:
 (use-package nlinum-relative
   :ensure t
   :init
@@ -10,3 +14,4 @@
 
 
 (provide 'init-linum)
+;;; init-linum ends here

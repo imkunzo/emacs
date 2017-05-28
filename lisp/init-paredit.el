@@ -1,3 +1,7 @@
+;;; init-paredit --- Summary
+;;; Commentary:
+
+;;; Code:
 (use-package paredit
   :ensure t
   :config
@@ -13,3 +17,4 @@
 
 
 (provide 'init-paredit)
+;;; init-paredit ends here

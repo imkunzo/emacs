@@ -17,7 +17,7 @@
                  chinese-fonts
                  &optional chinese-font-size)
   "english-font-size could be set to \":pixelsize=18\" or a integer.
-  If set/leave chinese-font-size to nil, it will follow english-font-size"
+If set/leave chinese-font-size to nil, it will follow english-font-size"
   (require 'cl)
   (let ((en-font (make-font-string
                   (find-if #'font-existsp english-fonts)
@@ -42,7 +42,7 @@
 (cond
  (*is-linux-p*
   (set-font
-   '("mononoki Nerd Font" "Monaco" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 12
+   '("mononoki Nerd Font" "Monaco" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 13
    '("WenQuanYi Micro Hei Mono" "Microsoft Yahei")))
  (*is-mac-p*
   (set-font

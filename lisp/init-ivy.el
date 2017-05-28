@@ -1,3 +1,7 @@
+;;; init-ivy --- Summary
+;;; Commentary:
+
+;;; Code:
 (defun pufferfish/enable-ivy-flx-matching ()
   "Make `ivy' matching work more like IDO."
   (interactive)
@@ -55,3 +59,4 @@
 
 
 (provide 'init-ivy)
+;;; init-ivy ends here
