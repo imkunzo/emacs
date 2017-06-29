@@ -1,5 +1,14 @@
-;;;; appearance
-;;; default encoding
+;;; init-appear --- Summary
+;;; Commentary:
+;;; Code:
+
+;; transparent
+;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
+;;(set-frame-parameter (selected-frame) 'alpha <both>)
+(set-frame-parameter (selected-frame) 'alpha '(95 . 90))
+(add-to-list 'default-frame-alist '(alpha . (95 . 90)))
+
+;; default encoding
 (setq default-buffer-file-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 ;;; TAB indent
@@ -10,11 +19,15 @@
 ;;; set default split
 (setq split-width-threshold nil)
 
-(use-package monokai-theme
+;; (use-package monokai-theme
+;;   :ensure t
+;;   :init
+;;   (load-theme 'monokai t))
+
+(use-package zenburn-theme
   :ensure t
   :init
-  (load-theme 'monokai t))
-
+  (load-theme 'zenburn t))
 
 (use-package rainbow-delimiters
   :ensure t
@@ -34,3 +47,4 @@
 
 
 (provide 'init-appear)
+;;; init-appear ends here

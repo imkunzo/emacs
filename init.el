@@ -22,6 +22,11 @@
 (add-hook 'after-init-hook
           (lambda () (setq gc-cons-threshold pufferfish/initial-gc-cons-threshold)))
 
+(when *is-mac-p*
+  ;; (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier 'meta)
+  (setq mac-command-modifier 'super)
+  (set-keyboard-coding-system nil))
 
 ;;;; Bootstrap config
 (require 'init-utils)
@@ -49,6 +54,7 @@
 (require 'init-flycheck)
 (require 'init-fcitx)
 (require 'init-yaml)
+(require 'mermaid-mode)
 
 ;;; IDE
 (require 'init-python)

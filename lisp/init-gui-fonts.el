@@ -42,11 +42,11 @@ If set/leave chinese-font-size to nil, it will follow english-font-size"
 (cond
  (*is-linux-p*
   (set-font
-   '("mononoki Nerd Font" "Monaco" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 13
+   '("Monaco" "mononoki Nerd Font" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 13
    '("WenQuanYi Micro Hei Mono" "Microsoft Yahei")))
  (*is-mac-p*
   (set-font
-   '("mononoki Nerd Font" "Monaco" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 14
+   '("Monaco" "mononoki Nerd Font" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 14
    '("Noto Sans CJK SC" "WenQuanYi Micro Hei Mono" "Microsoft Yahei") 16)))
 
 

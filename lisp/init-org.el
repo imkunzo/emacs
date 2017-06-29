@@ -15,7 +15,9 @@
           org-fast-tag-selection-single-key 'expert
           org-html-validation-link nil
           org-export-kill-product-buffer-when-displayed t
-          org-tags-column 80)
+          org-tags-column 80
+          org-src-fontify-natively t
+          org-src-tab-acts-natively t)
 
     ;; capture templates
     (setq org-capture-templates
@@ -29,7 +31,21 @@
         ("C-c c" . org-capture))
   :config
   (progn
-    ;;; github flavored markdown exporter
+    ;; org bable
+    (after-load 'org
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       `((R . t)
+         (dot . t)
+         (emacs-lisp . t)
+         (latex . t)
+         (python . t)
+         (ruby . t)
+         (screen . nil)
+         (,(if (locate-library "ob-sh") 'sh 'shell) . t)
+         (sql . t))))
+
+    ;; github flavored markdown exporter
     (use-package ox-gfm
       :ensure t
       :init
@@ -49,21 +65,7 @@
           (if (face-underline-p 'org-link)
               (set-face-underline-p 'org-link nil)
             (set-face-underline-p 'org-link t))
-          (iimage-mode))))
-
-    ;;; org bable
-    (after-load 'org
-      (org-babel-do-load-languages
-       'org-babel-load-languages
-       `((R . t)
-         (dot . t)
-         (emacs-lisp . t)
-         (latex . t)
-         (python . t)
-         (ruby . t)
-         (screen . nil)
-         (,(if (locate-library "ob-sh") 'sh 'shell) . t)
-         (sql . t))))))
+          (iimage-mode))))))
 
 
 ;;; org sync with google calendar
