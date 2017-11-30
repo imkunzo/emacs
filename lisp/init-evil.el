@@ -25,6 +25,8 @@
         (setq evil-leader/in-all-states t)
         (evil-leader/set-leader "<SPC>")
         (evil-leader/set-key
+          ;; ace-jump-mode
+          "<SPC>" 'ace-jump-word-mode
           ;; appearance
           "mb" 'toggle-menu-bar-mode-from-frame
           ;; buffers

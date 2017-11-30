@@ -1,5 +1,6 @@
 (use-package projectile
   :ensure t
+  :diminish projectile-mode
   :init
   (projectile-global-mode)
   :config

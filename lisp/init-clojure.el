@@ -1,3 +1,7 @@
+;;; package --- Summary
+;;; Code:
+;;; Commentary:
+
 (use-package clojure-mode
   :ensure t
   :init
@@ -26,5 +30,5 @@
     ;; flycheck setting for clojure
     (add-hook 'clojure-mode-hook 'flycheck-mode-hook)))
 
-
 (provide 'init-clojure)
+;;; init-clojure ends here

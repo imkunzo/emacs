@@ -1,4 +1,7 @@
-;;;; Rust IDE
+;;; rust --- rust ide configuration
+;;; Commentary:
+
+;;; Code:
 (use-package rust-mode
   :ensure t
   :init
@@ -6,6 +9,10 @@
     (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
     (use-package cargo
       :ensure t
+      :init
+      (setenv "PATH" (concat (getenv "PATH")
+                             ":"
+                             (concat (getenv "HOME") "/.cargo/bin")))
       :config
       (progn
         (add-hook 'rust-mode-hook 'cargo-minor-mode)
@@ -14,9 +21,12 @@
     (use-package racer
       :ensure t
       :init
-      (add-hook 'rust-mode-hook #'racer-mode)
+      (progn
+        (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
+        (setq racer-cmd (executable-find "racer")))
       :config
       (progn
+        (add-hook 'rust-mode-hook #'racer-mode)
         (add-hook 'racer-mode-hook #'eldoc-mode)
         (add-hook 'racer-mode-hook #'company-mode))
       :bind
@@ -29,5 +39,5 @@
   (:map rust-mode-map
         ("C-c <tab>" . rust-format-buffer)))
 
-
 (provide 'init-rust)
+;;; init-rust.el ends here

@@ -24,27 +24,29 @@
 ;;   :init
 ;;   (load-theme 'monokai t))
 
-(use-package zenburn-theme
-  :ensure t
-  :init
-  (load-theme 'zenburn t))
+;; (use-package zenburn-theme
+;;   :ensure t
+;;   :init
+;;   (load-theme 'zenburn t))
+
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t)
 
 (use-package rainbow-delimiters
   :ensure t
   :init
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
-
-(use-package powerline
-  :ensure t
-  :init
-  (display-time-mode t)
-  :config
-  (use-package powerline-evil
-    :ensure t
-    :init
-    (powerline-evil-vim-color-theme)))
-
+;; (use-package spaceline-all-the-icons
+;;   :ensure t
+;;   :init
+;;   (spaceline-all-the-icons-theme)
+;;   (spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
+;;   (spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
+;;   (spaceline-all-the-icons--setup-git-ahead)       ;; Enable # of commits ahead of upstream in git
+;;   (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
+;;   (spaceline-all-the-icons--setup-neotree)         ;; Enable Neotree mode line
+;;   (setq spaceline-all-the-icons-separator-type 'arrow))
 
 (provide 'init-appear)
 ;;; init-appear ends here

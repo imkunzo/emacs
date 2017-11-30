@@ -22,16 +22,27 @@
 (add-hook 'after-init-hook
           (lambda () (setq gc-cons-threshold pufferfish/initial-gc-cons-threshold)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; basic environment
+(when *is-windows-p*
+  (setq tramp-default-method "plink")
+  (setq default-directory "~/"))
+;;
+(when (or *is-mac-p* *is-linux-p*)
+  (setq shell-file-name "/bin/zsh"))
+
 (when *is-mac-p*
-  ;; (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier 'meta)
-  (setq mac-command-modifier 'super)
-  (set-keyboard-coding-system nil))
+  (setq temporary-file-directory "/tmp/"))
+
+(global-set-key (kbd "C-c t l" ) 'toggle-truncate-lines)
 
 ;;;; Bootstrap config
 (require 'init-utils)
 (require 'init-site-lisp)
 (require 'init-elpa)
+(when *is-mac-p*
+  (require 'init-osx)
+  )
 
 ;;; config gui fonts
 (when (window-system)
@@ -43,9 +54,12 @@
 (require 'init-evil)
 (require 'init-ivy)
 (require 'init-which-key)
-(require 'init-paredit)
+(require 'init-smartparens)
+(require 'init-eshell)
 
 ;;; tools
+(require 'init-ace-jump)
+(require 'init-graphviz)
 (require 'init-org)
 (require 'init-magit)
 (require 'init-company)
@@ -60,19 +74,5 @@
 (require 'init-python)
 (require 'init-clojure)
 (require 'init-rust)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; basic environment
-(when *is-windows-p*
-  (setq tramp-default-method "plink")
-  (setq default-directory "~/"))
-;;
-(when (or *is-mac-p* *is-linux-p*)
-  (setq shell-file-name "/bin/zsh"))
-
-(when *is-mac-p*
-  (setq temporary-file-directory "/tmp/"))
-
-(global-set-key (kbd "C-c t l" ) 'toggle-truncate-lines)
 
 ;;; init.el ends here
