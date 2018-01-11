@@ -1,3 +1,7 @@
+;;; init-python --- python configuration
+;;; Commentary:
+
+;;; Code:
 (use-package elpy
   :ensure t
   :init
@@ -33,7 +37,7 @@
       :config
       (cond
        ((or *is-linux-p* *is-mac-p*)
-        (setenv "WORKON_HOME" (expand-file-name "opt/python-venv" (getenv "HOME"))))
+        (setenv "WORKON_HOME" (expand-file-name "opt/pyvenv" (getenv "HOME"))))
        ((*is-windows-p*)
         (setenv "WORKON_HOME" "D:/opt/Python/venv"))))
 
@@ -47,10 +51,13 @@
 
 
     ;; py-autopep8
-    (use-package py-autopep8
-      :ensure t
-      :config
-      (add-hook 'python-mode-hook 'py-yapf-enable-on-save))))
+    ;; (use-package py-autopep8
+    ;;   :ensure t
+    ;;   :config
+    ;;   (add-hook 'python-mode-hook 'yapf-mode)
+    ;;   (add-hook 'python-mode-hook 'py-yapf-enable-on-save))
+    ))
 
 
 (provide 'init-python)
+;;; init-python.el Ends here

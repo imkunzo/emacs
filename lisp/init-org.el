@@ -73,17 +73,17 @@
     ;; capture templates
     (setq org-capture-templates
           '(("j" "Journal" entry (file+datetree "~/Dropbox/GTD/Note.org")
-             "* %?\n %i\n %a\n")
+             "* %?\n %i\n")
             ("n" "New" entry (file+headline "~/Dropbox/GTD/Inbox.org" "Inbox")
-             "* NEW %?\n Entered On: %U\n %a\n")
+             "* NEW %?\n Entered On: %U\n")
             ("t" "Task" entry (file+headline "~/Dropbox/GTD/Task.org" "Tasks")
-             "* TODO %?\n Entered On: %U\n %a\n")
+             "* TODO %?\n Entered On: %U\n")
             ("i" "Idea" entry (file+headline "~/Dropbox/GTD/Task.org" "Ideas")
-             "* SOMEDAY %?\n Entered On: %U\n %a\n")
+             "* SOMEDAY %?\n Entered On: %U\n")
             ("c" "Calendar" entry (file+headline "~/Dropbox/GTD/Task.org" "Calendar")
-             "* TODO %?\n Entered On: %U\n %a\n")
+             "* TODO %?\n Entered On: %U\n")
             ("p" "Project" entry (file+headline "~/Dropbox/GTD/Project.org" "Projects")
-             "* TODO %?\n Entered On: %U\n %a\n")))
+             "* TODO %?\n Entered On: %U\n")))
 
     ;; org export setting
     (setq org-export-backends '(ascii freemind gfm html icalendar latex md)))

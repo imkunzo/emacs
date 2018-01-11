@@ -22,7 +22,9 @@
       :ensure t
       :init
       (progn
-        (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
+        (setq racer-rust-src-path (concat (replace-regexp-in-string "\n" ""
+                                                                    (shell-command-to-string "rustc --print sysroot"))
+                                          "/lib/rustlib/src/rust"))
         (setq racer-cmd (executable-find "racer")))
       :config
       (progn
