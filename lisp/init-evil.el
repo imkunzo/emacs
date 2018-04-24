@@ -34,6 +34,7 @@
           "bk" 'kill-buffer
           "bd" 'kill-this-buffer
           ;; windows
+          "wd"'evil-window-delete
           "wv" 'evil-window-vsplit
           "ws" 'evil-window-split
           "wh" 'evil-window-left

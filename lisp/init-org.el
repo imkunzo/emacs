@@ -69,7 +69,7 @@
           org-latex-pdf-process '("xelatex -interaction nonstopmode -output-directory %o %f"
                                   "xelatex -interaction nonstopmode -output-directory %o %f"
                                   "xelatex -interaction nonstopmode -output-directory %o %f"))
-    
+
     ;; capture templates
     (setq org-capture-templates
           '(("j" "Journal" entry (file+datetree "~/Dropbox/GTD/Note.org")
@@ -109,13 +109,6 @@
          (,(if (locate-library "ob-sh") 'sh 'shell) . t)
          (sql . t))))
 
-    ;; github flavored markdown exporter
-    (use-package ox-gfm
-      :ensure t
-      :init
-      (when (boundp 'org-export-backends)
-        (customize-set-variable 'org-export-backends
-                                (cons 'gfm org-export-backends))))
     (use-package htmlize
       :ensure t)
 
@@ -139,7 +132,24 @@
                (require 'org-gcal nil :noerror))
       (setq org-gcal-client-id "something.apps.googleusercontent.com"
             org-gcal-client-secret "something"
-            org-gcal-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/ORG/gcal.org"))))))
+            org-gcal-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/ORG/gcal.org"))))
+
+    ;; github flavored markdown exporter
+    (use-package ox-gfm
+      :ensure t
+      :init
+      (when (boundp 'org-export-backends)
+        (customize-set-variable 'org-export-backends
+                                (cons 'gfm org-export-backends))))
+
+	;; org export pandoc
+	(use-package ox-pandoc
+	  :ensure t
+	  :init
+	  (setq org-pandoc-options '((standalone . t))
+			org-pandoc-options-for-docx '((standalone . nil))
+			org-pandoc-options-for-beamer-pdf '((pdf-engine . "xelatex"))
+			org-pandoc-options-for-latex-pdf '((pdf-engine . "xelatex"))))))
 
 (provide 'init-org)
 ;;; init-org ends here

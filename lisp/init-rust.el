@@ -10,11 +10,10 @@
     (use-package cargo
       :ensure t
       :init
-      (setenv "PATH" (concat (getenv "PATH")
+      (progn
+        (setenv "PATH" (concat (getenv "PATH")
                              ":"
                              (concat (getenv "HOME") "/.cargo/bin")))
-      :config
-      (progn
         (add-hook 'rust-mode-hook 'cargo-minor-mode)
         (add-hook 'cargo-process-mode-hook (lambda ()
                                              (setq truncate-lines nil)))))
@@ -24,10 +23,8 @@
       (progn
         (setq racer-rust-src-path (concat (replace-regexp-in-string "\n" ""
                                                                     (shell-command-to-string "rustc --print sysroot"))
-                                          "/lib/rustlib/src/rust"))
-        (setq racer-cmd (executable-find "racer")))
-      :config
-      (progn
+                                          "/lib/rustlib/src/rust/src")
+              racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer"))
         (add-hook 'rust-mode-hook #'racer-mode)
         (add-hook 'racer-mode-hook #'eldoc-mode)
         (add-hook 'racer-mode-hook #'company-mode))
