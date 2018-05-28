@@ -59,15 +59,16 @@
 
 ;;; tools
 (require 'init-ace-jump)
-(require 'init-graphviz)
-(require 'init-org)
-(require 'init-magit)
 (require 'init-company)
-(require 'init-yasnippet)
-(require 'init-projectile)
-(require 'init-flycheck)
 (require 'init-fcitx)
+(require 'init-flycheck)
+(require 'init-graphviz)
+(require 'init-magit)
+(require 'init-org)
+(require 'init-plantuml)
+(require 'init-projectile)
 (require 'init-yaml)
+(require 'init-yasnippet)
 (require 'mermaid-mode)
 
 ;;; IDE

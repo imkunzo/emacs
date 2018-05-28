@@ -47,15 +47,22 @@
           "fs" 'save-buffer
           ;; command
           "x" 'counsel-M-x
-          ;; projectile
-          "pf" 'project-find-file
           ;; evil-tabs
           ;; "gt" 'elscreen-goto
           ;; magit
           "mgs" 'magit-status
           "mgc" 'magit-commit
           "mgt" 'magit-push
-          "mgl" 'magit-pull))))
+          "mgl" 'magit-pull)
+        ;; org download
+        (evil-leader/set-key-for-mode 'org-mode "ods" 'org-download-screenshot)
+        (evil-leader/set-key-for-mode 'org-mode "odd" 'org-download-delete)
+        (evil-leader/set-key-for-mode 'org-mode "ode" 'org-download-edit)
+        (evil-leader/set-key-for-mode 'org-mode "odi" 'org-downlaod-image)
+        (evil-leader/set-key-for-mode 'org-mode "ody" 'org-download-yank)
+        ;; projectile
+        (evil-leader/set-key-for-mode 'projectile-mode "pf" 'project-find-file))))
+
   :bind
   (:map evil-insert-state-map
         ("C-g" . evil-normal-state)
