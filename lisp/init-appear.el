@@ -30,7 +30,19 @@
 ;;   (load-theme 'zenburn t))
 
 (use-package color-theme-sanityinc-tomorrow
-  :ensure t)
+  :ensure t
+  :init
+  (load-theme 'sanityinc-tomorrow-night t))
+
+;; (use-package solarized-theme
+;;   :ensure t
+;;   :init
+;;   (load-theme 'solarized-dark t))
+
+;; (use-package spacemacs-theme
+;;   :ensure t
+;;   :init
+;;   (load-theme 'spacemacs-dark t))
 
 (use-package rainbow-delimiters
   :ensure t

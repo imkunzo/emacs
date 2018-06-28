@@ -5,8 +5,9 @@
 (use-package plantuml-mode
   :ensure t
   :init
-  (setq plantuml-jar-path (expand-file-name "~/bin/plantuml.jar"))
-  (setq org-plantuml-jar-path (expand-file-name "~/bin/plantuml.jar"))
+  (setq org-plantuml-jar-path (expand-file-name "~/bin/plantuml.jar")
+        plantuml-jar-path (expand-file-name "~/bin/plantuml.jar")
+        plantuml-mode-debug-enabled t)
   :config
   (add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
   (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode)))

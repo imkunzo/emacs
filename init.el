@@ -72,6 +72,7 @@
 (require 'mermaid-mode)
 
 ;;; IDE
+(require 'init-lsp)
 (require 'init-python)
 (require 'init-clojure)
 (require 'init-rust)

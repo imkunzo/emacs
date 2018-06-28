@@ -20,19 +20,24 @@
     ;; flycheck
     (add-hook 'python-mode-hook #'flycheck-mode)
     ;; python inferior completion
-    (add-hook 'inferior-python-mode-hook #'company-mode)
+    (add-hook 'inferior-python-mode-hook #'company-mode)))
 
+;; anaconda
+(use-package anaconda-mode
+      :ensure t
+      :config
+      (add-hook 'python-mode-hook #'anaconda-mode)
+      (add-hook 'python-mode-hook #'anaconda-eldoc-mode))
 
-    ;; company-anaconda
-    (use-package company-anaconda
+;; company-anaconda
+(use-package company-anaconda
       :ensure t
       :init
-      (eval-after-load 'company
-        '(add-to-list 'company-backends 'company-anaconda)))
+      (with-eval-after-load 'company
+        (push 'company-anaconda company-backends)))
 
-
-    ;; pyvenv
-    (use-package pyvenv
+;; pyvenv
+(use-package pyvenv
       :ensure t
       :config
       (cond
@@ -41,23 +46,12 @@
        ((*is-windows-p*)
         (setenv "WORKON_HOME" "D:/opt/Python/venv"))))
 
-
-    ;; anaconda
-    (use-package anaconda-mode
-      :ensure t
-      :config
-      (add-hook 'python-mode-hook #'anaconda-mode)
-      (add-hook 'python-mode-hook #'anaconda-eldoc-mode))
-
-
-    ;; py-autopep8
-    ;; (use-package py-autopep8
-    ;;   :ensure t
-    ;;   :config
-    ;;   (add-hook 'python-mode-hook 'yapf-mode)
-    ;;   (add-hook 'python-mode-hook 'py-yapf-enable-on-save))
-    ))
-
+;; py-autopep8
+;; (use-package py-autopep8
+;;       :ensure t
+;;       :config
+;;       (add-hook 'python-mode-hook 'yapf-mode)
+;;       (add-hook 'python-mode-hook 'py-yapf-enable-on-save))
 
 (provide 'init-python)
 ;;; init-python.el Ends here

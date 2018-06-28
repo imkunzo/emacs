@@ -4,28 +4,27 @@
 ;;; Code:
 
 (use-package org
-  :ensure t
+  :ensure org-plus-contrib
   :init
   (progn
-    (setq org-log-done t
-          org-startup-indented t
-          org-edit-timestamp-down-means-later t
-          org-archive-mark-done nil
-          org-hide-emphasis-markers t
+    (setq org-archive-mark-done nil
           org-catch-invisible-edits 'show
+          org-edit-timestamp-down-means-later t
+          org-enforce-todo-dependencies t
           org-export-coding-system 'utf-8
-          org-fast-tag-selection-single-key 'expert
-          org-html-validation-link nil
-          org-html-htmlize-output-type 'css
           org-export-kill-product-buffer-when-displayed t
-          org-tags-column 80
+          org-fast-tag-selection-single-key 'expert
+          org-hide-emphasis-markers t
+          org-hide-leading-stars t
+          org-html-htmlize-output-type 'css
+          org-html-validation-link nil
+          org-log-done t
+          org-log-into-drawer t
           org-src-fontify-natively t
           org-src-tab-acts-natively t
-          org-log-into-drawer t
-          org-enforce-todo-dependencies t
+          org-startup-indented t
           org-startup-with-inline-images t
-          ;; org-bullets
-          org-bullets-bullet-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷")
+          org-tags-column 80
           ;; org directories
           org-directory "~/Dropbox/GTD"
           org-agenda-files (list "~/Dropbox/GTD")
@@ -115,13 +114,15 @@
     (use-package htmlize
       :ensure t)
 
-    ;; org sync with google calendar
-    (when (and (require 'calfw nil :noerror)
-               (require 'calfw-org nil :noerror)
-               (require 'org-gcal nil :noerror))
-      (setq org-gcal-client-id "something.apps.googleusercontent.com"
-            org-gcal-client-secret "something"
-            org-gcal-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/ORG/gcal.org"))))
+    ;; org-bullets
+    (use-package org-bullets
+      :ensure t
+      :init
+      (setq org-bullets-bullet-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"))
+      ;; (setq org-bullets-bullet-list '("①" "②" "③" "④" "⑤" "⑥" "⑦" "⑧"))
+      :config
+      (add-hook 'org-mode-hook (lambda ()
+                                 (org-bullets-mode t))))
 
     (use-package org-download
       :ensure t

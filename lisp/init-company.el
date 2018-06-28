@@ -6,22 +6,17 @@
   :ensure t
   :init
   (progn
-    (setq company-minimum-prefix-length 1)
-    (setq company-idle-delay 0.5)
-    
-    (setq tab-always-indent 'complete) ;; use 't when company is disabled
+    (setq company-dabbrev-downcase nil
+          company-idle-delay 0.5
+          company-minimum-prefix-length 1
+          completion-cycle-threshold 5
+          tab-always-indent 'comlete ;;use 't when company is disabled
+          )
     (add-to-list 'completion-styles 'initials t)
     ;; Stop completion-at-point from popping up completion buffers so eagerly
-    (setq completion-cycle-threshold 5)
-    (setq company-dabbrev-downcase nil)
     (add-hook 'after-init-hook 'global-company-mode))
   :config
   (progn
-    (use-package company-quickhelp
-      :ensure t
-      :init
-      (add-hook 'after-init-hook 'company-quickhelp-mode))
-
     (defun pufferfish/local-push-company-backend (backend)
       "Add BACKEND to a buffer-local version of `company-backends'."
       (set (make-local-variable 'company-backends)
@@ -45,12 +40,21 @@
         (add-hook 'company-completion-started-hook 'pufferfish/page-break-lines-disable)
         (add-hook 'company-completion-finished-hook 'pufferfish/page-break-lines-maybe-reenable)
         (add-hook 'company-completion-cancelled-hook 'pufferfish/page-break-lines-maybe-reenable))))
-  :bind (
-         :map company-active-map
+  :bind (:map company-active-map
          ("C-c h" . company-quickhelp-manual-begin)
          :map company-mode-map
          ("M-/" . company-complete)))
 
+(use-package company-quickhelp
+  :ensure t
+  :init
+  (add-hook 'after-init-hook 'company-quickhelp-mode))
+
+(use-package company-lsp
+  :ensure t
+  :init
+  (with-eval-after-load 'lsp-mode
+    (push 'company-lsp company-backends)))
 
 (provide 'init-company)
 ;;; init-company ends here

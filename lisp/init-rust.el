@@ -1,13 +1,20 @@
-;;; rust --- rust ide configuration
+;;; init-rust --- rust ide configuration
 ;;; Commentary:
 
 ;;; Code:
 (use-package rust-mode
   :ensure t
   :init
-  (progn
-    (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-    (use-package cargo
+  (setq rust-format-on-save t)
+  :config
+  (add-hook 'rust-mode-hook #'flycheck-mode)
+  :bind
+  (:map rust-mode-map
+        ("C-c <tab>" . rust-format-buffer))
+  :mode "\\.rs\\'"
+  :interpreter "rust")
+
+(use-package cargo
       :ensure t
       :init
       (progn
@@ -17,7 +24,8 @@
         (add-hook 'rust-mode-hook 'cargo-minor-mode)
         (add-hook 'cargo-process-mode-hook (lambda ()
                                              (setq truncate-lines nil)))))
-    (use-package racer
+
+(use-package racer
       :ensure t
       :init
       (progn
@@ -30,13 +38,15 @@
         (add-hook 'racer-mode-hook #'company-mode))
       :bind
       (:map rust-mode-map
-            ("M-." . racer-find-definition))))
+            ("M-." . racer-find-definition)))
+
+(use-package lsp-rust
+  :ensure t
+  :init
+  (with-eval-after-load 'lsp-mode
+    (setq lsp-rust-rls-command '("rustup" "run" "stable" "rls")))
   :config
-  (progn
-    (add-hook 'rust-mode-hook #'flycheck-mode))
-  :bind
-  (:map rust-mode-map
-        ("C-c <tab>" . rust-format-buffer)))
+  (add-hook 'rust-mode-hook #'lsp-rust-enable))
 
 (provide 'init-rust)
 ;;; init-rust.el ends here

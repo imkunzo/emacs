@@ -53,7 +53,13 @@
           "mgs" 'magit-status
           "mgc" 'magit-commit
           "mgt" 'magit-push
-          "mgl" 'magit-pull)
+          "mgl" 'magit-pull
+          ;; projectile
+          "pfd" 'project--find-in-directory
+          "pff" 'project-find-file
+          "pfi" 'project-find-file-in
+          "pfm" 'project-find-functions
+          "pfr" 'project-find-regexp)
         ;; org download
         (evil-leader/set-key-for-mode 'org-mode "ods" 'org-download-screenshot)
         (evil-leader/set-key-for-mode 'org-mode "odd" 'org-download-delete)

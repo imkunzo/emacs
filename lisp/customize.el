@@ -7,14 +7,14 @@
  '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
  '(custom-safe-themes
    (quote
-    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "73a13a70fd111a6cd47f3d4be2260b1e4b717dbf635a9caee6442c949fad41cd" "b181ea0cc32303da7f9227361bb051bbb6c3105bb4f386ca22a06db319b08882" "3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" default)))
+    ("bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "73a13a70fd111a6cd47f3d4be2260b1e4b717dbf635a9caee6442c949fad41cd" "b181ea0cc32303da7f9227361bb051bbb6c3105bb4f386ca22a06db319b08882" "3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" default)))
  '(global-font-lock-mode t)
  '(inhibit-startup-screen t)
  '(make-backup-files nil)
  '(org-export-backends (quote (gfm ascii freemind gfm html icalendar latex md)))
  '(package-selected-packages
    (quote
-    (plantuml-mode org-download ox-reveal ox-pandoc org htmlize graphviz-dot-mode ace-jump-mode yaml-mode smartparens color-theme-sanityinc-tomorrow evil-leader evil racer cargo rust-mode flycheck-clojure ox-gfm cider clojure-mode py-autopep8 company-anaconda elpy flycheck projectile yasnippet company-quickhelp company magit paredit which-key counsel ivy-historian ivy nlinum-relative rainbow-delimiters zenburn-theme fullframe use-package)))
+    (lsp-rust lsp-ui lsp-mode company-lsp flycheck-rust org-plus-contrib org-bullets solarized-theme plantuml-mode org-download ox-reveal ox-pandoc org htmlize graphviz-dot-mode ace-jump-mode yaml-mode smartparens color-theme-sanityinc-tomorrow evil-leader evil racer cargo rust-mode flycheck-clojure ox-gfm cider clojure-mode py-autopep8 company-anaconda elpy flycheck projectile yasnippet company-quickhelp company magit paredit which-key counsel ivy-historian ivy nlinum-relative rainbow-delimiters zenburn-theme fullframe use-package)))
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
 
