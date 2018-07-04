@@ -14,7 +14,7 @@
  '(org-export-backends (quote (gfm ascii freemind gfm html icalendar latex md)))
  '(package-selected-packages
    (quote
-    (lsp-rust lsp-ui lsp-mode company-lsp flycheck-rust org-plus-contrib org-bullets solarized-theme plantuml-mode org-download ox-reveal ox-pandoc org htmlize graphviz-dot-mode ace-jump-mode yaml-mode smartparens color-theme-sanityinc-tomorrow evil-leader evil racer cargo rust-mode flycheck-clojure ox-gfm cider clojure-mode py-autopep8 company-anaconda elpy flycheck projectile yasnippet company-quickhelp company magit paredit which-key counsel ivy-historian ivy nlinum-relative rainbow-delimiters zenburn-theme fullframe use-package)))
+    (fcitx doom-modeline all-the-icons lsp-rust lsp-ui lsp-mode company-lsp flycheck-rust org-plus-contrib org-bullets solarized-theme plantuml-mode org-download ox-reveal ox-pandoc org htmlize graphviz-dot-mode ace-jump-mode yaml-mode smartparens color-theme-sanityinc-tomorrow evil-leader evil racer cargo rust-mode flycheck-clojure ox-gfm cider clojure-mode py-autopep8 company-anaconda elpy flycheck projectile yasnippet company-quickhelp company magit paredit which-key counsel ivy-historian ivy nlinum-relative rainbow-delimiters zenburn-theme fullframe use-package)))
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
 

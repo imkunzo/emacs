@@ -58,6 +58,7 @@
 (require 'init-eshell)
 
 ;;; tools
+(require 'init-all-the-icons)
 (require 'init-ace-jump)
 (require 'init-company)
 (require 'init-fcitx)

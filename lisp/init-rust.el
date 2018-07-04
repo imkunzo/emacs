@@ -35,10 +35,7 @@
               racer-cmd (concat (getenv "HOME") "/.cargo/bin/racer"))
         (add-hook 'rust-mode-hook #'racer-mode)
         (add-hook 'racer-mode-hook #'eldoc-mode)
-        (add-hook 'racer-mode-hook #'company-mode))
-      :bind
-      (:map rust-mode-map
-            ("M-." . racer-find-definition)))
+        (add-hook 'racer-mode-hook #'company-mode)))
 
 (use-package lsp-rust
   :ensure t

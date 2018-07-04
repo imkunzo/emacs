@@ -5,20 +5,22 @@
 (require 'package)
 
 ;;; Standard package repositories
-
-;; We include the org repository for completeness, but don't normally
-;; use it.
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-
 ;; windows & dos will not use ssl
 (defconst pufferfish/no-ssl (and (memq system-type '(windows-nt ms-dos))
                                 (not (gnutls-available-p))))
 
 ;;; Also use Melpa for most packages
 (add-to-list 'package-archives
-             `("melpa" . ,(if pufferfish/no-ssl
-                              "http://melpa.org/packages/"
-                            "https://melpa.org/packages/")))
+             `("melpa-stable" . ,(if pufferfish/no-ssl
+                              "http://stable.melpa.org/packages/"
+                              "https://stable.melpa.org/packages/")))
+
+;; We include the org repository for completeness, but don't normally
+;; use it.
+(add-to-list 'package-archives
+             `("org" . ,(if pufferfish/no-ssl
+                            "http://orgmode.org/elpa/"
+                          "https://orgmode.org/elpa/")))
 
 ;;; initiate use-package
 (unless (package-installed-p 'use-package)
