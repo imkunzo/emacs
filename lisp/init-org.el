@@ -7,7 +7,10 @@
   :ensure org-plus-contrib
   :init
   (progn
-    (setq org-archive-mark-done nil
+    (setq org-agenda-custom-commands '(("c" "Simple agenda view"
+                                        ((agenda "")
+                                         (alltodo ""))))
+          org-archive-mark-done nil
           org-catch-invisible-edits 'show
           org-edit-timestamp-down-means-later t
           org-enforce-todo-dependencies t
@@ -73,18 +76,20 @@
 
     ;; capture templates
     (setq org-capture-templates
-          '(("j" "Journal" entry (file+datetree "~/Dropbox/GTD/Note.org")
+          '(("a" "Appointment" entry (file  "~/Dropbox/GTD/gcal.org" )
+	         "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+            ("j" "Journal" entry (file+datetree "~/Dropbox/GTD/note.org")
              "* %?\n %i\n")
-            ("n" "New" entry (file+headline "~/Dropbox/GTD/Inbox.org" "Inbox")
-             "* NEW %?\n Entered On: %U\n")
-            ("t" "Task" entry (file+headline "~/Dropbox/GTD/Task.org" "Tasks")
-             "* TODO %?\n Entered On: %U\n")
-            ("i" "Idea" entry (file+headline "~/Dropbox/GTD/Task.org" "Ideas")
-             "* SOMEDAY %?\n Entered On: %U\n")
-            ("c" "Calendar" entry (file+headline "~/Dropbox/GTD/Task.org" "Calendar")
-             "* TODO %?\n Entered On: %U\n")
-            ("p" "Project" entry (file+headline "~/Dropbox/GTD/Project.org" "Projects")
-             "* TODO %?\n Entered On: %U\n")))
+            ("n" "New" entry (file+headline "~/Dropbox/GTD/task.org" "Inbox")
+             "* NEW %?\nEntered On: %U\n")
+            ("t" "Task" entry (file+headline "~/Dropbox/GTD/task.org" "Tasks")
+             "* TODO %?\nEntered On: %U\n")
+            ("i" "Idea" entry (file+headline "~/Dropbox/GTD/task.org" "Ideas")
+             "* SOMEDAY %?\nEntered On: %U\n")
+            ("c" "Calendar" entry (file+headline "~/Dropbox/GTD/task.org" "Calendar")
+             "* TODO %?\nEntered On: %U\n")
+            ("p" "Project" entry (file+headline "~/Dropbox/GTD/project.org" "Projects")
+             "* TODO %?\nEntered On: %U\n")))
 
     ;; org export setting
     (setq org-export-backends '(ascii freemind gfm html icalendar latex md)))
@@ -152,13 +157,23 @@
 	(use-package ox-reveal
 	  :ensure t
       :init
-      (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/"
-            org-reveal-mathjax t))
+      (setq org-reveal-root "/Users/zack/Workspace/reveal.js"))
 
     ;; plantuml for org
     (after-load 'plantuml-mode
       (add-to-list
-       'org-src-lang-modes '("plantuml" . plantuml)))))
+       'org-src-lang-modes '("plantuml" . plantuml)))
+
+    ;; org-gcal
+    (use-package org-gcal
+      :ensure t
+      :init
+      (setq org-gcal-client-id "101938823939-ls7ugi8curo1ksg6v1ctr0md0vk917m8.apps.googleusercontent.com"
+            org-gcal-client-secret "VdjZiK1gZi748bub_fwmQc51"
+            org-gcal-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/GTD/gcal.org")))
+      :config
+      (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync)))
+      (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync))))))
 
 (provide 'init-org)
 ;;; init-org ends here

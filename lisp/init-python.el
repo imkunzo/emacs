@@ -22,23 +22,30 @@
     ;; python inferior completion
     (add-hook 'inferior-python-mode-hook #'company-mode)))
 
-;; anaconda
-(use-package anaconda-mode
-      :ensure t
-      :config
-      (add-hook 'python-mode-hook #'anaconda-mode)
-      (add-hook 'python-mode-hook #'anaconda-eldoc-mode))
+;; lsp-python
+(use-package lsp-python
+  :ensure t
+  :config
+  (add-hook 'python-mode-hook #'lsp-python-enable))
 
-;; company-anaconda
-(use-package company-anaconda
-      :ensure t
-      :init
-      (with-eval-after-load 'company
-        (push 'company-anaconda company-backends)))
+;; ;; anaconda
+;; (use-package anaconda-mode
+;;       :ensure t
+;;       :config
+;;       (add-hook 'python-mode-hook #'anaconda-mode)
+;;       (add-hook 'python-mode-hook #'anaconda-eldoc-mode))
+;;
+;; ;; company-anaconda
+;; (use-package company-anaconda
+;;       :ensure t
+;;       :init
+;;       (with-eval-after-load 'company
+;;         (push 'company-anaconda company-backends)))
 
 ;; pyvenv
 (use-package pyvenv
       :ensure t
+	  :after (:all python-mode elpy)
       :config
       (cond
        ((or *is-linux-p* *is-mac-p*)

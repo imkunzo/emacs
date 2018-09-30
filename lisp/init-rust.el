@@ -45,5 +45,13 @@
   :config
   (add-hook 'rust-mode-hook #'lsp-rust-enable))
 
+(use-package evcxr
+  :straight (evcxr
+             :type git
+             :host github
+             :repo "serialdev/evcxr-mode"
+             :config
+             (add-hook 'rust-mode-hook #'evcxr-minor-mode)))
+
 (provide 'init-rust)
 ;;; init-rust.el ends here

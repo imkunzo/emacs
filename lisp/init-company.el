@@ -8,7 +8,7 @@
   (progn
     (setq company-dabbrev-downcase nil
           company-idle-delay 0.5
-          company-minimum-prefix-length 1
+          company-minimum-prefix-length 3
           completion-cycle-threshold 5
           tab-always-indent 'comlete ;;use 't when company is disabled
           )

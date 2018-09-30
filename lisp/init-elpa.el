@@ -11,9 +11,9 @@
 
 ;;; Also use Melpa for most packages
 (add-to-list 'package-archives
-             `("melpa-stable" . ,(if pufferfish/no-ssl
-                              "http://stable.melpa.org/packages/"
-                              "https://stable.melpa.org/packages/")))
+             `("melpa" . ,(if pufferfish/no-ssl
+                              "http://melpa.org/packages/"
+                              "https://melpa.org/packages/")))
 
 ;; We include the org repository for completeness, but don't normally
 ;; use it.
@@ -22,10 +22,25 @@
                             "http://orgmode.org/elpa/"
                           "https://orgmode.org/elpa/")))
 
+;;; straight bootstrap
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
 ;;; initiate use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(straight-use-package 'use-package)
+;; (unless (package-installed-p 'use-package)
+;;   (package-refresh-contents)
+;;   (package-install 'use-package))
 
 ;;; initialize package
 (setq package-enable-at-startup nil)

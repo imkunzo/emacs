@@ -2,12 +2,15 @@
   :ensure t
   :diminish projectile-mode
   :init
-  (projectile-global-mode)
-  :config
-  (progn
-    (setq projectile-indexing-method 'native)
-    (setq projectile-enable-caching nil)
-    (setq projectile-require-project-root t)))
+  (setq projectile-completion-system 'ivy
+        projectile-enable-caching nil
+        projectile-indexing-method 'native
+        projectile-require-project-root t)
+  (projectile-global-mode))
 
+(use-package counsel-projectile
+  :ensure t
+  :init
+  (counsel-projectile-mode))
 
 (provide 'init-projectile)
