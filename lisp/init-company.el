@@ -7,7 +7,7 @@
   :init
   (progn
     (setq company-dabbrev-downcase nil
-          company-idle-delay 0.5
+          company-idle-delay 1.5
           company-minimum-prefix-length 3
           completion-cycle-threshold 5
           tab-always-indent 'comlete ;;use 't when company is disabled
@@ -28,20 +28,22 @@
       (after-load 'page-break-lines-mode
         (defvar pufferfish/page-break-lines-on-p nil)
         (make-variable-buffer-local 'pufferfish/page-break-lines-on-p)
-        
+
         (defun pufferfish/page-break-lines-disable (&rest ignore)
           (when (setq pufferfish/page-break-lines-on-p (bound-and-true-p page-break-lines-mode))
             (page-break-lines-mode -1)))
-        
+
         (defun pufferfish/page-break-lines-maybe-reenable (&rest ignore)
           (when pufferfish/page-break-lines-on-p
             (page-break-lines-mode 1)))
-        
+
         (add-hook 'company-completion-started-hook 'pufferfish/page-break-lines-disable)
         (add-hook 'company-completion-finished-hook 'pufferfish/page-break-lines-maybe-reenable)
         (add-hook 'company-completion-cancelled-hook 'pufferfish/page-break-lines-maybe-reenable))))
   :bind (:map company-active-map
-         ("C-c h" . company-quickhelp-manual-begin)
+              ("C-c h" . company-quickhelp-manual-begin)
+              ("C-p" . company-select-previous)
+              ("C-n" . company-select-next)
          :map company-mode-map
          ("M-/" . company-complete)))
 
@@ -49,12 +51,6 @@
   :ensure t
   :init
   (add-hook 'after-init-hook 'company-quickhelp-mode))
-
-(use-package company-lsp
-  :ensure t
-  :init
-  (with-eval-after-load 'lsp-mode
-    (push 'company-lsp company-backends)))
 
 (provide 'init-company)
 ;;; init-company ends here

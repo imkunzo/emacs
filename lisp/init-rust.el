@@ -37,14 +37,6 @@
         (add-hook 'racer-mode-hook #'eldoc-mode)
         (add-hook 'racer-mode-hook #'company-mode)))
 
-(use-package lsp-rust
-  :ensure t
-  :init
-  (with-eval-after-load 'lsp-mode
-    (setq lsp-rust-rls-command '("rustup" "run" "stable" "rls")))
-  :config
-  (add-hook 'rust-mode-hook #'lsp-rust-enable))
-
 (use-package evcxr
   :straight (evcxr
              :type git

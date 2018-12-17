@@ -64,6 +64,7 @@
 (require 'init-fcitx)
 (require 'init-flycheck)
 (require 'init-graphviz)
+(require 'init-markdown)
 (require 'init-magit)
 (require 'init-org)
 (require 'init-plantuml)

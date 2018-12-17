@@ -20,13 +20,15 @@
     ;; flycheck
     (add-hook 'python-mode-hook #'flycheck-mode)
     ;; python inferior completion
-    (add-hook 'inferior-python-mode-hook #'company-mode)))
+    (add-hook 'inferior-python-mode-hook #'company-mode)
+	;; Remove flymake hook
+	(remove-hook 'elpy-modules 'elpy-module-flymake)))
 
 ;; lsp-python
-(use-package lsp-python
-  :ensure t
-  :config
-  (add-hook 'python-mode-hook #'lsp-python-enable))
+;; (use-package lsp-python
+;;   :ensure t
+;;   :config
+;;   (add-hook 'python-mode-hook #'lsp-python-enable))
 
 ;; ;; anaconda
 ;; (use-package anaconda-mode
