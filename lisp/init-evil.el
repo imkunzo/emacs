@@ -5,6 +5,8 @@
 (use-package evil
   :ensure t
   :init
+  (setq evil-want-integration t
+        evil-want-keybinding nil)
   (progn
     ;; boot evil by default
     (evil-mode t)
@@ -90,7 +92,11 @@
     (define-key minibuffer-local-must-match-map [escape] 'abort-recursive-edit)
     (define-key minibuffer-local-isearch-map [escape] 'abort-recursive-edit)))
 
-    
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config
+  (evil-collection-init))    
 ;; evil-tabs
 ;; (use-package evil-tabs
 ;;   :ensure t

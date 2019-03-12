@@ -9,7 +9,7 @@
   (setq nlinum-relative-current-symbol "")
   (setq nlinum-relative-offset 0)
   :config
-  (nlinum-relative-setup-evil)
+  ;; (nlinum-relative-setup-evil)
   (add-hook 'prog-mode-hook 'nlinum-relative-mode))
 
 

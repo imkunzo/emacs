@@ -6,7 +6,7 @@
   :ensure t
   :init
   (progn
-    (setq fcitx-active-evil-states '(insert emacs hybrid))
+    ;; (setq fcitx-active-evil-states '(insert emacs hybrid))
     (fcitx-aggressive-setup))
     (when *is-linux-p*
       (setq fcitx-use-dbus t))

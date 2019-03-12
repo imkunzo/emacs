@@ -32,7 +32,14 @@
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
   :init
-  (load-theme 'sanityinc-tomorrow-night t))
+  (load-theme 'sanityinc-tomorrow-eighties t))
+
+;; (use-package srcery-theme
+;;   :ensure t
+;;   :init
+;;   (setq srcery-org-height nil)
+;;   :config
+;;   (load-theme 'srcery))
 
 ;; (use-package solarized-theme
 ;;   :ensure t
@@ -48,6 +55,14 @@
   :ensure t
   :init
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+
+(use-package awesome-tab
+  :straight (awesome-tab
+             :type git
+             :host github
+             :repo "manateelazycat/awesome-tab")
+  :init (setq awesome-tab-style 'box)
+  :config (awesome-tab-mode t))
 
 ;; (use-package spaceline-all-the-icons
 ;;   :ensure t

@@ -18,7 +18,9 @@
 
   ;; Keybindings
   (global-set-key (kbd "s-v") 'yank)
-  (global-set-key (kbd "s-c") 'evil-yank))
+  (global-set-key (kbd "s-c") 'kill-ring-save)
+  ;; (global-set-key (kbd "s-c") 'evil-yank)
+  )
 
 ;; Use the OS X Emoji font for Emoticons
 (when (fboundp 'set-fontset-font)

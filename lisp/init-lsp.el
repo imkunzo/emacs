@@ -6,9 +6,9 @@
   :ensure t
   :init
   (require 'lsp-clients)
-  (add-hook 'programming-mode-hook 'lsp)
-  :config
-  (setq lsp-prefer-flymake nil))
+  (setq lsp-prefer-flymake nil
+        lsp-enable-flycheck t)
+  (add-hook 'prog-mode-hook 'lsp))
 
 ;; lsp extras
 (use-package lsp-ui
@@ -20,16 +20,10 @@
 (use-package company-lsp
   :ensure t
   :init
+  (setq company-lsp-async t
+        company-lsp-enable-snippet t)
   (with-eval-after-load 'lsp-mode
     (push 'company-lsp company-backends)))
-
-;; (use-package lsp-rust
-  ;; :ensure t
-  ;; :init
-  ;; (with-eval-after-load 'lsp-mode
-    ;; (setq lsp-rust-rls-command '("rustup" "run" "stable" "rls")))
-  ;; :config
-  ;; (add-hook 'rust-mode-hook #'lsp-rust-enable))
 
 (provide 'init-lsp)
 ;;; init-lsp ends here

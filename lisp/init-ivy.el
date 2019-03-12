@@ -2,13 +2,12 @@
 ;;; Commentary:
 
 ;;; Code:
-(defun pufferfish/enable-ivy-flx-matching ()
-  "Make `ivy' matching work more like IDO."
-  (interactive)
-  (require-package 'flx)
-  (setq-default ivy-re-builders-alist
-                '((t . ivy--regex-fuzzy))))
-
+;; (defun pufferfish/enable-ivy-flx-matching ()
+;;  "Make `ivy' matching work more like IDO."
+;;  (interactive)
+;;  (require-package 'flx)
+;;  (setq-default ivy-re-builders-alist
+;;                '((t . ivy--regex-fuzzy))))
 
 (use-package ivy
   :ensure t
@@ -33,12 +32,10 @@
                   '((man . "^")
                     (woman . "^")))))
 
-
 (use-package ivy-historian
   :ensure t
   :init
   (add-hook 'after-init-hook (lambda () (ivy-historian-mode t))))
-
 
 (use-package counsel
   :ensure t
@@ -50,13 +47,11 @@
   (:map global-map
         ("M-y" . counsel-yank-pop)))
 
-
 (use-package swiper
   :ensure t
   :bind
   (:map ivy-mode-map
         ("C-s" . swiper)))
-
 
 (provide 'init-ivy)
 ;;; init-ivy ends here

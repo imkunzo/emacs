@@ -51,7 +51,7 @@
 ;;; basic config
 (require 'init-appear)
 (require 'init-linum)
-(require 'init-evil)
+;; (require 'init-evil)
 (require 'init-ivy)
 (require 'init-which-key)
 (require 'init-smartparens)
