@@ -3,7 +3,7 @@
   :init
   (global-magit-file-mode)
   :config
-  (when *is-windows-p*
+  (when sys/win32p
     (setq magit-git-executable "d:/opt/msys2/usr/bin/git.exe")))
 
 

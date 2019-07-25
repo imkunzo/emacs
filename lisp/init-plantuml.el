@@ -7,6 +7,7 @@
   :init
   (setq org-plantuml-jar-path (expand-file-name "~/bin/plantuml.jar")
         plantuml-jar-path (expand-file-name "~/bin/plantuml.jar")
+        plantuml-jar-args (list "-charset" "utf-8" "-tpng")
         plantuml-mode-debug-enabled t)
   :config
   (add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))

@@ -4,12 +4,12 @@
 ;;; Code:
 (use-package fcitx
   :ensure t
+  :if sys/linuxp
   :init
   (progn
     ;; (setq fcitx-active-evil-states '(insert emacs hybrid))
     (fcitx-aggressive-setup))
-    (when *is-linux-p*
-      (setq fcitx-use-dbus t))
+    (setq fcitx-use-dbus t)
   :config
   (progn
     ;; auto turn off fcitx when "M-x"

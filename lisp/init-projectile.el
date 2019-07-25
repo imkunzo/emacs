@@ -1,7 +1,7 @@
 (use-package projectile
   :ensure t
   :diminish projectile-mode
-  :bind-keymap ("C-c C-p" . projectile-command-map)
+  :bind-keymap ("C-c p" . projectile-command-map)
   :init
   (setq projectile-completion-system 'ivy
         projectile-enable-caching nil

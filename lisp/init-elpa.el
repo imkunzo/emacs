@@ -54,7 +54,7 @@
 (use-package cl-lib
   :ensure t)
 
-(add-hook 'package-menu-mode-hook 'pufferfish/maybe-widen-package-menu-columns)
+;; (add-hook 'package-menu-mode-hook 'pufferfish/maybe-widen-package-menu-columns)
 
 
 (provide 'init-elpa)

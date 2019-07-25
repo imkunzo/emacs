@@ -7,70 +7,69 @@
   :init
   (setq evil-want-integration t
         evil-want-keybinding nil)
-  (progn
-    ;; boot evil by default
-    (evil-mode t)
+  ;; boot evil by default
+  (evil-mode t))
 
-    ;; elscreen
-    ;; (use-package elscreen
-    ;;   :ensure t
-    ;;   :init
-    ;;   (elscreen-start))
+ 
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :custom (evil-collection-setup-minibugger t)
+  :init
+  (evil-collection-init))
 
-    ;; evil-leader
-    (use-package evil-leader
-      :ensure t
-      :init
-      (global-evil-leader-mode)
-      :config
-      (progn
-        (setq evil-leader/in-all-states t)
-        (evil-leader/set-leader "<SPC>")
-        (evil-leader/set-key
-          ;; ace-jump-mode
-          "<SPC>" 'ace-jump-word-mode
-          ;; appearance
-          "mb" 'toggle-menu-bar-mode-from-frame
-          ;; buffers
-          "bb" 'ivy-switch-buffer
-          "bk" 'kill-buffer
-          "bd" 'kill-this-buffer
-          ;; windows
-          "wd"'evil-window-delete
-          "wv" 'evil-window-vsplit
-          "ws" 'evil-window-split
-          "wh" 'evil-window-left
-          "wj" 'evil-window-down
-          "wk" 'evil-window-up
-          "wl" 'evil-window-right
-          ;; files
-          "ff" 'counsel-find-file
-          "fr" 'counsel-recentf
-          "fs" 'save-buffer
-          ;; command
-          "x" 'counsel-M-x
-          ;; evil-tabs
-          ;; "gt" 'elscreen-goto
-          ;; magit
-          "mgs" 'magit-status
-          "mgc" 'magit-commit
-          "mgt" 'magit-push
-          "mgl" 'magit-pull
-          ;; projectile
-          "pfd" 'project--find-in-directory
-          "pff" 'project-find-file
-          "pfi" 'project-find-file-in
-          "pfm" 'project-find-functions
-          "pfr" 'project-find-regexp)
-        ;; org download
-        (evil-leader/set-key-for-mode 'org-mode "ods" 'org-download-screenshot)
-        (evil-leader/set-key-for-mode 'org-mode "odd" 'org-download-delete)
-        (evil-leader/set-key-for-mode 'org-mode "ode" 'org-download-edit)
-        (evil-leader/set-key-for-mode 'org-mode "odi" 'org-downlaod-image)
-        (evil-leader/set-key-for-mode 'org-mode "ody" 'org-download-yank)
-        ;; projectile
-        (evil-leader/set-key-for-mode 'projectile-mode "pf" 'project-find-file))))
-
+;; evil-leader
+(use-package evil-leader
+    :ensure t
+    :init
+    (global-evil-leader-mode)
+    :config
+    (setq evil-leader/in-all-states t)
+    (evil-leader/set-leader "<SPC>")
+    ;; (evil-leader/set-key
+    ;;   ;; ace-jump-mode
+    ;;   "<SPC>" 'ace-jump-word-mode
+    ;;   ;; appearance
+    ;;   "mb" 'toggle-menu-bar-mode-from-frame
+    ;;   ;; buffers
+    ;;   "bb" 'ivy-switch-buffer
+    ;;   "bk" 'kill-buffer
+    ;;   "bd" 'kill-this-buffer
+    ;;   ;; windows
+    ;;   "wd"'evil-window-delete
+    ;;   "wv" 'evil-window-vsplit
+    ;;   "ws" 'evil-window-split
+    ;;   "wh" 'evil-window-left
+    ;;   "wj" 'evil-window-down
+    ;;   "wk" 'evil-window-up
+    ;;   "wl" 'evil-window-right
+    ;;   ;; files
+    ;;   "ff" 'counsel-find-file
+    ;;   "fr" 'counsel-recentf
+    ;;   "fs" 'save-buffer
+    ;;   ;; command
+    ;;   "x" 'counsel-M-x
+    ;;   ;; evil-tabs
+    ;;   ;; "gt" 'elscreen-goto
+    ;;   ;; magit
+    ;;   "mgs" 'magit-status
+    ;;   "mgc" 'magit-commit
+    ;;   "mgt" 'magit-push
+    ;;   "mgl" 'magit-pull
+    ;;   ;; projectile
+    ;;   "pfd" 'project--find-in-directory
+    ;;   "pff" 'project-find-file
+    ;;   "pfi" 'project-find-file-in
+    ;;   "pfm" 'project-find-functions
+    ;;   "pfr" 'project-find-regexp)
+    ;; org download
+    (evil-leader/set-key-for-mode 'org-mode "ods" 'org-download-screenshot)
+    (evil-leader/set-key-for-mode 'org-mode "odd" 'org-download-delete)
+    (evil-leader/set-key-for-mode 'org-mode "ode" 'org-download-edit)
+    (evil-leader/set-key-for-mode 'org-mode "odi" 'org-downlaod-image)
+    (evil-leader/set-key-for-mode 'org-mode "ody" 'org-download-yank)
+    ;; projectile
+    ;; (evil-leader/set-key-for-mode 'projectile-mode "pf" 'project-find-file)
   :bind
   (:map evil-insert-state-map
         ("C-g" . evil-normal-state)
@@ -90,13 +89,15 @@
     (define-key minibuffer-local-ns-map [escape] 'abort-recursive-edit)
     (define-key minibuffer-local-completion-map [escape] 'abort-recursive-edit)
     (define-key minibuffer-local-must-match-map [escape] 'abort-recursive-edit)
-    (define-key minibuffer-local-isearch-map [escape] 'abort-recursive-edit)))
+    (define-key minibuffer-local-isearch-map [escape]
+    'abort-recursive-edit)))
 
-(use-package evil-collection
+;; evil surround
+(use-package evil-surround
   :ensure t
-  :after evil
   :config
-  (evil-collection-init))    
+  (global-evil-surround-mode t))
+
 ;; evil-tabs
 ;; (use-package evil-tabs
 ;;   :ensure t
@@ -107,6 +108,9 @@
 ;;            "gnt" 'elscreen-create
 ;;            "gkt" 'elscreen-kill))
 
+(use-package org-evil
+  :ensure t
+  :after (org evil))
 
 (provide 'init-evil)
 ;;; init-evil ends here

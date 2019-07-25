@@ -53,5 +53,11 @@
   (:map ivy-mode-map
         ("C-s" . swiper)))
 
+;; (use-package all-the-icons-ivy
+;;   :ensure
+;;   :config
+;;   (with-eval-after-load 'ivy
+;;     (all-the-icons-ivy-setup)))
+
 (provide 'init-ivy)
 ;;; init-ivy ends here

@@ -21,6 +21,7 @@
           org-hide-leading-stars t
           org-html-htmlize-output-type 'css
           org-html-validation-link nil
+          org-image-actual-width nil
           org-log-done t
           org-log-into-drawer t
           org-src-fontify-natively t
@@ -102,7 +103,7 @@
   :config
   (progn
     ;; org bable
-    (after-load 'org
+    (with-eval-after-load 'org
       (org-babel-do-load-languages
        'org-babel-load-languages
        `((R . t)
@@ -132,8 +133,9 @@
     (use-package org-download
       :ensure t
       :init
-      (setq org-download-image-dir "./imgs")
-      (when *is-mac-p*
+      (setq org-download-image-dir "./imgs"
+            org-download-image-org-width 800)
+      (when sys/macp
         (setq org-download-screenshot-method "screencapture -i %s")))
 
     ;; github flavored markdown exporter
@@ -160,7 +162,7 @@
       (setq org-reveal-root "/Users/zack/Workspace/reveal.js"))
 
     ;; plantuml for org
-    (after-load 'plantuml-mode
+    (with-eval-after-load 'plantuml-mode
       (add-to-list
        'org-src-lang-modes '("plantuml" . plantuml)))
 

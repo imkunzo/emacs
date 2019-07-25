@@ -37,13 +37,13 @@
         (add-hook 'racer-mode-hook #'eldoc-mode)
         (add-hook 'racer-mode-hook #'company-mode)))
 
-(use-package evcxr
-  :straight (evcxr
-             :type git
-             :host github
-             :repo "serialdev/evcxr-mode"
-             :config
-             (add-hook 'rust-mode-hook #'evcxr-minor-mode)))
+;; (use-package evcxr
+;;   :straight (evcxr
+;;              :type git
+;;              :host github
+;;              :repo "serialdev/evcxr-mode")
+;;   :config
+;;   (add-hook 'rust-mode-hook #'evcxr-minor-mode))
 
 (provide 'init-rust)
 ;;; init-rust.el ends here

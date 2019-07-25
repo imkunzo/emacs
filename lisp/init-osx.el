@@ -6,6 +6,16 @@
   "If non nil the option key is mapped to meta. Set to `nil` if you need the
   option key to type common characters.")
 
+(setq shell-file-name "/bin/zsh"
+      temporary-file-directory "/tmp/")
+
+(use-package exec-path-from-shell
+  :ensure t
+  :init
+  (setenv "SHELL" "/bin/zsh")
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-envs '("PATH")))
+
 (when (display-graphic-p)
   ;;Treat command as super
   (setq mac-command-key-is-meta nil)
