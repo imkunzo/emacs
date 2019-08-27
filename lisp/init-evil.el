@@ -8,14 +8,16 @@
   (setq evil-want-integration t
         evil-want-keybinding nil)
   ;; boot evil by default
+  :config
   (evil-mode t))
 
  
 (use-package evil-collection
   :ensure t
   :after evil
-  :custom (evil-collection-setup-minibugger t)
   :init
+  (setq evil-collection-setup-minibuffer t)
+  :config
   (evil-collection-init))
 
 ;; evil-leader
@@ -62,13 +64,13 @@
     ;;   "pfi" 'project-find-file-in
     ;;   "pfm" 'project-find-functions
     ;;   "pfr" 'project-find-regexp)
-    ;; org download
+  ;; org download
     (evil-leader/set-key-for-mode 'org-mode "ods" 'org-download-screenshot)
     (evil-leader/set-key-for-mode 'org-mode "odd" 'org-download-delete)
     (evil-leader/set-key-for-mode 'org-mode "ode" 'org-download-edit)
     (evil-leader/set-key-for-mode 'org-mode "odi" 'org-downlaod-image)
     (evil-leader/set-key-for-mode 'org-mode "ody" 'org-download-yank)
-    ;; projectile
+;; projectile
     ;; (evil-leader/set-key-for-mode 'projectile-mode "pf" 'project-find-file)
   :bind
   (:map evil-insert-state-map

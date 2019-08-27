@@ -53,9 +53,11 @@
   :ensure t
   :init
   (setq cnfonts--custom-set-fontnames
-	'(("Hiragino Sans GB" "Monaco"))
-	cnfonts--custom-set-fontsizes '((14 14.0 14.0)))
-  (setq cnfonts-use-face-font-rescale t)
+        '(("Hiragino Sans GB" "Monaco"))
+        cnfonts--custom-set-fontsizes
+        '((14 14.0 14.0))
+        cnfonts-use-face-font-rescale t)
+  :config
   (cnfonts-enable))
 
 (provide 'init-gui-fonts)

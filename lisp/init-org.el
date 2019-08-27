@@ -172,7 +172,7 @@
       :init
       (setq org-gcal-client-id "101938823939-ls7ugi8curo1ksg6v1ctr0md0vk917m8.apps.googleusercontent.com"
             org-gcal-client-secret "VdjZiK1gZi748bub_fwmQc51"
-            org-gcal-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/GTD/gcal.org")))
+            org-gcal-fetch-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/GTD/gcal.org")))
       :config
       (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync)))
       (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync))))))

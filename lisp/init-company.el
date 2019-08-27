@@ -72,6 +72,12 @@
             (Template . ,(all-the-icons-material "format_align_center" :height 0.9 :v-adjust -0.2))))))
 
 
+;;; tabnine
+(use-package company-tabnine
+  :ensure t
+  :config
+  (add-to-list 'company-backends #'company-tabnine))
+
 ;; Popup documentation for completion candidates
 (when (and (not emacs/>=26p) (display-graphic-p))
   (use-package company-quickhelp

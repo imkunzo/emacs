@@ -18,6 +18,9 @@
 (global-hl-line-mode)
 ;;; set default split
 (setq split-width-threshold nil)
+;;; very long line performence optimizy
+(when emacs/>=27p
+  (global-so-long-mode t))
 
 ;; (use-package monokai-theme
 ;;   :ensure t

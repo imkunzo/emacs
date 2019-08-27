@@ -1,22 +1,17 @@
 ;;; init.el -- Summary
 ;;; Commentary:
 
-;;; Code:
-(when (< emacs-major-version 27)
-  (package-initialize))
-
+;;; initialize
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (setq custom-file (expand-file-name "lisp/customize.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-;; Enable with t if you prefer
-;; (defconst *spell-check-support-enabled* nil)
-;; (defconst *is-mac-p* (eq system-type 'darwin))
-;; (defconst *is-windows-p* (eq system-type 'windows-nt))
-;; (defconst *is-linux-p* (eq system-type 'gnu/linux))
-
-;; Constants
+;;; Constants
 (require 'init-const)
+
+;;; Code:
+(when (not emacs/>=27p)
+  (package-initialize))
 
 ;;;; Temporarily reduce garbage collection during startup
 (defconst pufferfish/initial-gc-cons-threshold gc-cons-threshold
@@ -28,8 +23,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; basic environment
 (when sys/win32p
-  (setq tramp-default-method "plink")
-  (setq default-directory "~/"))
+  (setq tramp-default-method "plink"))
 ;;
 (when sys/linuxp
   (setq shell-file-name "/bin/zsh"))
@@ -46,23 +40,24 @@
 (set-selection-coding-system 'utf-8)
 (setq locale-coding-system   'utf-8)
 (setq-default buffer-file-coding-system 'utf-8)
+;; default directory
+(setq default-directory "~/")
 
 ;;;; Bootstrap config
 ;; (require 'init-utils)
 (require 'init-site-lisp)
 (require 'init-elpa)
-(when sys/macp
-  (require 'init-osx)
-  )
 
-;;; config gui fonts
-(when (window-system)
+(when sys/macp
+  (require 'init-osx))
+
+(when (display-graphic-p)
   (require 'init-gui-fonts))
 
 ;;; basic config
 (require 'init-appear)
 (require 'init-linum)
-;; (require 'init-evil)
+(require 'init-evil)
 (require 'init-ivy)
 (require 'init-which-key)
 (require 'init-smartparens)
@@ -93,7 +88,4 @@
 (require 'init-clojure)
 (require 'init-rust)
 
-;;
-(when (require 'so-long nil :noerror)
-  (so-long-enable))
 ;;; init.el ends here
