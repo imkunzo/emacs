@@ -44,5 +44,15 @@
         company-lsp-enable-snippet t
         company-lsp-cache-candidates 'auto))
 
+(use-package lsp-treemacs
+  :ensure t)
+
+(use-package dap-mode
+  :ensure t
+  :config
+  (dap-mode t)
+  (dap-ui-mode t)
+  (dap-tooltip-mode t))
+
 (provide 'init-lsp)
 ;;; init-lsp ends here

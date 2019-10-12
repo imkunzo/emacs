@@ -44,7 +44,8 @@
 
 ;;; initialize package
 (setq package-enable-at-startup nil)
-(package-initialize)
+(when (not emacs/>=27p)
+  (package-initialize))
 
 (use-package fullframe
   :ensure t

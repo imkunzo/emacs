@@ -10,9 +10,6 @@
 (require 'init-const)
 
 ;;; Code:
-(when (not emacs/>=27p)
-  (package-initialize))
-
 ;;;; Temporarily reduce garbage collection during startup
 (defconst pufferfish/initial-gc-cons-threshold gc-cons-threshold
   "Initial value of `gc-cons-threshold' at start-up time.")
@@ -27,6 +24,14 @@
 ;;
 (when sys/linuxp
   (setq shell-file-name "/bin/zsh"))
+
+(when (or sys/linuxp sys/macp)
+  (setq remote-file-name-inhibit-cache nil)
+  (setq vc-ignore-dir-regexp
+        (format "\\(%s\\)\\|\\(%s\\)"
+                vc-ignore-dir-regexp
+                tramp-file-name-regexp))
+  (setq tramp-verbose 1))
 
 (add-to-list 'exec-path "/usr/local/bin")
 (add-to-list 'exec-path "~/.cargo/bin")
@@ -56,11 +61,14 @@
 
 ;;; basic config
 (require 'init-appear)
+(require 'init-awesome-tab)
 (require 'init-linum)
-(require 'init-evil)
+;; (require 'init-evil)
+(require 'init-hydra)
 (require 'init-ivy)
 (require 'init-which-key)
 (require 'init-smartparens)
+(require 'init-snails)
 (require 'init-eshell)
 
 ;;; tools

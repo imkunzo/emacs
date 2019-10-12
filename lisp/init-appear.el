@@ -19,8 +19,8 @@
 ;;; set default split
 (setq split-width-threshold nil)
 ;;; very long line performence optimizy
-(when emacs/>=27p
-  (global-so-long-mode t))
+;; (when emacs/>=27p
+;;   (global-so-long-mode t))
 
 ;; (use-package monokai-theme
 ;;   :ensure t
@@ -70,15 +70,6 @@
   :ensure t
   :init
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-
-(use-package awesome-tab
-  :straight (awesome-tab :type git
-                         :host github
-                         :repo "manateelazycat/awesome-tab")
-  :init
-  (setq awesome-tab-style 'box)
-  :config
-  (awesome-tab-mode t))
 
 ;; (use-package doom-modeline
 ;;   :ensure t

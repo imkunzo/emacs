@@ -57,5 +57,10 @@
 ;;       (add-hook 'python-mode-hook 'yapf-mode)
 ;;       (add-hook 'python-mode-hook 'py-yapf-enable-on-save))
 
+(use-package pipenv
+  :ensure t
+  :init
+  (setq pipenv-projectile-after-switch-function #'pipenv-projectile-after-switch-extended))
+
 (provide 'init-python)
 ;;; init-python.el Ends here

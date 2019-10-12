@@ -39,8 +39,8 @@
   :load-path "~/.emacs.d/pyim/rime"
   :config
   (liberime-start (expand-file-name "/Library/Input Methods/Squirrel.app/Contents/SharedSupport")
-                  (expand-file-name "~/.emacs.d/pyim/rime")))
-(liberime-select-schema "luna_pinyin_simp")
+                  (expand-file-name "~/.emacs.d/pyim/rime"))
+  (liberime-select-schema "luna_pinyin_simp"))
 
 (use-package posframe
   :straight (posframe :type git
