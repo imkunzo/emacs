@@ -60,7 +60,8 @@
 (use-package pipenv
   :ensure t
   :init
-  (setq pipenv-projectile-after-switch-function #'pipenv-projectile-after-switch-extended))
+  (setq pipenv-projectile-after-switch-function
+        #'pipenv-projectile-after-switch-extended))
 
 (provide 'init-python)
 ;;; init-python.el Ends here

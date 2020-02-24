@@ -52,7 +52,10 @@
   :config
   (dap-mode t)
   (dap-ui-mode t)
-  (dap-tooltip-mode t))
+  (dap-tooltip-mode t)
+  (tooltip-mode t)
+  (add-hook 'dap-stopped-hook
+            (lambda (arg) (call-interactively #'dap-hydra))))
 
 (provide 'init-lsp)
 ;;; init-lsp ends here

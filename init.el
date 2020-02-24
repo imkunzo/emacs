@@ -2,7 +2,6 @@
 ;;; Commentary:
 
 ;;; initialize
-
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (setq custom-file (expand-file-name "lisp/customize.el" user-emacs-directory))
 (load custom-file 'noerror)
@@ -40,12 +39,13 @@
 
 (when (fboundp 'set-charset-priority)
   (set-charset-priority 'unicode))     
-(prefer-coding-system        'utf-8)
-(set-terminal-coding-system  'utf-8)
-(set-keyboard-coding-system  'utf-8)
-(set-selection-coding-system 'utf-8)
-(setq locale-coding-system   'utf-8)
-(setq-default buffer-file-coding-system 'utf-8)
+(setq prefer-coding-system        'utf-8
+      set-terminal-coding-system  'utf-8
+      set-keyboard-coding-system  'utf-8
+      set-selection-coding-system 'utf-8
+      locale-coding-system   'utf-8
+      buffer-file-coding-system 'utf-8)
+
 ;; default directory
 (setq default-directory "~/")
 

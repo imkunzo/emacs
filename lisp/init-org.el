@@ -30,10 +30,10 @@
           org-startup-with-inline-images t
           org-tags-column 80
           ;; org directories
-          org-directory "~/Dropbox/GTD"
-          org-agenda-files (list "~/Dropbox/GTD")
-          org-mobile-inbox-for-pull "~/Dropbox/MobileOrg/mobileorg.org"
-          org-mobile-directory "~/Dropbox/MobileOrg"
+          org-directory "~/Dropbox/OrgMode/GTD"
+          org-agenda-files (list "~/Dropbox/OrgMode/GTD")
+          org-mobile-inbox-for-pull "~/Dropbox/OrgMode/MobileOrg/mobileorg.org"
+          org-mobile-directory "~/Dropbox/OrgMode/MobileOrg"
           ;; org todo keywords
           org-todo-keywords '((sequence "TODO(t!)" "DONE(d!)")
                               (sequence "|" "NEW(n)" "WAIT(w@)" "ABORT(a@/!)" "SOMEDAY(s)"))
@@ -77,19 +77,19 @@
 
     ;; capture templates
     (setq org-capture-templates
-          '(("a" "Appointment" entry (file  "~/Dropbox/GTD/gcal.org" )
+          '(("a" "Appointment" entry (file  "~/Dropbox/OrgMode/GTD/gcal.org" )
 	         "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
-            ("j" "Journal" entry (file+datetree "~/Dropbox/GTD/note.org")
+            ("j" "Journal" entry (file+datetree "~/Dropbox/OrgMode/GTD/note.org")
              "* %?\n %i\n")
-            ("n" "New" entry (file+headline "~/Dropbox/GTD/task.org" "Inbox")
+            ("n" "New" entry (file+headline "~/Dropbox/OrgMode/GTD/task.org" "Inbox")
              "* NEW %?\nEntered On: %U\n")
-            ("t" "Task" entry (file+headline "~/Dropbox/GTD/task.org" "Tasks")
+            ("t" "Task" entry (file+headline "~/Dropbox/OrgMode/GTD/task.org" "Tasks")
              "* TODO %?\nEntered On: %U\n")
-            ("i" "Idea" entry (file+headline "~/Dropbox/GTD/task.org" "Ideas")
+            ("i" "Idea" entry (file+headline "~/Dropbox/OrgMode/GTD/task.org" "Ideas")
              "* SOMEDAY %?\nEntered On: %U\n")
-            ("c" "Calendar" entry (file+headline "~/Dropbox/GTD/task.org" "Calendar")
+            ("c" "Calendar" entry (file+headline "~/Dropbox/OrgMode/GTD/task.org" "Calendar")
              "* TODO %?\nEntered On: %U\n")
-            ("p" "Project" entry (file+headline "~/Dropbox/GTD/project.org" "Projects")
+            ("p" "Project" entry (file+headline "~/Dropbox/OrgMode/GTD/project.org" "Projects")
              "* TODO %?\nEntered On: %U\n")))
 
     ;; org export setting
@@ -132,12 +132,19 @@
 
     (use-package org-download
       :ensure t
+      :bind (("C-c d s" . org-download-screenshot)
+             ("C-c d i" . org-download-image)
+             ("C-c d y" . org-download-yank))
       :init
-      (setq org-download-image-dir "./imgs"
+      (setq org-download-image-dir (concat "./" buffer-file-name ".imgs")
             org-download-image-org-width 800)
       (when sys/macp
-        (setq org-download-screenshot-method "screencapture -i %s")))
+        (setq org-download-screenshot-method "screencapture -U -W -i %s")))
 
+    ;; org-web-tools
+    (use-package org-web-tools
+      :ensure t)
+    
     ;; github flavored markdown exporter
     (use-package ox-gfm
       :ensure t
@@ -172,7 +179,7 @@
       :init
       (setq org-gcal-client-id "101938823939-ls7ugi8curo1ksg6v1ctr0md0vk917m8.apps.googleusercontent.com"
             org-gcal-client-secret "VdjZiK1gZi748bub_fwmQc51"
-            org-gcal-fetch-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/GTD/gcal.org")))
+            org-gcal-fetch-file-alist '(("lizhikun@growing.io" .  "~/Dropbox/OrgMode/GTD/gcal.org")))
       :config
       (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync)))
       (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync))))))

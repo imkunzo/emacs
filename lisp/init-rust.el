@@ -17,13 +17,14 @@
 (use-package cargo
       :ensure t
       :init
-      (progn
-        (setenv "PATH" (concat (getenv "PATH")
+      (setenv "PATH" (concat (getenv "PATH")
                              ":"
                              (concat (getenv "HOME") "/.cargo/bin")))
-        (add-hook 'rust-mode-hook 'cargo-minor-mode)
-        (add-hook 'cargo-process-mode-hook (lambda ()
-                                             (setq truncate-lines nil)))))
+      ;; (setq cargo-process--command-test "test --nocapture")
+      :config
+      (add-hook 'rust-mode-hook 'cargo-minor-mode)
+      (add-hook 'cargo-process-mode-hook (lambda ()
+                                           (setq truncate-lines nil))))
 
 (use-package racer
       :ensure t
