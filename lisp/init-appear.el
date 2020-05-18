@@ -73,12 +73,15 @@
 
 ;; (use-package doom-modeline
 ;;   :ensure t
+;;   :defer t
 ;;   :after (projectile all-the-icons)
-;;   :hook (after-init . doom-modeline-mode)
-;;   :init
-;;   (setq doom-modeline-minor-modes nil
-;;         doom-modeline-github t
-;;         doom-modeline-lsp t))
+;;   :hook
+;;   (after-init . doom-modeline-mode)
+;;   :custom
+;;   (doom-modeline-major-mode-icon nil)
+;;   (doom-modeline-minor-modes nil)
+;;   (doom-modeline-icon t)
+;;   (doom-modeline-buffer-file-name-style 'file-name))
 
 ;; (use-package spaceline-all-the-icons
 ;;   :ensure t
@@ -90,6 +93,9 @@
 ;;   (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
 ;;   (spaceline-all-the-icons--setup-neotree)         ;; Enable Neotree mode line
 ;;   (setq spaceline-all-the-icons-separator-type 'arrow))
+
+(use-package posframe
+  :ensure t)
 
 (provide 'init-appear)
 ;;; init-appear ends here

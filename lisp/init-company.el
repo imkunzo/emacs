@@ -17,18 +17,20 @@
               ("C-c h" . company-quickhelp-manual-begin)
               ("C-p" . company-select-previous)
               ("C-n" . company-select-next)
+              ("TAB" . company-complete-common-or-cycle)
+              ("RET" . company-complete-selection)
          :map company-mode-map
          ("M-/" . company-complete)))
+
 
 (use-package company-box
   :ensure t
   :hook (company-mode . company-box-mode)
   :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
   :config
-  (setq company-box-backends-colors nil)
-  (setq company-box-show-single-candidate t)
-  (setq company-box-max-candidates 50)
-
+  (setq company-box-backends-colors nil
+        company-box-show-single-candidate t
+        company-box-max-candidates 50)
   (defun company-box-icons--elisp (candidate)
     (when (derived-mode-p 'emacs-lisp-mode)
       (let ((sym (intern candidate)))
@@ -78,6 +80,14 @@
   :config
   (add-to-list 'company-backends #'company-tabnine))
 
+
+;; company-posframe
+(use-package company-posframe
+  :ensure t
+  :config
+  (company-posframe-mode t))
+
+
 ;; Popup documentation for completion candidates
 (when (and (not emacs/>=26p) (display-graphic-p))
   (use-package company-quickhelp
@@ -86,6 +96,7 @@
                 ("M-h" . company-quickhelp-manual-begin))
     :hook (global-company-mode . company-quickhelp-mode)
     :init (setq company-quickhelp-delay nil)))
+
 
 (provide 'init-company)
 ;;; init-company ends here

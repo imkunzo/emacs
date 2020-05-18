@@ -15,9 +15,9 @@
 (use-package evil-collection
   :ensure t
   :after evil
+  :custom
+  (evil-collection-setup-minibuffer t)
   :init
-  (setq evil-collection-setup-minibuffer t)
-  :config
   (evil-collection-init))
 
 ;; evil-leader
@@ -28,15 +28,15 @@
     :config
     (setq evil-leader/in-all-states t)
     (evil-leader/set-leader "<SPC>")
-    ;; (evil-leader/set-key
+    (evil-leader/set-key
     ;;   ;; ace-jump-mode
     ;;   "<SPC>" 'ace-jump-word-mode
     ;;   ;; appearance
     ;;   "mb" 'toggle-menu-bar-mode-from-frame
-    ;;   ;; buffers
-    ;;   "bb" 'ivy-switch-buffer
-    ;;   "bk" 'kill-buffer
-    ;;   "bd" 'kill-this-buffer
+      ;; buffers
+      "bb" 'ivy-switch-buffer
+      "bk" 'kill-buffer
+      "bd" 'kill-this-buffer
     ;;   ;; windows
     ;;   "wd"'evil-window-delete
     ;;   "wv" 'evil-window-vsplit
@@ -45,10 +45,10 @@
     ;;   "wj" 'evil-window-down
     ;;   "wk" 'evil-window-up
     ;;   "wl" 'evil-window-right
-    ;;   ;; files
-    ;;   "ff" 'counsel-find-file
-    ;;   "fr" 'counsel-recentf
-    ;;   "fs" 'save-buffer
+      ;; files
+      "ff" 'counsel-find-file
+      "fr" 'counsel-recentf
+      "fs" 'save-buffer
     ;;   ;; command
     ;;   "x" 'counsel-M-x
     ;;   ;; evil-tabs
@@ -63,7 +63,8 @@
     ;;   "pff" 'project-find-file
     ;;   "pfi" 'project-find-file-in
     ;;   "pfm" 'project-find-functions
-    ;;   "pfr" 'project-find-regexp)
+    ;;   "pfr" 'project-find-regexp
+    )
   ;; org download
     (evil-leader/set-key-for-mode 'org-mode "ods" 'org-download-screenshot)
     (evil-leader/set-key-for-mode 'org-mode "odd" 'org-download-delete)
@@ -78,21 +79,19 @@
         :map evil-visual-state-map
         ("C-c" . evil-exit-visual-state))
   :config
-  (progn
-    (define-key evil-normal-state-map (kbd "q") nil)
-    (define-key evil-insert-state-map (kbd "C-e") nil)
-    (define-key evil-insert-state-map (kbd "C-d") nil)
-    (define-key evil-insert-state-map (kbd "C-k") nil)
-    (define-key evil-motion-state-map (kbd "C-e") nil)
-    ;; esc should always quit
-    (define-key evil-normal-state-map [escape] 'keyboard-quit)
-    (define-key evil-visual-state-map [escape] 'keyboard-quit)
-    (define-key minibuffer-local-map [escape] 'abort-recursive-edit)
-    (define-key minibuffer-local-ns-map [escape] 'abort-recursive-edit)
-    (define-key minibuffer-local-completion-map [escape] 'abort-recursive-edit)
-    (define-key minibuffer-local-must-match-map [escape] 'abort-recursive-edit)
-    (define-key minibuffer-local-isearch-map [escape]
-    'abort-recursive-edit)))
+  (define-key evil-normal-state-map (kbd "q") nil)
+  (define-key evil-insert-state-map (kbd "C-e") nil)
+  (define-key evil-insert-state-map (kbd "C-d") nil)
+  (define-key evil-insert-state-map (kbd "C-k") nil)
+  (define-key evil-motion-state-map (kbd "C-e") nil)
+  ;; esc should always quit
+  (define-key evil-normal-state-map [escape] 'keyboard-quit)
+  (define-key evil-visual-state-map [escape] 'keyboard-quit)
+  (define-key minibuffer-local-map [escape] 'abort-recursive-edit)
+  (define-key minibuffer-local-ns-map [escape] 'abort-recursive-edit)
+  (define-key minibuffer-local-completion-map [escape] 'abort-recursive-edit)
+  (define-key minibuffer-local-must-match-map [escape] 'abort-recursive-edit)
+  (define-key minibuffer-local-isearch-map [escape] 'abort-recursive-edit))
 
 ;; evil surround
 (use-package evil-surround

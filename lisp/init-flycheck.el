@@ -20,6 +20,7 @@
   :ensure t
   :after (:all python-mode elpy flycheck)
   :init
+  (setq flycheck-pycheckers-checkers 'pyflakes)
   (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
 
 (provide 'init-flycheck)

@@ -131,15 +131,29 @@
                                  (org-bullets-mode t))))
 
     (use-package org-download
-      :ensure t
+      :ensure-system-package (pngpaste . "brew install pngpaste") 
       :bind (("C-c d s" . org-download-screenshot)
              ("C-c d i" . org-download-image)
              ("C-c d y" . org-download-yank))
       :init
-      (setq org-download-image-dir (concat "./" buffer-file-name ".imgs")
-            org-download-image-org-width 800)
-      (when sys/macp
-        (setq org-download-screenshot-method "screencapture -U -W -i %s")))
+      (setq org-download-image-dir "./imgs"
+            org-download-image-org-width 600
+            org-download-image-attr-list '("#+ATTR_HTML: :width 60% :align center")
+            ;; org-download-method 'attach
+            ;; org-download-display-inline-images 'posframe
+            ;; org-download-posframe-show-params '((timeout . 1)
+            ;;                                     (internal-border-width . 1)
+            ;;                                     (internal-border-color . "red")
+            ;;                                     (min-width . 200)
+            ;;                                     (min-height . 50)
+            ;;                                     (poshandler . posframe-poshandler-window-center)))
+            )
+      (cond (sys/macp
+             (setq org-download-screenshot-method "pngpaste %s"))
+            (sys/win32p
+             (setq org-download-screenshot-method "convert clipboard: %s")))
+      :config
+      (add-hook 'dired-mode-hook 'org-download-enable))
 
     ;; org-web-tools
     (use-package org-web-tools
@@ -164,9 +178,7 @@
 
 	;; org reveal
 	(use-package ox-reveal
-	  :ensure t
-      :init
-      (setq org-reveal-root "/Users/zack/Workspace/reveal.js"))
+	  :ensure t)
 
     ;; plantuml for org
     (with-eval-after-load 'plantuml-mode

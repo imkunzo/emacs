@@ -6,6 +6,10 @@
   "If non nil the option key is mapped to meta. Set to `nil` if you need the
   option key to type common characters.")
 
+;; (setenv "LC_CTYPE" "UTF-8")
+;; (setenv "LC_ALL" "en_US.UTF-8")
+;; (setenv "LANG" "en_US.UTF-8")
+
 (setq shell-file-name "/bin/zsh"
       temporary-file-directory "/tmp/")
 
@@ -14,7 +18,7 @@
   :init
   (setenv "SHELL" "/bin/zsh")
   (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs '("PATH")))
+  (exec-path-from-shell-copy-envs '("PATH" "PYTHONPATH")))
 
 (when (display-graphic-p)
   ;;Treat command as super

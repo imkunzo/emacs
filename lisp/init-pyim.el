@@ -2,7 +2,7 @@
   :ensure t
   :demand t
   :bind
-  (("M-j" . pyim-convert-string-at-point)
+  (("S-SPC" . pyim-convert-string-at-point)
    ("C-;" . pyim-delete-word-from-personal-buffer)
    :map pyim-mode-map
    ("." . pyim-page-next-page)
@@ -18,15 +18,12 @@
   ;; 1. 光标只有在注释里面时，才可以输入中文。
   ;; 2. 光标前是汉字字符时，才能输入中文。
   ;; 3. 使用 M-j 快捷键，强制将光标前的拼音字符串转换为中文。
-  (setq-default pyim-english-input-switch-functions
-                '(pyim-probe-dynamic-english
-                  pyim-probe-isearch-mode
-                  pyim-probe-program-mode
-                  pyim-probe-org-structure-template))
-
-  (setq-default pyim-punctuation-half-width-functions
-                '(pyim-probe-punctuation-line-beginning
-                  pyim-probe-punctuation-after-punctuation))
+  (setq-default pyim-english-input-switch-functions '(pyim-probe-dynamic-english
+                                                      pyim-probe-isearch-mode
+                                                      pyim-probe-program-mode
+                                                      pyim-probe-org-structure-template)
+                pyim-punctuation-half-width-functions '(pyim-probe-punctuation-line-beginning
+                                                        pyim-probe-punctuation-after-punctuation))
   (pyim-isearch-mode t))
 
 (use-package pyim-basedict
@@ -41,10 +38,5 @@
   (liberime-start (expand-file-name "/Library/Input Methods/Squirrel.app/Contents/SharedSupport")
                   (expand-file-name "~/.emacs.d/pyim/rime"))
   (liberime-select-schema "luna_pinyin_simp"))
-
-(use-package posframe
-  :straight (posframe :type git
-                      :host github
-                      :repo "tumashu/posframe"))
 
 (provide 'init-pyim)

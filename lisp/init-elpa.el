@@ -43,17 +43,23 @@
 ;;   (package-install 'use-package))
 
 ;;; initialize package
-(setq package-enable-at-startup nil)
+(setq package-enable-at-startup nil
+      use-package-always-ensure t)
 (when (not emacs/>=27p)
   (package-initialize))
+
+(use-package benchmark-init
+  :ensure t)
 
 (use-package fullframe
   :ensure t
   :config
   (fullframe list-packages quit-window))
 
-(use-package cl-lib
-  :ensure t)
+;; (use-package cl-lib
+;;   :ensure t)
+
+(use-package use-package-ensure-system-package)
 
 ;; (add-hook 'package-menu-mode-hook 'pufferfish/maybe-widen-package-menu-columns)
 

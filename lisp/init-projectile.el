@@ -1,10 +1,10 @@
 (use-package projectile
   :ensure t
-  :diminish projectile-mode
-  :bind-keymap ("C-c p" . projectile-command-map)
+  :bind
+  (:map projectile-mode-map
+        ("C-c p" . projectile-command-map))
   :init
-  (setq projectile-completion-system 'ivy
-        projectile-enable-caching nil
+  (setq projectile-enable-caching nil
         projectile-indexing-method 'native
         projectile-require-project-root t)
   (projectile-global-mode))
