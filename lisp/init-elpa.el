@@ -48,8 +48,8 @@
 (when (not emacs/>=27p)
   (package-initialize))
 
-(use-package benchmark-init
-  :ensure t)
+;; (use-package benchmark-init
+;;   :ensure t)
 
 (use-package fullframe
   :ensure t

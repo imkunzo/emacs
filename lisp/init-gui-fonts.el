@@ -2,52 +2,20 @@
 ;;; Commentary:
 
 ;; ;;; Code:
-;; ;; Gui Fonts configuration
-;; (defun font-existsp (font)
-;;   (if (null (x-list-fonts font)) nil t))
-;; ;;
-;; (defun make-font-string (font-name font-size)
-;;   (if (and (stringp font-size)
-;;            (equal ":" (string (elt font-size 0))))
-;;       (format "%s%s" font-name font-size)
-;;     (format "%s %s" font-name font-size)))
-;; ;;
-;; (defun set-font (english-fonts
-;;                  english-font-size
-;;                  chinese-fonts
-;;                  &optional chinese-font-size)
-;;   "english-font-size could be set to \":pixelsize=18\" or a integer.
-;; If set/leave chinese-font-size to nil, it will follow english-font-size"
-;;   (require 'cl)
-;;   (let ((en-font (make-font-string
-;;                   (find-if #'font-existsp english-fonts)
-;;                   english-font-size))
-;;         (zh-font (font-spec :family (find-if #'font-existsp chinese-fonts)
-;;                             :size chinese-font-size)))
-;;     ;; Set the default English font
-;;     ;; The following 2 method cannot make the font settig work in new frames.
-;;     ;; (set-default-font "Consolas:pixelsize=18")
-;;     ;; (add-to-list 'default-frame-alist '(font . "Consolas:pixelsize=18"))
-;;     ;; We have to use set-face-attribute
-;;     (message "Set English Font to %s" en-font)
-;;     (set-face-attribute
-;;      'default nil :font en-font)
-;;     ;; Set Chinese font
-;;     ;; Do not use 'unicode charset, it will cause the english font setting invalid
-;;     (message "Set Chinese Font to %s" zh-font)
-;;     (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;;       (set-fontset-font (frame-parameter nil 'font) charset
-;;       zh-font))))
-;; ;; setup default fonts
-;; (cond
-;;  (*is-linux-p*
-;;   (set-font
-;;    '("Monaco" "mononoki Nerd Font" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 13
-;;    '("WenQuanYi Micro Hei Mono" "Microsoft Yahei")))
-;;  (*is-mac-p*
-;;   (set-font
-;;    '("Monaco" "mononoki Nerd Font" "Ubuntu Mono" "DejaVu Sans Mono" "Consolas") 14
-;;    '("Noto Sans CJK SC" "WenQuanYi Micro Hei Mono" "Microsoft Yahei") 16)))
+(defvar my-line-spacing-alist
+      '((9 . 0.1) (10 . 0.9) (11.5 . 0.2)
+        (12.5 . 0.2) (14 . 0.2) (16 . 0.2)
+        (18 . 0.2) (20 . 1.0) (22 . 0.2)
+        (24 . 0.2) (26 . 0.2) (28 . 0.2)
+        (30 . 0.2) (32 . 0.2)))
+
+(defun my-line-spacing-setup (fontsizes-list)
+  (let ((fontsize (car fontsizes-list))
+        (line-spacing-alist (copy-list my-line-spacing-alist)))
+    (dolist (list line-spacing-alist)
+      (when (= fontsize (car list))
+        (setq line-spacing-alist nil)
+        (setq-default line-spacing (cdr list))))))
 
 (use-package cnfonts
   :ensure t
@@ -57,6 +25,7 @@
         cnfonts--custom-set-fontsizes
         '((14 14.0 14.0))
         cnfonts-use-face-font-rescale t)
+  (add-hook 'cnfonts-set-font-finish-hook #'my-line-spacing-setup)
   :config
   (cnfonts-enable))
 

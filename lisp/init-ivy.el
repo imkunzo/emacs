@@ -78,22 +78,22 @@
   :config
   (ivy-rich-mode t))
 
-(use-package prescient
-  :straight t
-  :preface
-  (eval-when-compile
-    (declare-function prescient-persist-mode nil))
-  :config
-  (prescient-persist-mode t))
-
-(use-package ivy-prescient
-  :after (ivy prescient)
-  :straight t
-  :preface
-  (eval-when-compile
-    (declare-function ivy-prescient-mode nil))
-  :config
-  (ivy-prescient-mode t))
+;; (use-package prescient
+;;   :straight t
+;;   :preface
+;;   (eval-when-compile
+;;     (declare-function prescient-persist-mode nil))
+;;   :config
+;;   (prescient-persist-mode t))
+;; 
+;; (use-package ivy-prescient
+;;   :after (ivy prescient)
+;;   :straight t
+;;   :preface
+;;   (eval-when-compile
+;;     (declare-function ivy-prescient-mode nil))
+;;   :config
+;;   (ivy-prescient-mode t))
 
 ;; (use-package all-the-icons-ivy
 ;;   :ensure

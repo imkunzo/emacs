@@ -7,7 +7,9 @@
                          :host github
                          :repo "manateelazycat/awesome-tab")
   :init
-  (setq awesome-tab-style 'box)
+  (setq awesome-tab-height 140
+        awesome-tab-icon-height 0.9
+        awesome-tab-style 'box)
   :config
   (awesome-tab-mode t)
 
@@ -29,7 +31,7 @@
        (string-to-number (car (nreverse (split-string key-desc "-")))))))
   
   (with-eval-after-load 'hydra
-    (defhydra hydra/awesome-fast-switch (:hint nil)
+    (defhydra hydra/awesome-fast-switch (:hint nil :exit t)
 	"
 	 ^^^^Fast Move             ^^^^Tab                    ^^Search            ^^Misc
 	-^^^^--------------------+-^^^^---------------------+-^^----------------+-^^---------------------------

@@ -1,6 +1,9 @@
 ;;; init.el -- Summary
 ;;; Commentary:
 
+;;; native comp
+(setq comp-speed 3
+      comp-deferred-compilation t)
 
 ;;; server mode
 (server-start)
@@ -9,6 +12,14 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (setq custom-file (expand-file-name "lisp/customize.el" user-emacs-directory))
 (load custom-file 'noerror)
+
+;; (setenv "LD_LIBRARY_PATH"
+;;         (let ((current (getenv "LD_LIBRARY_PATH"))
+;;               (new (concat (getenv "HOME") "/.nix-profile/lib")))
+;;           (if current (concat new ":" current) new)))
+;; (setenv "LIBRARY_PATH" (getenv "LD_LIBRARY_PATH"))
+;; (setenv "CFLAGS" (concat "-I" (getenv "HOME") "/.nix-profile/include"))
+;; (setenv "CPPFLAGS" (getenv "CFLAGS"))
 
 ;;; Constants
 (require 'init-const)
@@ -43,6 +54,8 @@
       locale-coding-system   'utf-8
       buffer-file-coding-system 'utf-8)
 
+(setq warning-minimum-level :emergency)
+
 ;; default directory
 (setq default-directory "~/")
 
@@ -68,24 +81,28 @@
   (require 'init-appear)
   (require 'init-awesome-tab)
   (require 'init-linum)
-;;  (require 'init-evil)
+  (require 'init-evil)
   (require 'init-hydra)
   (require 'init-ivy)
   (require 'init-which-key)
   (require 'init-smartparens)
-  (require 'init-snails)
+;;  (require 'init-snails)
   (require 'init-eshell)
   
   ;;; tools
   (require 'init-all-the-icons)
   (require 'init-ace-jump)
   (require 'init-company)
-  (require 'init-fcitx)
+  (require 'init-ein)
+  (when sys/linuxp
+    (require 'init-fcitx))
   (require 'init-flycheck)
   (require 'init-graphviz)
+  (require 'init-json)
   (require 'init-markdown)
   (require 'init-magit)
-  (require 'init-mermaid)
+  ;; (require 'init-mermaid)
+  (require 'init-nix)
   (require 'init-org)
   (require 'init-plantuml)
   (require 'init-projectile)

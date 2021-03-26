@@ -32,15 +32,15 @@
 ;;   :init
 ;;   (load-theme 'zenburn t))
 
-;; (use-package color-theme-sanityinc-tomorrow
-;;   :ensure t
-;;   :init
-;;   (load-theme 'sanityinc-tomorrow-eighties t))
-
-(use-package atom-one-dark-theme
+(use-package color-theme-sanityinc-tomorrow
   :ensure t
   :init
-  (load-theme 'atom-one-dark t))
+  (load-theme 'sanityinc-tomorrow-eighties t))
+
+;; (use-package atom-one-dark-theme
+;;   :ensure t
+;;   :init
+;;   (load-theme 'atom-one-dark t))
 
 ;; (use-package srcery-theme
 ;;   :ensure t
@@ -102,6 +102,32 @@
 (use-package posframe
   :ensure t)
 
+;; (use-package maple-minibuffer
+;;   :straight (maple-minibuffer :type git
+;;                               :host github
+;;                               :repo "honmaple/emacs-maple-minibuffer")
+;;   :ensure t
+;;   :hook (after-init . maple-minibuffer-mode)
+;;   :config
+;;   (setq maple-minibuffer:position-type 'window-center
+;;         maple-minibuffer:border-color "gray50"
+;;         maple-minibuffer:height nil
+;;         maple-minibuffer:width 0.8
+;;         maple-minibuffer:cache t)
+;; 
+;;   (setq maple-minibuffer:action '(read-from-minibuffer read-string)
+;;         maple-minibuffer:ignore-action '(evil-ex eval-expression))
+;; 
+;;   (add-to-list 'maple-minibuffer:ignore-action 'org-schedule)
+;;   (add-to-list 'maple-minibuffer:ignore-regexp "^ivy-")
+;; 
+;;   ;; more custom parameters for frame
+;;   (defun maple-minibuffer:parameters ()
+;;     "Maple minibuffer parameters."
+;;     `((height . ,(or maple-minibuffer:height 10))
+;;       (width . ,(or maple-minibuffer:width (window-pixel-width)))
+;;       (left-fringe . 5)
+;;       (right-fringe . 5))))
 
 ;;; prefer vertical split
 (defun split-window-sensibly-prefer-horizontal (&optional window)

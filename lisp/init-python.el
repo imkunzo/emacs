@@ -1,76 +1,58 @@
 ;;; init-python --- python configuration
 ;;; Commentary:
 
-;;; Code:
-;; python mode
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "--simple-prompt -i --pprint"
-      python-shell-completion-native-enable nil)
+(defun send-input-and-indent ()
+  (interactive)
+  (comint-send-input)
+  (indent-for-tab-command))
 
-(defun my-extra-pythonpaths ()
-  (add-to-list 'python-shell-extra-pythonpaths
-               projectile-project-root))
-
-(add-hook 'python-mode-hook 'my-extra-pythonpaths)
-
-;; (use-package elpy
-;;   :ensure t
-;;   :init
-;;   ;; (setq ;; elpy-rpc-python-command "python3"
-;;   ;;       ;; python-shell-interpreter "ipython"
-;;   ;;       ;; python-shell-interpreter-args "--simple-prompt --pprint"
-;;   ;;  python-shell-completion-native-enable nil)
-;;   (setq elpy-shell-echo-output nil
-;;         elpy-rpc-virtualenv-path 'current
-;;         python-shell-interpreter "ipython"
-;;         python-shell-interpreter-args "--simple-prompt -c exec('__import__(\\'readline\\')') -i")
-;;   ;; (elpy-enable)
-;;   (advice-add 'python-mode :before 'elpy-enable)
-;;   :config
-;;   ;; flycheck
-;;   (add-hook 'python-mode-hook #'flycheck-mode)
-;;   ;; python inferior completion
-;;   (add-hook 'inferior-python-mode-hook #'company-mode)
-;;   ;; Remove flymake hook
-;;   (remove-hook 'elpy-modules 'elpy-module-flymake))
-
-;; lsp-python
-;; (use-package lsp-python
-;;   :ensure t
-;;   :config
-;;   (add-hook 'python-mode-hook #'lsp-python-enable))
-
-;; ;; anaconda
-;; (use-package anaconda-mode
-;;       :ensure t
-;;       :config
-;;       (add-hook 'python-mode-hook #'anaconda-mode)
-;;       (add-hook 'python-mode-hook #'anaconda-eldoc-mode))
-;;
-;; ;; company-anaconda
-;; (use-package company-anaconda
-;;       :ensure t
-;;       :init
-;;       (with-eval-after-load 'company
-;;         (push 'company-anaconda company-backends)))
-
-;; pyvenv
-;; (use-package pyvenv
-;;       :ensure t
-;; 	  :after (:all python-mode elpy)
-;;       :config
-;;       (cond
-;;        ((or *is-linux-p* *is-mac-p*)
-;;         (setenv "WORKON_HOME" (expand-file-name "venv" (getenv "HOME"))))
-;;        ((*is-windows-p*)
-;;         (setenv "WORKON_HOME" "D:/opt/Python/venv"))))
-
-;; py-autopep8
-;; (use-package py-autopep8
-;;       :ensure t
-;;       :config
-;;       (add-hook 'python-mode-hook 'yapf-mode)
-;;       (add-hook 'python-mode-hook 'py-yapf-enable-on-save))
+(use-package elpy
+  :ensure t
+  ;; :bind (:map inferior-python-mode-map
+  ;;             ("C-j" . send-input-and-indent))
+  :init
+  ;; (setq ;; elpy-rpc-python-command "python3"
+  ;;       ;; python-shell-interpreter "ipython"
+  ;;       ;; python-shell-interpreter-args "--simple-prompt --pprint"
+  ;;  python-shell-completion-native-enable nil)
+  (setq elpy-shell-echo-output nil
+        elpy-rpc-python-command "python3.9"
+        elpy-rpc-timeout 10
+        elpy-rpc-virtualenv-path 'current
+        python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--simple-prompt --pprint"
+        python-shell-completion-native-enable nil)
+  ;; (setq elpy-shell-echo-output nil
+  ;;       elpy-rpc-python-command "python3.9"
+  ;;       elpy-rpc-timeout 10
+  ;;       elpy-rpc-virtualenv-path 'current
+  ;;       python-shell-interpreter "jupyter"
+  ;;       python-shell-interpreter-args "console --simple-prompt"
+  ;;       python-shell-prompt-detect-failure-warning nil)
+  :config
+  ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
+  ;;              "jupyter")
+  ;; python indent
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode nil
+                    python-indent-guess-indent-offset nil
+                    python-indent-offset 4)))
+  ;; flycheck
+  (add-hook 'python-mode-hook #'flycheck-mode)
+  ;; python inferior completion
+  (add-hook 'inferior-python-mode-hook #'company-mode)
+  ;; Remove flymake hook
+  (remove-hook 'elpy-modules 'elpy-module-flymake)
+  ;; pythonpaths
+  (add-hook 'python-mode-hook
+          (lambda ()
+            (setq python-shell-extra-pythonpaths
+                  (list (projectile-ensure-project (projectile-project-root))
+                        (concat (projectile-ensure-project (projectile-project-root))
+                                "src")))))
+  ;; (advice-add 'python-mode :before 'elpy-mode)
+  (add-hook 'python-mode-hook #'elpy-enable))
 
 (use-package pipenv
   :ensure t
@@ -78,6 +60,9 @@
   :init
   (setq pipenv-projectile-after-switch-function
         #'pipenv-projectile-after-switch-extended))
+
+(use-package poetry
+  :ensure t)
 
 (provide 'init-python)
 ;;; init-python.el Ends here

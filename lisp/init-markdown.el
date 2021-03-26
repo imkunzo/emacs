@@ -31,6 +31,7 @@
 ;;; Code:
 
 (use-package markdown-mode
+  :ensure t
   :defines flycheck-markdown-markdownlint-cli-config
   :preface
   ;; Install: pip install grip
@@ -54,11 +55,16 @@
                              (locate-dominating-file md-file md-lint))))
       (setq-local flycheck-markdown-markdownlint-cli-config
                   (concat md-lint-dir md-lint))))
+  :command (markdown-mode gfm-mode)
   :bind (:map markdown-mode-command-map
               ("g" .  markdown-preview-grip))
   :hook (;;(markdown-mode . flyspell-mode)
          (markdown-mode . set-flycheck-markdownlint))
-  :mode (("README\\.md\\'" . gfm-mode))
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init
+  (setq markdown-command "multimarkdown")
   :config
   (setq markdown-command-needs-filename t)
   (setq markdown-content-type "application/xhtml+xml")

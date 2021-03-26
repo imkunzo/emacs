@@ -75,10 +75,10 @@
 
 
 ;;; tabnine
-(use-package company-tabnine
-  :ensure t
-  :config
-  (add-to-list 'company-backends #'company-tabnine))
+;; (use-package company-tabnine
+;;   :ensure t
+;;   :config
+;;   (add-to-list 'company-backends #'company-tabnine))
 
 
 ;; company-posframe
@@ -96,6 +96,15 @@
                 ("M-h" . company-quickhelp-manual-begin))
     :hook (global-company-mode . company-quickhelp-mode)
     :init (setq company-quickhelp-delay nil)))
+
+
+;; company-org-roam
+(use-package company-org-roam
+  :ensure t
+  ;; You may want to pin in case the version from stable.melpa.org is not working 
+  ; :pin melpa
+  :config
+  (push 'company-org-roam company-backends))
 
 
 (provide 'init-company)
