@@ -86,11 +86,12 @@
 ;; (load! "+cnfonts")
 (load! "+flycheck")
 (load! "+graphql")
-;; (load! "+lsp-bridge")
+(load! "+lsp-bridge")
 (load! "+org")
 (load! "+osx")
 (load! "+rime")
 (load! "+sql")
+(load! "+tree-sitter")
 
 ;; pythonpaths
 (add-hook 'python-mode-hook
@@ -101,24 +102,22 @@
                         "src")))))
 
 ;; lsp-ui
-(after! lsp-ui
-  (setq lsp-ui-doc-enable t
-        lsp-ui-doc-show-with-cursor t
-        lsp-ui-doc-delay 2
-        lsp-ui-doc-position 'at-point))
+;; (after! lsp-ui
+;;   (setq lsp-ui-doc-enable t
+;;         lsp-ui-doc-show-with-cursor t
+;;         lsp-ui-doc-delay 2
+;;         lsp-ui-doc-position 'at-point))
 
 ;; lsp-pyright
-(use-package! lsp-pyright
-  :config
-  (setq lsp-pyright-extra-paths "./src"
-        lsp-pyright-auto-import-completions t
-        lsp-pyright-use-library-code-for-types t
-        lsp-pyright-venv-path ".venv"
-        lsp-pyright-venv-directory ".venv")
-  :hook ((python-mode . (lambda ()
-                          (require 'lsp-pyright) (lsp-deferred)))))
+;; (use-package! lsp-pyright
+;;   :config
+;;   (setq lsp-pyright-extra-paths "./src"
+;;         lsp-pyright-auto-import-completions t
+;;         lsp-pyright-use-library-code-for-types t
+;;         lsp-pyright-venv-path ".venv"
+;;         lsp-pyright-venv-directory ".venv")
+;;   :hook ((python-mode . (lambda ()
+;;                           (require 'lsp-pyright) (lsp-deferred)))))
 
-;; tree-sitter
-(use-package! tree-sitter
-  :config
-  (global-tree-sitter-mode))
+(after! rustic
+  (setq rustic-cargo-run-use-comint t))

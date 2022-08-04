@@ -20,7 +20,7 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       company           ; the ultimate code completion backend
+       ;;company           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ivy               ; a search engine for love and life
@@ -94,7 +94,7 @@
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
-       (lsp +peek)             ; M-x vscode
+       ;;(lsp +peek)             ; M-x vscode
        magit               ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -136,11 +136,11 @@
        ;;(haskell +lsp)    ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
-       (json +lsp)         ; At least it ain't XML
-       ;; json
+       ;;(json +lsp)         ; At least it ain't XML
+       json
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
-       (javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
-       ;; javascript
+       ;;(javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
+       javascript
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        ;;latex             ; writing papers in Emacs has never been so fun
@@ -151,12 +151,16 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       org                 ; organize your plain life in plain text
+       (org                ; organize your plain life in plain text
+        +roam2
+        +journal
+        +pandoc
+        +present)
        ;;php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python             ; beautiful is better than ugly
-        +lsp
+        ;; +lsp
         +poetry
         +pyright)
        ;;qt                ; the 'cutest' gui framework ever
@@ -165,19 +169,19 @@
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       (rust +lsp)         ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       ;; rust
+       ;;(rust +lsp)         ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       rust
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
-       (sh +lsp)           ; she sells {ba,z,fi}sh shells on the C xor
-       ;; sh
+       ;;(sh +lsp)           ; she sells {ba,z,fi}sh shells on the C xor
+       sh
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        ;;web               ; the tubes
-       (yaml +lsp)         ; JSON, but readable
-       ;; yaml
+       ;;(yaml +lsp)         ; JSON, but readable
+       yaml
        ;;zig               ; C, but simpler
 
        :email

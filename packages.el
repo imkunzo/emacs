@@ -67,20 +67,26 @@
 
 (package! graphql-mode)
 
-;; (package! lsp-bridge
-;;   :recipe (:host github
-;;            :repo "manateelazycat/lsp-bridge"))
-
-;; (package! orderless)
+(package! lsp-bridge
+  :recipe (:host github
+           :repo "manateelazycat/lsp-bridge"))
 
 (package! rime
   :recipe (:host github
            :repo "DogLooksGood/emacs-rime"
            :files ("*.el" "Makefile" "lib.c")))
 
-(package! tabnine-capf
+;; org-roam2
+(unpin! org-roam)
+(package! org-roam-ui
   :recipe (:host github
-           :repo "50ways2sayhard/tabnine-capf"
-           :files ("*.el" "*.sh")))
+           :repo "org-roam/org-roam-ui"
+           :branch "main"
+           :files ("*.el" "out")))
+
+;; (package! tabnine-capf
+;;   :recipe (:host github
+;;            :repo "50ways2sayhard/tabnine-capf"
+;;            :files ("*.el" "*.sh")))
 
 (package! tree-sitter)
