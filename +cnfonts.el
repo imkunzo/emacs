@@ -18,7 +18,7 @@
 (use-package! cnfonts
   :init
   (setq cnfonts--custom-set-fontnames
-        '(("Hiragino Sans GB" "Monaco"))
+        '(("Hack Nerd Font Mono" "Lantinghei SC" "Monaco"))
         cnfonts--custom-set-fontsizes
         '((14 14.0 14.0))
         cnfonts-use-face-font-rescale t)

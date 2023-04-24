@@ -4,8 +4,8 @@
   :load-path "~/.emacs.d/.local/straight/repos/lsp-bridge"
   :init
   (setq lsp-bridge-enable-debug nil
-        lsp-bridge-enable-log nil
-        lsp-bridge-python-command "/usr/local/bin/python3.9")
+        lsp-bridge-enable-log t
+        lsp-bridge-python-command "/usr/local/bin/pypy3")
   ;; (setq lsp-bridge-enable-auto-format-code t)
   :config
   (evil-collection-define-key 'insert 'lsp-bridge-mode-map (kbd "C-n") #'acm-select-next)

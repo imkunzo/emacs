@@ -71,10 +71,9 @@
   :recipe (:host github
            :repo "manateelazycat/lsp-bridge"))
 
-(package! rime
-  :recipe (:host github
-           :repo "DogLooksGood/emacs-rime"
-           :files ("*.el" "Makefile" "lib.c")))
+(package! mermaid-mode)
+
+(package! ob-mermaid)
 
 ;; org-roam2
 (unpin! org-roam)
@@ -83,6 +82,11 @@
            :repo "org-roam/org-roam-ui"
            :branch "main"
            :files ("*.el" "out")))
+
+(package! rime
+  :recipe (:host github
+           :repo "DogLooksGood/emacs-rime"
+           :files ("*.el" "Makefile" "lib.c")))
 
 ;; (package! tabnine-capf
 ;;   :recipe (:host github

@@ -12,8 +12,20 @@
 
 (after! org
   :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((mermaid .t)
+     (plantuml . t)
+     (python . t)
+     (rust . t)))
   ;; org mode
   (setq org-image-actual-width (/ (display-pixel-width) 2))
+  ;; (setq org-image-actual-width 1024)
+  ;; ob-mermaid
+  (setq ob-mermaid-cli-path "/usr/local/bin/mmdc")
+  ;; ob-plantuml
+  (setq org-plantuml-jar-path (expand-file-name (concat (getenv "HOME") "/bin/plantuml.jar")))
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
   ;; org journal
   (setq org-journal-dir "~/Dropbox/OrgMode/journal"
         org-journal-file-type 'org-journal-file-header-func
