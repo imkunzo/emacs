@@ -4,7 +4,7 @@
   :load-path "~/.emacs.d/.local/straight/repos/lsp-bridge"
   :init
   (setq lsp-bridge-enable-debug nil
-        lsp-bridge-enable-log t
+        lsp-bridge-enable-log nil
         lsp-bridge-python-command "/usr/local/bin/pypy3")
   ;; (setq lsp-bridge-enable-auto-format-code t)
   :config
@@ -18,7 +18,8 @@
       :map (lsp-bridge-mode-map)
       :leader
       (:prefix-map ("l" . "lsp-bridge")
-       :desc "documentation" "d" 'lsp-bridge-lookup-documentation
+       :desc "documentation" "d" 'lsp-bridge-popup-documentation
+       :desc "rename" "r" 'lsp-bridge-rename
        (:prefix ("f" . "find")
         :desc "define" "d" 'lsp-bridge-find-def
         :desc "references" "r" 'lsp-bridge-find-references

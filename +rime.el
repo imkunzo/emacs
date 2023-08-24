@@ -17,6 +17,7 @@
   :config
   (setq rime-show-candidate 'posframe
         rime-posframe-properties (list :font "Lantinghei SC"
+                                       :font-width 16
                                        :internal-border-width 10)
         rime-posframe-style 'vertical
         rime-inline-ascii-holder ?x

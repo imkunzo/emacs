@@ -52,7 +52,8 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-tomorrow-night)
-(setq doom-theme 'doom-spacegrey)
+;; (setq doom-theme 'doom-spacegrey)
+(setq doom-theme 'doom-gruvbox)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -87,7 +88,7 @@
 ;; (load! "+cnfonts")
 (load! "+flycheck")
 (load! "+graphql")
-(load! "+lsp-bridge")
+;; (load! "+lsp-bridge")
 (load! "+org")
 (load! "+osx")
 (load! "+rime")
@@ -103,14 +104,14 @@
                         "src")))))
 
 ;; lsp-ui
-;; (after! lsp-ui
-;;   (setq lsp-ui-doc-enable t
-;;         lsp-ui-doc-show-with-cursor t
-;;         lsp-ui-doc-delay 2
-;;         lsp-ui-doc-position 'at-point))
+(after! lsp-ui
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-show-with-cursor t
+        lsp-ui-doc-delay 2
+        lsp-ui-doc-position 'at-point))
 
 ;; lsp-pyright
-;; (use-package! lsp-pyright
+;; (after! lsp-pyright
 ;;   :config
 ;;   (setq lsp-pyright-extra-paths "./src"
 ;;         lsp-pyright-auto-import-completions t

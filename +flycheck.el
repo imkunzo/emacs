@@ -4,6 +4,8 @@
   :after (:all rustic rust-mode flycheck)
   :config
   (push 'rustic-clippy flycheck-checkers)
+  (setq flycheck-rust-cargo-executable "~/.cargo/bin/cargo"
+        flycheck-rust-clippy-executable "~/.cargo/bin/cargo-clippy")
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (use-package! flycheck-pycheckers

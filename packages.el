@@ -67,9 +67,9 @@
 
 (package! graphql-mode)
 
-(package! lsp-bridge
-  :recipe (:host github
-           :repo "manateelazycat/lsp-bridge"))
+;; (package! lsp-bridge
+;;   :recipe (:host github
+;;            :repo "manateelazycat/lsp-bridge"))
 
 (package! mermaid-mode)
 
@@ -94,3 +94,4 @@
 ;;            :files ("*.el" "*.sh")))
 
 (package! tree-sitter)
+(package! tree-sitter-langs)
